@@ -409,6 +409,12 @@ remaining issues:
 - A ZMK-centric
   [introduction to Git](https://gist.github.com/urob/68a1e206b2356a01b876ed02d3f542c7)
   (useful for maintaining your own ZMK fork with a custom selection of PRs).
+- [west](https://docs.zephyrproject.org/latest/develop/west/index.html)
+- [Recommended nix tutorial](https://zero-to-nix.com)
+- [direnv](https://direnv.net) / nix-direnv
+- [just](https://github.com/casey/just)
+- [GitHub actions](https://docs.github.com/en/actions)
+- [keymap-drawer](https://github.com/caksoylar/keymap-drawer)
 
 [^1]:
     I call it "timer-less", because the large tapping-term makes the behavior
