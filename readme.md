@@ -252,18 +252,19 @@ environment is _completely isolated_ and won't pollute your system.
 
 #### Pre-requisites
 
-1. Install the `nix` package manager:
+1. Install the [`nix` package manager](https://github.com/DeterminateSystems/nix-installer). 
 
-   ```bash
-   # Install Nix with flake support enabled
-   curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix |
-      sh -s -- install --no-confirm
+2. Configure your shell to work with nix.
 
-   # Start the nix daemon without restarting the shell
-   . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
+   ```zsh
+   # Nix
+   if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
+     . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
+   fi
+   # End Nix
    ```
 
-2. Install [`direnv`](https://direnv.net/) (and optionally but recommended
+3. Install [`direnv`](https://direnv.net/) (and optionally but recommended
    [`nix-direnv`](https://github.com/nix-community/nix-direnv)[^4]) using your
    package manager of choice. E.g., using the `nix` package manager that we just
    installed[^5]:
@@ -272,12 +273,12 @@ environment is _completely isolated_ and won't pollute your system.
    nix profile install nixpkgs#direnv nixpkgs#nix-direnv
    ```
 
-3. Set up the `direnv` [shell-hook](https://direnv.net/docs/hook.html) for your
-   shell. E.g., for `bash`:
+4. Set up the `direnv` [shell-hook](https://direnv.net/docs/hook.html) for your
+   shell. E.g., for `zsh`:
 
-   ```bash
+   ```zsh
    # Install the shell-hook
-   echo 'eval "$(direnv hook bash)"' >> ~/.bashrc
+   echo 'eval "$(direnv hook zsh)"' >> ~/.config/zsh/.zshrc
 
    # Enable nix-direnv (if installed in the previous step)
    mkdir -p ~/.config/direnv
