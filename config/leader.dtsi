@@ -1,3 +1,6 @@
+// The leader node is defined each time ZMK_LEADER_SEQUENCE is called.
+// devicetree merges multiple definitions of the same node (leader)
+// into one with all of the leader_sequence_##name child nodes.
 #undef ZMK_LEADER_SEQUENCE
 #define ZMK_LEADER_SEQUENCE(name, leader_bindings, leader_sequence) \
     / { \
@@ -13,6 +16,8 @@
             }; \
         }; \
     };
+
+// See zmk-helpers/unicode-chars/(german|greek).dtsi
 
 /* German umlauts */
 ZMK_LEADER_SEQUENCE(de_ae,      &de_ae,         A)  // ä
