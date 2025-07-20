@@ -14,7 +14,7 @@ The state of the entire firmware is pinned in my `west`
 
 - ["Timeless" homerow mods](#timeless-homerow-mods)
 - Combos instead of symbol layer
-- Auto-toggle off numbers and mouse layers
+- Auto-toggle off numbers layer
 - Magic thumb quadrupling as Repeat/Sticky-shift/Capsword/Shift
 - Leader key sequences for Unicode input and system commands
 - Arrow-cluster doubles as <kbd>home</kbd>, <kbd>end</kbd>, <kbd>begin/end of
@@ -191,17 +191,10 @@ any of the letters on which my numpad is located (WFPRSTXCD), then the automatic
 deactivation won't work. But this is rare -- most number sequences are
 terminated by `space`, `return` or some form of punctuation/delimination. To
 deal with the rare cases where they aren't, there is a `CANCEL` key on the
-navigation-layer that deactivates Numword, Capsword and Smart-mouse. (It also
+navigation-layer that deactivates Numword and Capsword. (It also
 toggles off when pressing `Numword` again, but I find it cognitively easier to
 have a dedicated "off-switch" than keeping track of which modes are currently
 active.)
-
-##### Smart-Mouse
-
-Similarly to Numword, I have a smart-mouse layer (activated by comboing
-<kbd>W</kbd> + <kbd>P</kbd>), which replaces the navigation cluster with scroll
-and mouse-movements, and replaces the right thumbs with mouse buttons. Pressing
-any other key automatically deactivates the layer.
 
 ##### Magic Repeat/Shift/Capsword
 
@@ -252,18 +245,19 @@ environment is _completely isolated_ and won't pollute your system.
 
 #### Pre-requisites
 
-1. Install the `nix` package manager:
+1. Install the [`nix` package manager](https://github.com/DeterminateSystems/nix-installer). 
 
-   ```bash
-   # Install Nix with flake support enabled
-   curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix |
-      sh -s -- install --no-confirm
+2. Configure your shell to work with nix.
 
-   # Start the nix daemon without restarting the shell
-   . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
+   ```zsh
+   # Nix
+   if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
+     . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
+   fi
+   # End Nix
    ```
 
-2. Install [`direnv`](https://direnv.net/) (and optionally but recommended
+3. Install [`direnv`](https://direnv.net/) (and optionally but recommended
    [`nix-direnv`](https://github.com/nix-community/nix-direnv)[^4]) using your
    package manager of choice. E.g., using the `nix` package manager that we just
    installed[^5]:
@@ -272,12 +266,12 @@ environment is _completely isolated_ and won't pollute your system.
    nix profile install nixpkgs#direnv nixpkgs#nix-direnv
    ```
 
-3. Set up the `direnv` [shell-hook](https://direnv.net/docs/hook.html) for your
-   shell. E.g., for `bash`:
+4. Set up the `direnv` [shell-hook](https://direnv.net/docs/hook.html) for your
+   shell. E.g., for `zsh`:
 
-   ```bash
+   ```zsh
    # Install the shell-hook
-   echo 'eval "$(direnv hook bash)"' >> ~/.bashrc
+   echo 'eval "$(direnv hook zsh)"' >> ~/.config/zsh/.zshrc
 
    # Enable nix-direnv (if installed in the previous step)
    mkdir -p ~/.config/direnv
@@ -408,6 +402,12 @@ remaining issues:
 - A ZMK-centric
   [introduction to Git](https://gist.github.com/urob/68a1e206b2356a01b876ed02d3f542c7)
   (useful for maintaining your own ZMK fork with a custom selection of PRs).
+- [west](https://docs.zephyrproject.org/latest/develop/west/index.html)
+- [Recommended nix tutorial](https://zero-to-nix.com)
+- [direnv](https://direnv.net) / nix-direnv
+- [just](https://github.com/casey/just)
+- [GitHub actions](https://docs.github.com/en/actions)
+- [keymap-drawer](https://github.com/caksoylar/keymap-drawer)
 
 [^1]:
     I call it "timer-less", because the large tapping-term makes the behavior

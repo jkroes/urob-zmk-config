@@ -1,0 +1,36 @@
+
+// Tap: comma | Shift + tap: semicolon | Ctrl + shift + tap: <.
+SIMPLE_MORPH(comma_morph, SFT, &kp COMMA, &kp SEMI)
+//SIMPLE_MORPH(comma_morph, SFT, &kp COMMA, &comma_inner_morph)
+//SIMPLE_MORPH(comma_inner_morph, CTL, &kp SEMICOLON, &kp LESS_THAN)
+
+// Tap: dot | Shift + tap: colon | Ctrl + shift + tap: >.
+SIMPLE_MORPH(dot_morph, SFT, &kp DOT, &kp COLON)
+//SIMPLE_MORPH(dot_morph, SFT, &kp DOT, &dot_inner_morph)
+//SIMPLE_MORPH(dot_inner_morph, CTL, &kp COLON, &kp GREATER_THAN)
+
+// Tap: qmark | Shift + tap: excl.
+SIMPLE_MORPH(qexcl, SFT, &kp QMARK, &kp EXCL)
+
+#define LT_BSPC_DEL(LAYER) &lt_bspc_del LAYER 0
+THUMB(lt_bspc_del, &mo, &bspc_del)
+MORPH(bspc_del, MOD_LCTL, &kp BSPC, &kp DEL)
+ 
+MORPH(num_morph, MOD_LCTL, &mo NUM, &num_word NUM)
+
+#define SHIFT_SPC shift_spc 0 0
+THUMB(shift_spc, &shift_morph, &spc_morph)
+MORPH(shift_morph, MOD_RCTL, &typing_shift, &typing_caps_word)
+LAYER_MACRO(typing_shift, TYPING, &kp LSHFT)
+LAYER_MACRO(typing_caps_word, TYPING, &caps_word)
+&caps_word { 
+  /delete-property/ ignore-modifiers; // Mods deactivate caps-word, requires PR #1451. [TODO: rebase]
+  continue-list = < 
+    UNDER BSPC DEL N1 N2 N3 N4 N5 N6 N7 N8 N9 N0
+  >;
+};
+// Pausing for release prevents &kp DOT from being dropped. Seems to
+// be necessary for macros bound to hold-tap, mod-morph, or a combination
+// of the two.
+MORPH(spc_morph, MOD_RCTL, &kp SPACE, &dot_spc_shft)
+MACRO(dot_spc_shft, &macro_pause_for_release &kp DOT &kp SPACE &sk LSHFT)

@@ -35,6 +35,8 @@
               pkgs.just
               pkgs.yq # Make sure yq resolves to python-yq.
 
+              pkgs.git
+
               keymap_drawer
 
               # -- Used by just_recipes and west_commands. Most systems already have them. --

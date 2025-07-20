@@ -1,0 +1,121 @@
+// Built-in behavior modifiers
+&sk {
+  release-after-ms = <2000>;
+  quick-release;
+};
+
+// &sl { // Allow sticky mods to chord across sticky layers.
+//   ignore-modifiers;
+// };
+
+// Home row modifiers:
+// - Release before tapping-term-ms: tap
+// - Release after tapping-term-ms: hold
+// - While holding, press and release a same-hand key before tapping-term-ms: tap
+// - While holding, press and release a cross-hand key: hold
+// - If hold-while-undecided is enabled, the hold behavior 
+// immediately sends but will release if a tap is triggered.
+// Since mouse clicks do not count as a key press, this flag
+// enables instant modded clicks. The reason we set
+// tapping-term-ms to a reasonably low value is to enable modded 
+// mice for ALT and GUI (or CTRL on MacOS). 
+#define HRM(NAME, HOLD, TAP, TAP_TERM, TRIGGER_POS, ...) \
+  ZMK_HOLD_TAP(NAME, \
+               bindings = <HOLD>, <TAP>; \
+               flavor = "balanced"; \
+               tapping-term-ms = <TAP_TERM>; \
+               quick-tap-ms = <300>; \
+               hold-trigger-on-release; \
+               hold-trigger-key-positions = <TRIGGER_POS>; \
+               __VA_ARGS__)
+// require-prior-idle-ms = <TAP_TERM>; \
+
+#define LEFT_HRM(NAME, HOLD, TAP, TAP_TERM, ...) \
+  HRM(NAME, HOLD, TAP, TAP_TERM, KEYS_R THUMBS, __VA_ARGS__)
+
+#define RIGHT_HRM(NAME, HOLD, TAP, TAP_TERM, ...) \
+  HRM(NAME, HOLD, TAP, TAP_TERM, KEYS_L THUMBS, __VA_ARGS__)
+
+// hold-while-undecided can lead to issues when using remote
+// desktop on windows 11. e.g. holding the right shift key
+// and tapping the left one just outputs lowercase d.
+LEFT_HRM(left_pinky,    &kp, &kp, PINKY_TAP_TERM)
+LEFT_HRM(left_ring,     &kp, &kp, RINGY_TAP_TERM) 
+LEFT_HRM(left_middle,   &kp, &kp, MIDDY_TAP_TERM) // , hold-while-undecided;) 
+LEFT_HRM(left_index,    &kp, &kp, INDEX_TAP_TERM) // , hold-while-undecided;) 
+RIGHT_HRM(right_index,  &kp, &kp, INDEX_TAP_TERM) // , hold-while-undecided;) 
+RIGHT_HRM(right_middle, &kp, &kp, MIDDY_TAP_TERM) // , hold-while-undecided;) 
+RIGHT_HRM(right_ring,   &kp, &kp, RINGY_TAP_TERM) 
+RIGHT_HRM(right_pinky,  &kp, &kp, PINKY_TAP_TERM) 
+
+#define lp(key) &left_pinky   LGUI  key // LCTRL (MacOS)
+#define lr(key) &left_ring    LALT  key
+#define lm(key) &left_middle  LSHFT key
+#define li(key) &left_index   LCTRL key // LGUI (MacOS)
+#define ri(key) &right_index  RCTRL key // RGUI (MacOS)
+#define rm(key) &right_middle RSHFT key 
+#define rr(key) &right_ring   RALT  key
+#define rp(key) &right_pinky  RGUI  key // RCTRL (MacOS)
+
+// TODO Should we use retro-tap for thumb keys? May cause issues
+// e.g. for caps-word. Consider moving to another key?
+// Could we rearrange the morphs? spc and caps-word are taps,
+// and shift and dot-spc are holds? 
+// TODO How does quick-tap-ms affect spc followed by shift on 
+// the same key? Maybe that's why it's lower than hrm value above.
+#define LT_CORE \
+  flavor = "balanced"; \
+  tapping-term-ms = <225>; \
+  quick-tap-ms = <200>;
+
+&lt { LT_CORE };
+&mt { LT_CORE };
+
+#define THUMB(NAME, HOLD, TAP) \
+  ZMK_HOLD_TAP(NAME, bindings = <HOLD>, <TAP>; LT_CORE)
+
+#define MORPH(NAME, MODS, BINDING1, BINDING2) \
+  ZMK_MOD_MORPH(NAME, mods = <(MODS)>; bindings = <BINDING1>, <BINDING2>;)
+
+// Mod-morph with a single left/right modifier
+#define SIMPLE_MORPH(NAME, MOD, BINDING1, BINDING2) \
+  MORPH(NAME, MOD_L##MOD|MOD_R##MOD, BINDING1, BINDING2)
+
+#define MACRO(...) CONCAT(MACRO_, VARGS(__VA_ARGS__))(__VA_ARGS__)
+#define MACRO_2(NAME, BINDINGS) \
+    MACRO_3(NAME, BINDINGS, MACRO_DEFAULT_WAIT_MS) 
+#define MACRO_3(NAME, BINDINGS, WAIT_MS) \
+    MACRO_4(NAME, BINDINGS, WAIT_MS, MACRO_DEFAULT_TAP_MS) 
+#define MACRO_4(NAME, BINDINGS, WAIT_MS, TAP_MS) \
+  ZMK_BEHAVIOR(NAME, macro, bindings = <BINDINGS>; wait-ms = <WAIT_MS>; tap-ms = <TAP_MS>;)
+
+// Trigger a layer and hold mods before the next keypress
+// Lower wait time to ensure next key press is shifted
+#define LAYER_MACRO(NAME, LAYER, MODS) \
+  MACRO(NAME, \
+        &macro_press &mo LAYER MODS \
+        &macro_pause_for_release \
+        &macro_release &mo LAYER MODS, \
+        0) 
+
+// See the definition of ZMK_COMBO in zmk-helpers
+#define ZMK_COMBO_VERT(name, bindings, keypos, layers) \
+  ZMK_COMBO_6(name, bindings, keypos, layers, COMBO_TIMEOUT_VERT, COMBO_PRIOR_IDLE_VERT)
+
+#define ZMK_COMBO_HORZ(name, bindings, keypos, layers) \
+  ZMK_COMBO_6(name, bindings, keypos, layers, COMBO_TIMEOUT_HORZ, COMBO_PRIOR_IDLE_HORZ)
+
+// Combos overlapping HRMs are set up as hold-taps themselves to allow for instantaneous chording of mods 
+// Hold: Modifiers that correspond to the hml/hmr modifiers at keypos (see instances below)
+
+#define LEFT_COMBO_HRM(name, tap, keys, keypos, layers) \
+  LEFT_HRM(combo_hrm_##name, &kp, tap, PINKY_TAP_TERM) \
+  ZMK_COMBO_HORZ(name, &combo_hrm_##name keys, keypos, layers)
+
+#define RIGHT_COMBO_HRM(name, tap, keys, keypos, layers) \
+  RIGHT_HRM(combo_hrm_##name, &kp, tap, PINKY_TAP_TERM) \
+  ZMK_COMBO_HORZ(name, &combo_hrm_##name keys, keypos, layers)
+
+MACRO(bt_0, &out OUT_BLE &bt BT_SEL 0 &to DEF)
+MACRO(bt_1, &out OUT_BLE &bt BT_SEL 1 &to PC)
+MACRO(bt_2, &out OUT_BLE &bt BT_SEL 2 &to DEF)

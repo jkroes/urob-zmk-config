@@ -1,0 +1,102 @@
+// Tri-state for macOS 
+ZMK_TRI_STATE(swapper,
+    bindings = <&kt LCTRL>, <&kp TAB>, <&kt LCTRL>;
+    ignored-key-positions = <SWAPPER_POS>;)
+
+// Tri-state for Windows/RDP
+MACRO(alt_press, &macro_press &kp LALT &macro_wait_time 120)
+MACRO(alt_release, &macro_release &kp LALT)
+ZMK_TRI_STATE(swapper_pc,
+    bindings = <&alt_press>, <&kp TAB>, <&alt_release>;
+    ignored-key-positions = <SWAPPER_POS>;)
+
+//#define CANCEL     &kp K_CANCEL           // Cancel caps-word & auto-layers
+
+#define TP_CORE \
+  flavor = "tap-preferred"; \
+  tapping-term-ms = <220>; \
+  quick-tap-ms = <220>;
+
+ZMK_HOLD_TAP(tp, bindings = <&kp>, <&kp>; TP_CORE)
+
+#define _WORD_LEFT(_W)      &kp _W(LEFT)
+#define _WORD_RIGHT(_W)     &kp _W(RIGHT)
+#define _NAV_LEFT(_HOME)    &tp _HOME     LEFT   // Tap: left | Long-tap: start of line
+#define _NAV_RIGHT(_END)    &tp _END      RIGHT  // Tap: right | Long-tap: end of line
+#define _NAV_UP(_DOC_HOME)  &tp _DOC_HOME UP     // Tap: up | Long-tap: start of doc
+#define _NAV_DOWN(_DOC_END) &tp _DOC_END  DOWN   // Tap: down | Long-tap: end of doc
+#define _NEXT_WIN(_WIN)     &kp _WIN(GRAVE) 
+
+#define WORD_LEFT     _WORD_LEFT(LA)
+#define WORD_RIGHT    _WORD_RIGHT(LA)
+#define NAV_LEFT      _NAV_LEFT(LC(LEFT))   
+#define NAV_RIGHT     _NAV_RIGHT(LC(RIGHT)) 
+#define NAV_UP        _NAV_UP(LC(UP))       
+#define NAV_DOWN      _NAV_DOWN(LC(DOWN))   
+#define NEXT_WIN      _NEXT_WIN(LC)
+#define SPOTLIGHT     &kp LC(SPACE)
+MACRO(finder, SPOTLIGHT &kp F &kp RET)
+
+#define WORD_LEFT_PC  _WORD_LEFT(LC) 
+#define WORD_RIGHT_PC _WORD_RIGHT(LC) 
+#define NAV_LEFT_PC   _NAV_LEFT(HOME) 
+#define NAV_RIGHT_PC  _NAV_RIGHT(END) 
+#define NAV_UP_PC     _NAV_UP(LC(HOME))
+#define NAV_DOWN_PC   _NAV_DOWN(LC(END))  
+//#define NEXT_WIN_PC   _NEXT_WIN(LA) // Requires https://github.com/sigoden/window-switcher
+MACRO(power_run, 
+      &macro_press &kp LALT &kp LSHFT \
+      &macro_wait_time 120 \
+      &macro_tap &kp SPACE \
+      &macro_wait_time MACRO_DEFAULT_WAIT_MS \
+      &macro_release &kp LALT &kp LSHFT) // Requires PowerToys Run
+#define EXPLORER &kp LG(E)
+
+// Pulled from the fn layer
+// #define DSK_PREV  &hmr LCTRL LG(LC(LEFT)) // Previous desktop.
+// #define DSK_NEXT  &hmr LALT LG(LC(RIGHT)) // Next     desktop.
+// #define PIN_WIN   &kp LG(LC(LS(Q)))       // Pin window across desktops.
+// #define PIN_APP   &kp LG(LC(LS(A)))       // Pin application across desktops.
+// #define DSK_MGR   &kp LA(GRAVE)           // Desktop manager.
+
+/*
+https://support.apple.com/en-us/102609
+
+look into https://karabiner-elements.pqrs.org and https://www.reddit.com/r/vim/comments/c4oyji/if_youre_on_macos_karabiners_systemwide_vimode_is/
+Get rid of caps once hammerspoon becomes redundant
+Note that some things are best implemented as combos!!!
+bind pc-specific layers to the thumb clusters on the pc layer
+
+system shortcuts (change to fn keys or hyper--all mods--to 
+avoid interfering with app shortcuts):
+
+https://alt-tab-macos.netlify.app
+https://rectangleapp.com
+https://www.reddit.com/r/macapps/comments/1dmj0la/spaces_for_macos/
+Assign apps to specific mission control spaces: https://support.apple.com/ml-in/guide/mac-help/mh14112/mac
+
+1password (on laptop: cmd-shift-spc)
+launchpad & dock
+- show launchpad
+mission control
+- mission control: show all windows?
+- move left/right a space 
+- application windows 
+- show desktop
+windows
+- minimize
+- maximize
+- fill
+- center
+- halves 
+keyboard
+- move focus to next window
+- move focus to the dock
+- move focus to the menu bar
+- show contextual menu: right click?
+-- maybe we can simulate this with zmk mouse functionality I deleted?
+cmd-shift-5: screenshot toolbar
+TODO services
+dictation 
+safari tab overview (cmd-shift-\)
+*/
