@@ -20,55 +20,65 @@
 #define ZMK_COMBO_FAST(name, bindings, keypos, layers)     \
   ZMK_COMBO_6(name, bindings, keypos, layers, COMBO_TERM_FAST, COMBO_IDLE_FAST)
 
+// Modifiers correspond to the hml/hmr modifiers at keypos within 
+// ZMK_COMBO_(SLOW|FAST) where these definitions are used
+#define HML_LEADER &hml LS(LGUI) &leader
+#define HML_LEADER_SFT &hml LS(LG(LALT)) &leader_sft
+#define HML_TAB &hml LS(LALT) TAB
+#define HMR_LPAR_LT &hmr RS(LGUI) &lpar_lt
+#define HMR_RPAR_GT &hmr RS(LALT) &rpar_gt
+
+#define LAYERS1 DEF NAV NUM
+
 // Combos overlapping HRMs are set up as hold-taps themselves to allow for instantaneous chording of mods 
 
 /* Horizontal combos - left hand */
-ZMK_COMBO_FAST(esc,   &kp ESC,                       LT3 LT2,     DEF NAV NUM)
+ZMK_COMBO_FAST(esc,   &kp ESC,        LT3 LT2,     LAYERS1)
 
-ZMK_COMBO_FAST(tab,   &hml LS(LALT) TAB,             LM3 LM2,     DEF NAV NUM)
-ZMK_COMBO_FAST(ldr,   &hml LS(LGUI) &leader,         LM2 LM1,     DEF NAV NUM)
-ZMK_COMBO_FAST(ldrsh, &hml LS(LG(LALT)) &leader_sft, LM3 LM2 LM1, DEF NAV NUM)
+ZMK_COMBO_FAST(tab,   HML_TAB,        LM3 LM2,     LAYERS1)
+ZMK_COMBO_FAST(ldr,   HML_LEADER,     LM2 LM1,     LAYERS1)
+ZMK_COMBO_FAST(ldrsh, HML_LEADER_SFT, LM3 LM2 LM1, LAYERS1)
 
-ZMK_COMBO_FAST(cut,   &kp LG(X),                     LB3 LB1,     DEF NAV NUM)
-ZMK_COMBO_FAST(copy,  &kp LG(C),                     LB3 LB2,     DEF NAV NUM)
-ZMK_COMBO_FAST(paste, &kp LG(V),                     LB2 LB1,     DEF NAV NUM)
+ZMK_COMBO_FAST(cut,   &kp LG(X),      LB3 LB1,     LAYERS1)
+ZMK_COMBO_FAST(copy,  &kp LG(C),      LB3 LB2,     LAYERS1)
+ZMK_COMBO_FAST(paste, &kp LG(V),      LB2 LB1,     LAYERS1)
 
 /* Horizontal combos - right hand */
-ZMK_COMBO_FAST(bspc,  &kp BSPC,                      RT1 RT2,     DEF NAV NUM)
-ZMK_COMBO_FAST(del,   &kp DEL,                       RT2 RT3,     DEF NAV NUM)
+ZMK_COMBO_FAST(bspc,  &kp BSPC,       RT1 RT2,     LAYERS1)
+ZMK_COMBO_FAST(del,   &kp DEL,        RT2 RT3,     LAYERS1)
 
-ZMK_COMBO_FAST(lpar,  &hmr RS(LGUI) &lpar_lt,        RM1 RM2,     DEF     NUM)
-ZMK_COMBO_FAST(rpar,  &hmr RS(LALT) &rpar_gt,        RM2 RM3,     DEF     NUM)
+ZMK_COMBO_FAST(lpar,  HMR_LPAR_LT,    RM1 RM2,     DEF     NUM)
+ZMK_COMBO_FAST(rpar,  HMR_RPAR_GT,    RM2 RM3,     DEF     NUM)
 // TODO Why define just lt/gt on nav?
-ZMK_COMBO_FAST(lt,    &kp LT,                        RM1 RM2,         NAV)
-ZMK_COMBO_FAST(gt,    &kp GT,                        RM2 RM3,         NAV)
+ZMK_COMBO_FAST(lt,    &kp LT,         RM1 RM2,         NAV)
+ZMK_COMBO_FAST(gt,    &kp GT,         RM2 RM3,         NAV)
 
 // TODO Why not define this similar to lpar_lt/gt? The README and images
 // suggest braces should be available on shift
-ZMK_COMBO_FAST(lbkt,  &kp LBKT,                      RB1 RB2,     DEF     NUM)
-ZMK_COMBO_FAST(rbkt,  &kp RBKT,                      RB2 RB3,     DEF     NUM)
-ZMK_COMBO_FAST(lbrc,  &kp LBRC,                      RB1 RB2,         NAV)
-ZMK_COMBO_FAST(rbrc,  &kp RBRC,                      RB2 RB3,         NAV)
+ZMK_COMBO_FAST(lbkt,  &kp LBKT,       RB1 RB2,     DEF     NUM)
+ZMK_COMBO_FAST(rbkt,  &kp RBKT,       RB2 RB3,     DEF     NUM)
+ZMK_COMBO_FAST(lbrc,  &kp LBRC,       RB1 RB2,         NAV)
+ZMK_COMBO_FAST(rbrc,  &kp RBRC,       RB2 RB3,         NAV)
 
 /* Vertical combos - left hand */
-ZMK_COMBO_SLOW(at,    &kp AT,                        LT3 LM3,     DEF NAV NUM)
-ZMK_COMBO_SLOW(hash,  &kp HASH,                      LT2 LM2,     DEF NAV NUM)
-ZMK_COMBO_SLOW(dllr,  &kp DLLR,                      LT1 LM1,     DEF NAV NUM)
-ZMK_COMBO_SLOW(prcnt, &kp PRCNT,                     LT0 LM0,     DEF NAV NUM)
+ZMK_COMBO_SLOW(at,    &kp AT,         LT3 LM3,     LAYERS1)
+ZMK_COMBO_SLOW(hash,  &kp HASH,       LT2 LM2,     LAYERS1)
+ZMK_COMBO_SLOW(dllr,  &kp DLLR,       LT1 LM1,     LAYERS1)
+ZMK_COMBO_SLOW(prcnt, &kp PRCNT,      LT0 LM0,     LAYERS1)
 
-ZMK_COMBO_SLOW(grave, &kp GRAVE,                     LM3 LB3,     DEF NAV NUM)
-ZMK_COMBO_SLOW(bslh,  &kp BSLH,                      LM2 LB2,     DEF NAV NUM)
-ZMK_COMBO_SLOW(equal, &kp EQUAL,                     LM1 LB1,     DEF NAV NUM)
-ZMK_COMBO_SLOW(tilde, &kp TILDE,                     LM0 LB0,     DEF NAV NUM)
+ZMK_COMBO_SLOW(grave, &kp GRAVE,      LM3 LB3,     LAYERS1)
+ZMK_COMBO_SLOW(bslh,  &kp BSLH,       LM2 LB2,     LAYERS1)
+ZMK_COMBO_SLOW(equal, &kp EQUAL,      LM1 LB1,     LAYERS1)
+ZMK_COMBO_SLOW(tilde, &kp TILDE,      LM0 LB0,     LAYERS1)
 
 /* Vertical combos - right hand */
-ZMK_COMBO_SLOW(caret, &kp CARET,                     RT0 RM0,     DEF NAV NUM)
-ZMK_COMBO_SLOW(plus,  &kp PLUS,                      RT1 RM1,     DEF NAV NUM)
-ZMK_COMBO_SLOW(star,  &kp STAR,                      RT2 RM2,     DEF NAV NUM)
-ZMK_COMBO_SLOW(amps,  &kp AMPS,                      RT3 RM3,     DEF NAV NUM)
+ZMK_COMBO_SLOW(caret, &kp CARET,      RT0 RM0,     LAYERS1)
+ZMK_COMBO_SLOW(plus,  &kp PLUS,       RT1 RM1,     LAYERS1)
+ZMK_COMBO_SLOW(star,  &kp STAR,       RT2 RM2,     LAYERS1)
+ZMK_COMBO_SLOW(amps,  &kp AMPS,       RT3 RM3,     LAYERS1)
 
-ZMK_COMBO_SLOW(under, &kp UNDER,                     RM0 RB0,     DEF NAV NUM)
-ZMK_COMBO_SLOW(minus, &kp MINUS,                     RM1 RB1,     DEF NAV NUM)
-ZMK_COMBO_SLOW(fslh,  &kp FSLH,                      RM2 RB2,     DEF NAV NUM)
-ZMK_COMBO_SLOW(pipe,  &kp PIPE,                      RM3 RB3,     DEF NAV NUM)
+ZMK_COMBO_SLOW(under, &kp UNDER,      RM0 RB0,     LAYERS1)
+ZMK_COMBO_SLOW(minus, &kp MINUS,      RM1 RB1,     LAYERS1)
+ZMK_COMBO_SLOW(fslh,  &kp FSLH,       RM2 RB2,     LAYERS1)
+ZMK_COMBO_SLOW(pipe,  &kp PIPE,       RM3 RB3,     LAYERS1)
 
