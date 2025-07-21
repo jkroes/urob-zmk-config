@@ -67,7 +67,7 @@ MAKE_HRM(hmr, &kp, &kp, KEYS_L THUMBS) // Right-hand HRMs.
 
 /* Combos, leader key sequences */
 
-#include "combos.dtsi" // Must be sourced after HRM-combo hack.
+#include "combos.dtsi" // Must be sourced after &hml and &hmr are defined
 #include "leader.dtsi"
 
 /* Nav cluster */
