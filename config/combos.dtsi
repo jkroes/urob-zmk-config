@@ -47,18 +47,11 @@ ZMK_COMBO_FAST(paste, &kp LG(V),      LB2 LB1,     LAYERS1)
 ZMK_COMBO_FAST(bspc,  &kp BSPC,       RT1 RT2,     LAYERS1)
 ZMK_COMBO_FAST(del,   &kp DEL,        RT2 RT3,     LAYERS1)
 
-ZMK_COMBO_FAST(lpar,  HMR_LPAR_LT,    RM1 RM2,     DEF     NUM)
-ZMK_COMBO_FAST(rpar,  HMR_RPAR_GT,    RM2 RM3,     DEF     NUM)
-// TODO Why define just lt/gt on nav?
-ZMK_COMBO_FAST(lt,    &kp LT,         RM1 RM2,         NAV)
-ZMK_COMBO_FAST(gt,    &kp GT,         RM2 RM3,         NAV)
+ZMK_COMBO_FAST(lpar,  HMR_LPAR_LT,    RM1 RM2,     LAYERS1)
+ZMK_COMBO_FAST(rpar,  HMR_RPAR_GT,    RM2 RM3,     LAYERS1)
 
-// TODO Why not define this similar to lpar_lt/gt? The README and images
-// suggest braces should be available on shift
-ZMK_COMBO_FAST(lbkt,  &kp LBKT,       RB1 RB2,     DEF     NUM)
-ZMK_COMBO_FAST(rbkt,  &kp RBKT,       RB2 RB3,     DEF     NUM)
-ZMK_COMBO_FAST(lbrc,  &kp LBRC,       RB1 RB2,         NAV)
-ZMK_COMBO_FAST(rbrc,  &kp RBRC,       RB2 RB3,         NAV)
+ZMK_COMBO_FAST(lbkt,  &lbkt_lbrc,     RB1 RB2,   LAYERS1)
+ZMK_COMBO_FAST(rbkt,  &rbkt_rbrc,     RB2 RB3,   LAYERS1)
 
 /* Vertical combos - left hand */
 ZMK_COMBO_SLOW(at,    &kp AT,         LT3 LM3,     LAYERS1)
