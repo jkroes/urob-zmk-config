@@ -17,6 +17,11 @@
         }; \
     };
 
+// TODO What is the point of combining sticky shift with leader? Does
+// it uppercase the Greek/German leader sequences?
+// Sticky shift + leader.
+ZMK_MACRO(leader_sft, bindings = <&sk LSHFT &leader>;)
+
 // See zmk-helpers/unicode-chars/(german|greek).dtsi
 
 /* German umlauts */
