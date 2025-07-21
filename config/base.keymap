@@ -65,19 +65,6 @@
 MAKE_HRM(hml, &kp, &kp, KEYS_R THUMBS) // Left-hand HRMs.
 MAKE_HRM(hmr, &kp, &kp, KEYS_L THUMBS) // Right-hand HRMs.
 
-// Under the hood, any calls to ZMK_COMBO with 8 arguments will dispatch
-// to this definition. ZMK_COMBO_6 is similarly dispatched when ZMK_COMBO
-// is called with 6 arguments. See the re-definition of ZMK_COMBO in
-// zmk-helpers. TODO Why not put this at the top of combos.dtsi?
-//
-// Hack: Make HRM combos tap-only (cf, ZMK issue #544). If a combo
-// involves simultaneous presses of HRMs, define a hold-tap where
-// the hold outputs the combined modifiers and the tap outputs the
-// combo
-#define ZMK_COMBO_8(NAME, TAP, POS, LAYERS, COMBO_MS, IDLE_MS, HOLD, SIDE)     \
-  MAKE_HRM(hm_combo_##NAME, &kp, TAP, SIDE THUMBS)                             \
-  ZMK_COMBO_6(NAME, &hm_combo_##NAME HOLD 0, POS, LAYERS, COMBO_MS, IDLE_MS)
-
 /* Combos, leader key sequences */
 
 #include "combos.dtsi" // Must be sourced after HRM-combo hack.
