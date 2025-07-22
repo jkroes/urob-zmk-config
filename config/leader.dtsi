@@ -1,3 +1,6 @@
+#include "zmk-helpers/unicode-chars/greek.dtsi"
+#include "zmk-helpers/unicode-chars/german.dtsi"
+
 // The leader node is defined each time ZMK_LEADER_SEQUENCE is called.
 // devicetree merges multiple definitions of the same node (leader)
 // into one with all of the leader_sequence_##name child nodes.
