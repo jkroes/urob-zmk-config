@@ -39,12 +39,12 @@ ZMK_CONDITIONAL_LAYER(sys, FN NUM, SYS) // FN + NUM --> SYS.
 
 #include "homerow_mods.dtsi"
 #include "morphs.dtsi"
-#include "leader.dtsi"
-#include "combos.dtsi" // Must be sourced after &hml and &hmr are defined
 #include "base_thumbs.dtsi" // Must be sourced after SIMPLE_MORPH is defined
 #include "nav.dtsi"
 #include "app_switcher.dtsi"
 #include "fn.dtsi"
+#include "leader.dtsi"
+#include "combos.dtsi" // Must be sourced after &hml and &hmr are defined
 
 #define XXX &none
 #define ___ &trans
@@ -113,3 +113,58 @@ ZMK_BASE_LAYER(Sys,
                                               ___           ___         ,   ___           ___
 //                                          ╰─────────────┴─────────────╯ ╰─────────────┴─────────────╯
 )
+
+/*
+enable private relay on mac mini if not enabled
+on macos, i can swap the modifiers for specific keyboards. keep the windows bindings here and swap cmd/ctrl
+look into https://karabiner-elements.pqrs.org and https://www.reddit.com/r/vim/comments/c4oyji/if_youre_on_macos_karabiners_systemwide_vimode_is/
+
+
+Navigation:
+Arrows
+LA(l/r): move word
+LG(l/r): move start/end line
+LA(u/d): move paragraph
+page up/down
+HOME/END
+shift + arrows = select ...
+Get rid of caps once hammerspoon becomes redundant
+Note that some things are best implemented as combos!!!
+bind pc-specific layers to the thumb clusters on the pc layer
+
+system shortcuts (change to fn keys or hyper--all mods--to 
+avoid interfering with app shortcuts):
+
+https://alt-tab-macos.netlify.app
+https://rectangleapp.com
+https://www.reddit.com/r/macapps/comments/1dmj0la/spaces_for_macos/
+Assign apps to specific mission control spaces: https://support.apple.com/ml-in/guide/mac-help/mh14112/mac
+
+1password (on laptop: cmd-shift-spc)
+app switcher (cmd-tab, needs arrows and tab in new layer)
+spotlight
+- show spotlight search
+- show finder search window
+launchpad & dock
+- show launchpad
+mission control
+- mission control: show all windows?
+- move left/right a space 
+- application windows 
+- show desktop
+windows
+- minimize
+- maximize
+- fill
+- center
+- halves 
+keyboard
+- move focus to next window
+- move focus to the dock
+- move focus to the menu bar
+- show contextual menu: right click?
+-- maybe we can simulate this with zmk mouse functionality I deleted?
+cmd-shift-5: screenshot toolbar
+TODO services
+dictation 
+*/
