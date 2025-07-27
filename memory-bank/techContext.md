@@ -43,10 +43,12 @@ The `west` tool manages the ZMK firmware and its modules, with versions pinned i
   - `lvgl`: Light and Versatile Graphics Library.
   - `tinycrypt`: Cryptography library.
 
-## Other Tools
+## Continuous Integration & Visualization
 
-- **Visualization:** `keymap-drawer` is used to generate visual representations of the keymap.
-- **Continuous Integration:** GitHub Actions are used for automated builds and testing.
+- **Visualization:** `keymap-drawer` is used to generate visual representations of the keymap from the configuration files.
+- **Continuous Integration (GitHub Actions):** The project uses two distinct GitHub Actions workflows for CI/CD:
+  - **`build.yml`:** Triggers a standard build using the official `zmkfirmware/zmk` reusable workflow. This provides a baseline build process maintained by the ZMK community.
+  - **`build-nix.yml`:** Triggers a Nix-based build using a reusable workflow from `urob/zmk-actions`. This workflow mirrors the local development environment, ensuring high fidelity between local and CI builds.
 
 ## Technical Constraints
 

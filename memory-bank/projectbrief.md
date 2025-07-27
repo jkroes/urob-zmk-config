@@ -4,7 +4,7 @@ This document outlines the high-level goals, scope, and constraints of the proje
 
 ## Core Mission
 
-This project configures and builds custom ZMK firmware for the Glove80 keyboard. It is a fork of `urob/zmk-config`, adapted for personal use by Justin Kroes.  
+This project configures and builds customized ZMK firmware for the Glove80 keyboard. It is a fork of `urob/zmk-config`, adapted for personal use by Justin Kroes.  
 
 ## Key Objectives
 

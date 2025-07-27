@@ -5,7 +5,8 @@ This document tracks the overall progress of the project, including what's worki
 ## What's Working
 
 - **Initial QWERTY Layout:** The base layer has been converted to a standard QWERTY layout.
-- **Build Environment:** The Nix-based build environment is fully functional.
+- **Build Environment:** The Nix-based local build environment is fully functional and documented.
+- **CI/CD:** The dual GitHub Actions workflows (standard and Nix-based) are in place for automated firmware builds.
 - **Core `urob/zmk-config` Features:** The advanced features from the original repository (homerow mods, combos, etc.) are present but may need adaptation.
 
 ## What's Left to Build
