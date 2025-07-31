@@ -6,7 +6,7 @@
         &kp EQUAL &kp N1 &kp N2 &kp N3 &kp N4 &kp N5 &kp N6 &kp N7 &kp N8 &kp N9 &kp N0 &kp MINUS \
         &kp TAB              LT                                            RT           &kp BSPC  \
         &kp ESC              LM                                            RM           &none     \
-        &none                LB &kp TAB  &none  &none  &none  &none &kp ESC    RB           &none     \
+        &none                LB &kp TAB  &key_repeat  &none  &none  &key_repeat &kp ESC    RB           &none     \
         &none &none &none &kp LEFT &kp RIGHT                                                      \
                              LH               &none  &none                 RH                     \
         &kp UP &kp DOWN &none &none &none)

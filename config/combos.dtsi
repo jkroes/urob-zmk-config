@@ -14,11 +14,15 @@
 #define COMBO_IDLE_SLOW 50
 
 // See the definition of ZMK_COMBO in zmk-helpers
-#define ZMK_COMBO_SLOW(name, bindings, keypos, layers)     \
+#define ZMK_COMBO_SLOW(name, bindings, keypos, layers) \
   ZMK_COMBO_6(name, bindings, keypos, layers, COMBO_TERM_SLOW, COMBO_IDLE_SLOW)
 
-#define ZMK_COMBO_FAST(name, bindings, keypos, layers)     \
+#define ZMK_COMBO_FAST(name, bindings, keypos, layers) \
   ZMK_COMBO_6(name, bindings, keypos, layers, COMBO_TERM_FAST, COMBO_IDLE_FAST)
+
+#define ZMK_COMBO_HRM(name, hold, tap, side, keypos, layers) \
+  MAKE_HRM(hm_combo_##name, &kp, tap, side THUMBS)                             \
+  ZMK_COMBO_FAST(&hm_combo_##name hold 0, keypos, layers)
 
 // Modifiers correspond to the hml/hmr modifiers at keypos within 
 // ZMK_COMBO_(SLOW|FAST) where these definitions are used
@@ -47,8 +51,18 @@ ZMK_COMBO_FAST(paste, &kp LG(V),      LB2 LB1,     LAYERS1)
 ZMK_COMBO_FAST(bspc,  &kp BSPC,       RT1 RT2,     LAYERS1)
 ZMK_COMBO_FAST(del,   &kp DEL,        RT2 RT3,     LAYERS1)
 
-ZMK_COMBO_FAST(lpar,  HMR_LPAR_LT,    RM1 RM2,     LAYERS1)
-ZMK_COMBO_FAST(rpar,  HMR_RPAR_GT,    RM2 RM3,     LAYERS1)
+// TODO My refactoring isnt working for some reason
+//ZMK_COMBO_FAST(lpar,  HMR_LPAR_LT,    RM1 RM2,     LAYERS1)
+//ZMK_COMBO_FAST(rpar,  HMR_RPAR_GT,    RM2 RM3,     LAYERS1)
+ZMK_COMBO(lpar,  &lpar_lt,     RM1 RM2,     DEF     NUM, COMBO_TERM_FAST, COMBO_IDLE_FAST, RS(LGUI),    KEYS_L)
+ZMK_COMBO(rpar,  &rpar_gt,     RM2 RM3,     DEF     NUM, COMBO_TERM_FAST, COMBO_IDLE_FAST, RS(LALT),     KEYS_L)
+//ZMK_COMBO_HRM(lpar, RS(LGUI), &lpar_lt, KEYS_L, RM1 RM2, LAYERS1)
+//ZMK_COMBO_HRM(rpar, RS(LALT), &lpar_lt, KEYS_L, RM2 RM3, LAYERS1)
+
+#define ZMK_COMBO_HRM(name, hold, tap, side, keypos, layers) \
+  MAKE_HRM(hm_combo_##name, &kp, tap, side THUMBS)                             \
+  ZMK_COMBO_FAST(&hm_combo_##name hold 0, keypos, layers)
+
 
 ZMK_COMBO_FAST(lbkt,  &lbkt_lbrc,     RB1 RB2,   LAYERS1)
 ZMK_COMBO_FAST(rbkt,  &rbkt_rbrc,     RB2 RB3,   LAYERS1)
