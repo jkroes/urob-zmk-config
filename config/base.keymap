@@ -37,11 +37,6 @@
 
 #include "homerow_mods.dtsi"
 
-// Hack: Make HRM combos tap-only (cf, ZMK issue #544).
-#define ZMK_COMBO_8(NAME, TAP, POS, LAYERS, COMBO_MS, IDLE_MS, HOLD, SIDE)     \
-  MAKE_HRM(hm_combo_##NAME, &kp, TAP, SIDE THUMBS)                             \
-  ZMK_COMBO_6(NAME, &hm_combo_##NAME HOLD 0, POS, LAYERS, COMBO_MS, IDLE_MS)
-
 #include "morphs.dtsi"
 #include "base_thumbs.dtsi" // Must be sourced after SIMPLE_MORPH is defined
 #include "nav.dtsi"
@@ -60,6 +55,7 @@
 
 ZMK_CONDITIONAL_LAYER(sys, FN NUM, SYS) // FN + NUM --> SYS.
 
+// TODO Add back the mouse
 ZMK_BASE_LAYER(Base,
 //╭─────────────┬─────────────┬─────────────┬─────────────┬─────────────╮ ╭─────────────┬─────────────┬─────────────┬─────────────┬─────────────╮
     &kp Q         &kp W         &kp E         &kp R         &kp T       ,   &kp Y         &kp U         &kp I         &kp O         &kp P       ,

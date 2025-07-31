@@ -21,14 +21,3 @@ SIMPLE_MORPH(rpar_gt, SFT, &kp RPAR, &kp GT)
 // Tap: left/right parenthesis | Shft + tap: less-than/greater-than.
 SIMPLE_MORPH(lbkt_lbrc, SFT, &kp LBKT, &kp LBRC)
 SIMPLE_MORPH(rbkt_rbrc, SFT, &kp RBKT, &kp RBRC)
-
-// TODO This is a really interesting way to get two keys and a modded
-// version of one key; however, shift+delete only seems to have a
-// useful function in browsers (deleting suggestions from history) and
-// catastrophic in file browsers (delete permanently, skipping recycling
-// bin). 
-// Tap: backspace | Lshft + tap: delete | Rshft + tap: shift-delete.
-/*
-ZMK_MOD_MORPH(bs_del, bindings = <&kp BSPC>, <&kp DEL>;
-              mods = <(MOD_LSFT|MOD_RSFT)>; keep-mods = <MOD_RSFT>;)
-*/

@@ -20,28 +20,25 @@
 #define ZMK_COMBO_FAST(name, bindings, keypos, layers) \
   ZMK_COMBO_6(name, bindings, keypos, layers, COMBO_TERM_FAST, COMBO_IDLE_FAST)
 
-#define ZMK_COMBO_HRM(name, hold, tap, side, keypos, layers) \
-  MAKE_HRM(hm_combo_##name, &kp, tap, side THUMBS)                             \
-  ZMK_COMBO_FAST(&hm_combo_##name hold 0, keypos, layers)
+// Combos overlapping HRMs are set up as hold-taps themselves to allow for instantaneous chording of mods 
+// Hold: Modifiers that correspond to the hml/hmr modifiers at keypos 
+#define ZMK_COMBO_HRM(name, hold, macro_tap, side, keypos, layers) \
+  MAKE_HRM(hm_combo_##name, &kp, macro_tap, side THUMBS)                             \
+  ZMK_COMBO_FAST(name, &hm_combo_##name hold 0, keypos, layers)
 
-// Modifiers correspond to the hml/hmr modifiers at keypos within 
-// ZMK_COMBO_(SLOW|FAST) where these definitions are used
-#define HML_LEADER &hml LS(LGUI) &leader
-#define HML_LEADER_SFT &hml LS(LG(LALT)) &leader_sft
-#define HML_TAB &hml LS(LALT) TAB
-#define HMR_LPAR_LT &hmr RS(LGUI) &lpar_lt
-#define HMR_RPAR_GT &hmr RS(LALT) &rpar_gt
+//#define ZMK_COMBO_HRM2(name, hold, tap, side, keypos, layers) \
+//  MAKE_HRM(hm_combo_##name, &kp, &kp, side THUMBS)                             \
+//  ZMK_COMBO_FAST(name, &hm_combo_##name hold tap, keypos, layers)
 
 #define LAYERS1 DEF NAV NUM
-
-// Combos overlapping HRMs are set up as hold-taps themselves to allow for instantaneous chording of mods 
 
 /* Horizontal combos - left hand */
 ZMK_COMBO_FAST(esc,   &kp ESC,        LT3 LT2,     LAYERS1)
 
-ZMK_COMBO_FAST(tab,   HML_TAB,        LM3 LM2,     LAYERS1)
-ZMK_COMBO_FAST(ldr,   HML_LEADER,     LM2 LM1,     LAYERS1)
-ZMK_COMBO_FAST(ldrsh, HML_LEADER_SFT, LM3 LM2 LM1, LAYERS1)
+ZMK_COMBO_FAST(tab, &hml LS(LALT) TAB, LM3 LM2, LAYERS1)
+//ZMK_COMBO_HRM2(tab,  LS(LALT),     TAB,         KEYS_R, LM3 LM2,     LAYERS1)
+ZMK_COMBO_HRM(ldr,   LS(LGUI),     &leader,     KEYS_R, LM2 LM1,     LAYERS1)
+ZMK_COMBO_HRM(ldrsh, LS(LG(LALT)), &leader_sft, KEYS_R, LM3 LM2 LM1, LAYERS1)
 
 ZMK_COMBO_FAST(cut,   &kp LG(X),      LB3 LB1,     LAYERS1)
 ZMK_COMBO_FAST(copy,  &kp LG(C),      LB3 LB2,     LAYERS1)
@@ -51,18 +48,8 @@ ZMK_COMBO_FAST(paste, &kp LG(V),      LB2 LB1,     LAYERS1)
 ZMK_COMBO_FAST(bspc,  &kp BSPC,       RT1 RT2,     LAYERS1)
 ZMK_COMBO_FAST(del,   &kp DEL,        RT2 RT3,     LAYERS1)
 
-// TODO My refactoring isnt working for some reason
-//ZMK_COMBO_FAST(lpar,  HMR_LPAR_LT,    RM1 RM2,     LAYERS1)
-//ZMK_COMBO_FAST(rpar,  HMR_RPAR_GT,    RM2 RM3,     LAYERS1)
-ZMK_COMBO(lpar,  &lpar_lt,     RM1 RM2,     DEF     NUM, COMBO_TERM_FAST, COMBO_IDLE_FAST, RS(LGUI),    KEYS_L)
-ZMK_COMBO(rpar,  &rpar_gt,     RM2 RM3,     DEF     NUM, COMBO_TERM_FAST, COMBO_IDLE_FAST, RS(LALT),     KEYS_L)
-//ZMK_COMBO_HRM(lpar, RS(LGUI), &lpar_lt, KEYS_L, RM1 RM2, LAYERS1)
-//ZMK_COMBO_HRM(rpar, RS(LALT), &lpar_lt, KEYS_L, RM2 RM3, LAYERS1)
-
-#define ZMK_COMBO_HRM(name, hold, tap, side, keypos, layers) \
-  MAKE_HRM(hm_combo_##name, &kp, tap, side THUMBS)                             \
-  ZMK_COMBO_FAST(&hm_combo_##name hold 0, keypos, layers)
-
+ZMK_COMBO_HRM(lpar, RS(LGUI), &lpar_lt, KEYS_L, RM1 RM2, LAYERS1)
+ZMK_COMBO_HRM(rpar, RS(LALT), &rpar_gt, KEYS_L, RM2 RM3, LAYERS1)
 
 ZMK_COMBO_FAST(lbkt,  &lbkt_lbrc,     RB1 RB2,   LAYERS1)
 ZMK_COMBO_FAST(rbkt,  &rbkt_rbrc,     RB2 RB3,   LAYERS1)
