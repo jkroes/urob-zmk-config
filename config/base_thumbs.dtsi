@@ -3,10 +3,12 @@
 // Tap: bspc
 // Left shift-tap: del
 // Hold: nav layer
+// Shift-hold: toggle nav layer
 #define SUPER_NAV &super_nav NAV 0
-ZMK_HOLD_TAP(super_nav, bindings = <&mo>, <&bspc_morph>; 
+ZMK_HOLD_TAP(super_nav, bindings = <&nav_morph>, <&bspc_morph>; 
              flavor = "balanced"; tapping-term-ms = <300>; 
              quick-tap-ms = <QUICK_TAP_MS>;)
+SIMPLE_MORPH(nav_morph, SFT, &mo NAV, &tog NAV)
 ZMK_MOD_MORPH(bspc_morph, bindings = <&kp BSPC>, <&kp DEL>;
               mods = <(MOD_LSFT)>;)
 
