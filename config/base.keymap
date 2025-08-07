@@ -163,4 +163,5 @@ cmd-shift-5: screenshot toolbar
 TODO services
 dictation 
 safari tab overview (cmd-shift-\)
+enable type to siri shortcut: tap cmd twice (requires standalone cmd key)
 */
