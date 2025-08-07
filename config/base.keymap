@@ -18,6 +18,7 @@
 #define NUM 3
 #define SYS 4
 
+#define TAPPING_RESOLUTION 150
 #define QUICK_TAP_MS 250
 
 &sk {
