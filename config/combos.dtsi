@@ -21,58 +21,51 @@
   ZMK_COMBO_6(name, bindings, keypos, layers, COMBO_TIMEOUT_HORZ, COMBO_PRIOR_IDLE_HORZ)
 
 // Combos overlapping HRMs are set up as hold-taps themselves to allow for instantaneous chording of mods 
-// Hold: Modifiers that correspond to the hml/hmr modifiers at keypos 
-#define ZMK_COMBO_HRM(name, hold, macro_tap, side, keypos, layers) \
-  MAKE_HRM(combo_hrm_##name, &kp, macro_tap, side THUMBS)                             \
-  ZMK_COMBO_HORZ(name, &combo_hrm_##name hold 0, keypos, layers)
-
-//#define ZMK_COMBO_HRM2(name, hold, tap, side, keypos, layers) \
-//  MAKE_HRM(hm_combo_##name, &kp, &kp, side THUMBS)                             \
-//  ZMK_COMBO_HORZ(name, &hm_combo_##name hold tap, keypos, layers)
-
-#define LAYERS1 DEF NAV NUM
+// Hold: Modifiers that correspond to the hml/hmr modifiers at keypos (see instances below)
+#define ZMK_COMBO_HRM(name, tap, keys, side, keypos, layers) \
+  MAKE_HRM(combo_hrm_##name, &kp, tap, PINKY_TAP_TERM, side THUMBS)                             \
+  ZMK_COMBO_HORZ(name, &combo_hrm_##name keys, keypos, layers)
 
 /* Horizontal combos - left hand */
-ZMK_COMBO_HORZ(esc,   &kp ESC,        LT3 LT2,     LAYERS1)
+ZMK_COMBO_HORZ(esc,   &kp ESC,        LT3 LT2,     DEF NAV NUM)
 
-ZMK_COMBO_HORZ(tab, &hml LS(LALT) TAB, LM3 LM2, LAYERS1)
-//ZMK_COMBO_HRM2(tab,  LS(LALT),     TAB,         KEYS_R, LM3 LM2,     LAYERS1)
-ZMK_COMBO_HRM(ldr,   LS(LGUI),     &leader,     KEYS_R, LM2 LM1,     LAYERS1)
-ZMK_COMBO_HRM(ldrsh, LS(LG(LALT)), &leader_sft, KEYS_R, LM3 LM2 LM1, LAYERS1)
+ZMK_COMBO_HRM(tab,   &kp,         LS(LALT) TAB,   KEYS_R, LM3 LM2,     DEF NAV NUM)
+ZMK_COMBO_HRM(ldr,   &leader,     LS(LGUI) 0,     KEYS_R, LM2 LM1,     DEF NAV NUM)
+ZMK_COMBO_HRM(ldrsh, &leader_sft, LS(LG(LALT)) 0, KEYS_R, LM3 LM2 LM1, DEF NAV NUM)
 
-ZMK_COMBO_HORZ(cut,   &kp LG(X),      LB3 LB1,     LAYERS1)
-ZMK_COMBO_HORZ(copy,  &kp LG(C),      LB3 LB2,     LAYERS1)
-ZMK_COMBO_HORZ(paste, &kp LG(V),      LB2 LB1,     LAYERS1)
+ZMK_COMBO_HORZ(cut,   &kp LG(X),      LB3 LB1,     DEF NAV NUM)
+ZMK_COMBO_HORZ(copy,  &kp LG(C),      LB3 LB2,     DEF NAV NUM)
+ZMK_COMBO_HORZ(paste, &kp LG(V),      LB2 LB1,     DEF NAV NUM)
 
 /* Horizontal combos - right hand */
-ZMK_COMBO_HORZ(bspc,  &kp BSPC,       RT1 RT2,     LAYERS1)
-ZMK_COMBO_HORZ(del,   &kp DEL,        RT2 RT3,     LAYERS1)
+ZMK_COMBO_HORZ(bspc,  &kp BSPC,       RT1 RT2,     DEF NAV NUM)
+ZMK_COMBO_HORZ(del,   &kp DEL,        RT2 RT3,     DEF NAV NUM)
 
-ZMK_COMBO_HRM(lpar, RS(LGUI), &lpar_lt, KEYS_L, RM1 RM2, LAYERS1)
-ZMK_COMBO_HRM(rpar, RS(LALT), &rpar_gt, KEYS_L, RM2 RM3, LAYERS1)
+ZMK_COMBO_HRM(lpar, &lpar_lt, RS(LGUI) 0, KEYS_L, RM1 RM2, DEF NAV NUM)
+ZMK_COMBO_HRM(rpar, &rpar_gt, RS(LALT) 0, KEYS_L, RM2 RM3, DEF NAV NUM)
 
-ZMK_COMBO_HORZ(lbkt,  &lbkt_lbrc,     RB1 RB2,   LAYERS1)
-ZMK_COMBO_HORZ(rbkt,  &rbkt_rbrc,     RB2 RB3,   LAYERS1)
+ZMK_COMBO_HORZ(lbkt,  &lbkt_lbrc,     RB1 RB2,   DEF NAV NUM)
+ZMK_COMBO_HORZ(rbkt,  &rbkt_rbrc,     RB2 RB3,   DEF NAV NUM)
 
 /* Vertical combos - left hand */
-ZMK_COMBO_VERT(at,    &kp AT,         LT3 LM3,     LAYERS1)
-ZMK_COMBO_VERT(hash,  &kp HASH,       LT2 LM2,     LAYERS1)
-ZMK_COMBO_VERT(dllr,  &kp DLLR,       LT1 LM1,     LAYERS1)
-ZMK_COMBO_VERT(prcnt, &kp PRCNT,      LT0 LM0,     LAYERS1)
+ZMK_COMBO_VERT(at,    &kp AT,         LT3 LM3,     DEF NAV NUM)
+ZMK_COMBO_VERT(hash,  &kp HASH,       LT2 LM2,     DEF NAV NUM)
+ZMK_COMBO_VERT(dllr,  &kp DLLR,       LT1 LM1,     DEF NAV NUM)
+ZMK_COMBO_VERT(prcnt, &kp PRCNT,      LT0 LM0,     DEF NAV NUM)
 
-ZMK_COMBO_VERT(grave, &kp GRAVE,      LM3 LB3,     LAYERS1)
-ZMK_COMBO_VERT(bslh,  &kp BSLH,       LM2 LB2,     LAYERS1)
-ZMK_COMBO_VERT(equal, &kp EQUAL,      LM1 LB1,     LAYERS1)
-ZMK_COMBO_VERT(tilde, &kp TILDE,      LM0 LB0,     LAYERS1)
+ZMK_COMBO_VERT(grave, &kp GRAVE,      LM3 LB3,     DEF NAV NUM)
+ZMK_COMBO_VERT(bslh,  &kp BSLH,       LM2 LB2,     DEF NAV NUM)
+ZMK_COMBO_VERT(equal, &kp EQUAL,      LM1 LB1,     DEF NAV NUM)
+ZMK_COMBO_VERT(tilde, &kp TILDE,      LM0 LB0,     DEF NAV NUM)
 
 /* Vertical combos - right hand */
-ZMK_COMBO_VERT(caret, &kp CARET,      RT0 RM0,     LAYERS1)
-ZMK_COMBO_VERT(plus,  &kp PLUS,       RT1 RM1,     LAYERS1)
-ZMK_COMBO_VERT(star,  &kp STAR,       RT2 RM2,     LAYERS1)
-ZMK_COMBO_VERT(amps,  &kp AMPS,       RT3 RM3,     LAYERS1)
+ZMK_COMBO_VERT(caret, &kp CARET,      RT0 RM0,     DEF NAV NUM)
+ZMK_COMBO_VERT(plus,  &kp PLUS,       RT1 RM1,     DEF NAV NUM)
+ZMK_COMBO_VERT(star,  &kp STAR,       RT2 RM2,     DEF NAV NUM)
+ZMK_COMBO_VERT(amps,  &kp AMPS,       RT3 RM3,     DEF NAV NUM)
 
-ZMK_COMBO_VERT(under, &kp UNDER,      RM0 RB0,     LAYERS1)
-ZMK_COMBO_VERT(minus, &kp MINUS,      RM1 RB1,     LAYERS1)
-ZMK_COMBO_VERT(fslh,  &kp FSLH,       RM2 RB2,     LAYERS1)
-ZMK_COMBO_VERT(pipe,  &kp PIPE,       RM3 RB3,     LAYERS1)
+ZMK_COMBO_VERT(under, &kp UNDER,      RM0 RB0,     DEF NAV NUM)
+ZMK_COMBO_VERT(minus, &kp MINUS,      RM1 RB1,     DEF NAV NUM)
+ZMK_COMBO_VERT(fslh,  &kp FSLH,       RM2 RB2,     DEF NAV NUM)
+ZMK_COMBO_VERT(pipe,  &kp PIPE,       RM3 RB3,     DEF NAV NUM)
 

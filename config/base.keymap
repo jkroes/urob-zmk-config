@@ -19,7 +19,11 @@
 #define SYS 4
 
 #define TAPPING_RESOLUTION 150
-#define QUICK_TAP_MS 250
+#define QUICK_TAP_MS (TAPPING_RESOLUTION + 150)
+#define PINKY_TAP_TERM (TAPPING_RESOLUTION + 150)
+#define RINGY_TAP_TERM (TAPPING_RESOLUTION + 125)
+#define MIDDY_TAP_TERM (TAPPING_RESOLUTION + 100)
+#define INDEX_TAP_TERM (TAPPING_RESOLUTION + 75)
 
 &sk {
   release-after-ms = <900>;
@@ -51,15 +55,15 @@
 ZMK_CONDITIONAL_LAYER(sys, FN NUM, SYS) // FN + NUM --> SYS.
 
 GLV80_LAYER(base,
-&kp F1       &kp F2        &kp F3       &kp F4        &kp F5                         &kp F6       &kp F7        &kp F8       &kp F9          &kp F10 
-XXX          &kp N1        &kp N2       &kp N3        &kp N4       &kp N5    &kp N6  &kp N7       &kp N8        &kp N9       &kp N0          XXX  
-XXX          &kp Q         &kp W        &kp E         &kp R        &kp T     &kp Y   &kp U        &kp I         &kp O        &kp P           XXX
-&kp CAPS     &hml LCTRL A  &hml LALT S  &hml LSHFT D  &hml LGUI F  &kp G     &kp H   &hmr LGUI J  &hmr RSHFT K  &hmr LALT L  &hmr LCTRL SQT  XXX
-XXX          &kp Z         &kp X        &kp C         &kp V        &kp B  ,  &kp N   &kp M        &comma_morph  &dot_morph   &qexcl          XXX
-&bootloader  XXX           XXX          &kp LEFT      &kp RIGHT           ,          &kp UP       &kp DOWN      XXX          XXX             &bootloader
+&kp F1       &kp F2        &kp F3     &kp F4       &kp F5                        &kp F6      &kp F7       &kp F8      &kp F9         &kp F10 
+XXX          &kp N1        &kp N2     &kp N3       &kp N4      &kp N5    &kp N6  &kp N7      &kp N8       &kp N9      &kp N0         XXX  
+XXX          &kp Q         &kp W      &kp E        &kp R       &kp T     &kp Y   &kp U       &kp I        &kp O       &kp P          XXX
+&kp CAPS     &lp LCTRL A  &lr LALT S  &lm LSHFT D  &li LGUI F  &kp G     &kp H   &ri LGUI J  &rm RSHFT K  &rr LALT L  &rp LCTRL SQT  XXX
+XXX          &kp Z         &kp X      &kp C        &kp V       &kp B  ,  &kp N   &kp M       &comma_morph &dot_morph  &qexcl         XXX
+&bootloader  XXX           XXX        &kp LEFT     &kp RIGHT          ,          &kp UP      &kp DOWN     XXX         XXX            &bootloader
 
-,                                       &kp LGUI      &kp LSHFT    &kp LALT  XXX     XXX          XXX      
-,                                       SUPER_NAV     &lt FN TAB   XXX       XXX     SMART_NUM    MAGIC_SHIFT
+,                                     &kp LGUI     &kp LSHFT   &kp LALT  XXX     XXX          XXX      
+,                                     SUPER_NAV    &lt FN TAB  XXX       XXX     SMART_NUM    MAGIC_SHIFT
 )
 
 GLV80_LAYER(nav,

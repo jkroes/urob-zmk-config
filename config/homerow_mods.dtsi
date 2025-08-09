@@ -8,67 +8,36 @@
   #define THUMBS LH2 LH1 LH0 RH0 RH1 RH2 // Thumbs on 36+ keys.
 #endif
 
-// SHIFT_FORGIVENESS taps when home row shift is merely held and released,
-// without any other key having been tapped while the shift was held down.
-// For example, suppose you hold a home row shift key and, before pressing
-// another key, you suddenly decide that you don't want the shift anymore:
-//
-// <1> If this setting is enabled, the underlying tap behavior is triggered
-//     to type a single character when you release that home row shift key.
-//
-// <2> Otherwise, nothing happens when you release that home row shift key.
-//
-// This requires the "hold-while-undecided" ZMK feature in a beta firmware:
-// please select "v24.08-beta1" or newer from the drop-down menu located at
-// Glove80 Layout Editor > Settings > Advanced Settings > Firmware Version.
-//
-// CAUTION: This can interfere with mod-click mouse usage where you hold a
-// home row shift key and perform mouse actions (move, click, drag & drop):
-// when you release that home row shift key, its underlying character would
-// be typed, potentially triggering an unexpected action on your selection!
-// To prevent the underlying character from being typed, press another key
-// (such as a dedicated shift key, a neighboring home row mod key, or even
-// a layer access key) before you release the original home row shift key.
-//
-// NOTE: You may potentially encounter "flashing mods" where an application
-// or operating system action is triggered by a standalone tap of a shift,
-// but this is unlikely as people regularly tap shift without consequence.
-//
-//#define SHIFT_FORGIVENESS
-
-// flavor = "tap-preferred";
-// tapping-term-ms: tapping resolution + pinky 130, ringy, 90, middy 60, or index 40
-// quick-tap-ms = <(TAPPING_RESOLUTION + 150)>;
-// require-prior-idle-ms = <TAPPING_RESOLUTION>;
-// #ifdef SHIFT_FORGIVENESS
-// #if PINKY_FINGER_MOD == LSFT || PINKY_FINGER_MOD == RSFT
-// hold-while-undecided; // requires 24.08-beta1 or newer firmware
-// retro-tap; // tap on standalone hold
-// #endif
-// #endif
-
-// Sticky keys can interfere with mod-morphs on macos
+// With the balanced flavor, modifiers are triggered when
+// pressing and releasing another key while the hold-tap key is 
+// held, or tapping-term-ms after pressing the hold-tap. Setting tapping-term-ms to a high
+// value effectively eliminates timer-based holds. In this case, releasing the other key first
+// triggers a modifier, while releasing the hold-tap key first triggers the tap. 
+// 
+// Sticky keys on macos can interfere with mod-morphs on macos
 //
 // hold-while-undecided leads to flashing mods (tapping mods
 // to trigger standalone behavior) on windows. the effects
 // vary by application
-//
-// setting tapping-term-ms to a high value changes what happens
-// when you hold one hrm, then another on the other hand, then release the first
-// hrm, then the second. low values produce two holds, 
-// while high values produce two taps
-#define MAKE_HRM(NAME, HOLD, TAP, TRIGGER_POS)                                 \
-  ZMK_HOLD_TAP(NAME, \
-               bindings = <HOLD>, <TAP>; \
+#define MAKE_HRM(NAME, HOLD, TAP, TAP_TERM, TRIGGER_POS, ...)                                 \
+  ZMK_HOLD_TAP(NAME, bindings = <HOLD>, <TAP>; \
                flavor = "balanced";            \
-               tapping-term-ms = <10000>; \
-               quick-tap-ms = <300>;         \
-               require-prior-idle-ms = <150>; \
+               tapping-term-ms = <TAP_TERM>; \
+               quick-tap-ms = <QUICK_TAP_MS>;         \
+               require-prior-idle-ms = <TAPPING_RESOLUTION>; \
                hold-trigger-on-release;         \
-               hold-trigger-key-positions = <TRIGGER_POS>;)
+               hold-trigger-key-positions = <TRIGGER_POS>; \
+               __VA_ARGS__)
 
-MAKE_HRM(hml, &kp, &kp, KEYS_R THUMBS) // Left-hand HRMs.
-MAKE_HRM(hmr, &kp, &kp, KEYS_L THUMBS) // Right-hand HRMs.
+// MacOS
+MAKE_HRM(lp, &kp, &kp, PINKY_TAP_TERM, KEYS_R THUMBS, hold-while-undecided;) // Left-hand HRMs.
+MAKE_HRM(rp, &kp, &kp, PINKY_TAP_TERM, KEYS_L THUMBS, hold-while-undecided;) // Right-hand HRMs.
+MAKE_HRM(lr, &kp, &kp, RINGY_TAP_TERM, KEYS_R THUMBS) // Left-hand HRMs.
+MAKE_HRM(rr, &kp, &kp, RINGY_TAP_TERM, KEYS_L THUMBS) // Right-hand HRMs.
+MAKE_HRM(lm, &kp, &kp, MIDDY_TAP_TERM, KEYS_R THUMBS, hold-while-undecided;) // Left-hand HRMs.
+MAKE_HRM(rm, &kp, &kp, MIDDY_TAP_TERM, KEYS_L THUMBS, hold-while-undecided;) // Right-hand HRMs.
+MAKE_HRM(li, &kp, &kp, INDEX_TAP_TERM, KEYS_R THUMBS, hold-while-undecided;) // Left-hand HRMs.
+MAKE_HRM(ri, &kp, &kp, INDEX_TAP_TERM, KEYS_L THUMBS, hold-while-undecided;) // Right-hand HRMs.
 
 // Experimenting with Sunaku's config
 //thumb: thumb_layer_access {
