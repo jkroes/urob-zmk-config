@@ -47,10 +47,10 @@ ZMK_ADAPTIVE_KEY(
       //max-prior-idle-ms = <1200>;
       strict-modifiers;
     };)
+*/
 &caps_word { // Mods deactivate caps-word, requires PR #1451. [TODO: rebase]
   /delete-property/ ignore-modifiers;
 };
-*/
 
 // TODO adaptive key to cancel dot_spc for non-alpha keys that
 // follow dot_spc
