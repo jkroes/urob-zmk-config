@@ -8,43 +8,67 @@
   #define THUMBS LH2 LH1 LH0 RH0 RH1 RH2 // Thumbs on 36+ keys.
 #endif
 
-// With the balanced flavor, modifiers are triggered when
-// pressing and releasing another key while the hold-tap key is 
-// held, or tapping-term-ms after pressing the hold-tap. Setting tapping-term-ms to a high
-// value effectively eliminates timer-based holds. In this case, releasing the other key first
-// triggers a modifier, while releasing the hold-tap key first triggers the tap. 
-// 
-// Sticky keys on macos can interfere with mod-morphs on macos
-//
-// hold-while-undecided leads to flashing mods (tapping mods
-// to trigger standalone behavior) on windows. the effects
-// vary by application
-#define MAKE_HRM(NAME, HOLD, TAP, TAP_TERM, TRIGGER_POS, ...)                                 \
+// NOTE Sticky keys on macos can interfere with mod-morphs on macos
+#define MAKE_HRM(NAME, HOLD, TAP, TAP_TERM, TRIGGER_POS, ...) \
   ZMK_HOLD_TAP(NAME, bindings = <HOLD>, <TAP>; \
-               flavor = "balanced";            \
+               flavor = "balanced"; \
                tapping-term-ms = <TAP_TERM>; \
-               quick-tap-ms = <QUICK_TAP_MS>;         \
-               require-prior-idle-ms = <TAPPING_RESOLUTION>; \
-               hold-trigger-on-release;         \
+               quick-tap-ms = <QUICK_TAP_MS>; \
+               require-prior-idle-ms = <TAP_TERM>; \
+               hold-trigger-on-release; \
                hold-trigger-key-positions = <TRIGGER_POS>; \
                __VA_ARGS__)
 
+#define LEFT_HRM(NAME, HOLD, TAP, TAP_TERM, ...) \
+  MAKE_HRM(NAME, HOLD, TAP, TAP_TERM, KEYS_R THUMBS, __VA_ARGS__)
+
+#define RIGHT_HRM(NAME, HOLD, TAP, TAP_TERM, ...) \
+  MAKE_HRM(NAME, HOLD, TAP, TAP_TERM, KEYS_L THUMBS, __VA_ARGS__)
+
+#define LEFT_KP_HRM(NAME, TAP_TERM, ...) \
+  LEFT_HRM(NAME, &kp, &kp, TAP_TERM, __VA_ARGS__)                                
+
+#define RIGHT_KP_HRM(NAME, TAP_TERM, ...) \
+  RIGHT_HRM(NAME, &kp, &kp, TAP_TERM, __VA_ARGS__)
+
 // MacOS
-MAKE_HRM(lp, &kp, &kp, PINKY_TAP_TERM, KEYS_R THUMBS, hold-while-undecided;) // Left-hand HRMs.
-MAKE_HRM(rp, &kp, &kp, PINKY_TAP_TERM, KEYS_L THUMBS, hold-while-undecided;) // Right-hand HRMs.
-MAKE_HRM(lr, &kp, &kp, RINGY_TAP_TERM, KEYS_R THUMBS) // Left-hand HRMs.
-MAKE_HRM(rr, &kp, &kp, RINGY_TAP_TERM, KEYS_L THUMBS) // Right-hand HRMs.
-MAKE_HRM(lm, &kp, &kp, MIDDY_TAP_TERM, KEYS_R THUMBS, hold-while-undecided;) // Left-hand HRMs.
-MAKE_HRM(rm, &kp, &kp, MIDDY_TAP_TERM, KEYS_L THUMBS, hold-while-undecided;) // Right-hand HRMs.
-MAKE_HRM(li, &kp, &kp, INDEX_TAP_TERM, KEYS_R THUMBS, hold-while-undecided;) // Left-hand HRMs.
-MAKE_HRM(ri, &kp, &kp, INDEX_TAP_TERM, KEYS_L THUMBS, hold-while-undecided;) // Right-hand HRMs.
+LEFT_KP_HRM(left_pinky, PINKY_TAP_TERM, hold-while-undecided;) 
+LEFT_KP_HRM(left_ring, RINGY_TAP_TERM, hold-while-undecided;) 
+LEFT_KP_HRM(left_middle, MIDDY_TAP_TERM, hold-while-undecided;) 
+LEFT_KP_HRM(left_index, INDEX_TAP_TERM, hold-while-undecided;) 
+RIGHT_KP_HRM(right_index, INDEX_TAP_TERM, hold-while-undecided;) 
+RIGHT_KP_HRM(right_middle, MIDDY_TAP_TERM, hold-while-undecided;) 
+RIGHT_KP_HRM(right_ring, RINGY_TAP_TERM, hold-while-undecided;) 
+RIGHT_KP_HRM(right_pinky, PINKY_TAP_TERM, hold-while-undecided;) 
+
+#define lp(key) &left_pinky LCTRL key 
+#define lr(key) &left_ring LALT key
+#define lm(key) &left_middle LSHFT key
+#define li(key) &left_index LGUI key
+#define ri(key) &right_index LGUI key
+#define rm(key) &right_middle RSHFT key
+#define rr(key) &right_ring LALT key
+#define rp(key) &right_pinky LCTRL key
+
+// Windows alternates (minimize flashing mods)
+LEFT_KP_HRM(left_pinky_pc, PINKY_TAP_TERM) 
+LEFT_KP_HRM(left_ring_pc, RINGY_TAP_TERM) 
+RIGHT_KP_HRM(right_ring_pc, RINGY_TAP_TERM) 
+RIGHT_KP_HRM(right_pinky_pc, PINKY_TAP_TERM) 
+
+#define lp_pc(key) &left_pinky_pc LGUI key 
+#define lr_pc(key) &left_ring_pc LALT key
+#define li_pc(key) &left_index LCTRL key
+#define ri_pc(key) &right_index LCTRL key
+#define rr_pc(key) &right_ring_pc LALT key
+#define rp_pc(key) &right_pinky_pc LGUI key
 
 // Experimenting with Sunaku's config
 //thumb: thumb_layer_access {
 //  compatible = "zmk,behavior-hold-tap";
 //  flavor = "balanced";
-//  tapping-term-ms = <(TAPPING_RESOLUTION + 50)>;
-//  quick-tap-ms = <(TAPPING_RESOLUTION + 150)>; // enable repeat
+//  tapping-term-ms = <(TAP_TERM + 50)>;
+//  quick-tap-ms = <(TAP_TERM + 150)>; // enable repeat
 //  #binding-cells = <2>;
 //  bindings = <&mo>, <&kp>;
 //  #ifdef THUMB_FORGIVENESS
@@ -54,8 +78,8 @@ MAKE_HRM(ri, &kp, &kp, INDEX_TAP_TERM, KEYS_L THUMBS, hold-while-undecided;) // 
 //space: thumb_layer_access_spacebar {
 //  compatible = "zmk,behavior-hold-tap";
 //  flavor = ("balanced" + 150);
-//  tapping-term-ms = <(TAPPING_RESOLUTION + 50)>;
-//  quick-tap-ms = <TAPPING_RESOLUTION>; // enable repeat
+//  tapping-term-ms = <(TAP_TERM + 50)>;
+//  quick-tap-ms = <TAP_TERM>; // enable repeat
 //  #binding-cells = <2>;
 //  bindings = <&mo>, <&kp>;
 //  #ifdef SPACE_FORGIVENESS
