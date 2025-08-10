@@ -1,13 +1,3 @@
-#define KEYS_L LT0 LT1 LT2 LT3 LT4 LM0 LM1 LM2 LM3 LM4 LB0 LB1 LB2 LB3 LB4
-#define KEYS_R RT0 RT1 RT2 RT3 RT4 RM0 RM1 RM2 RM3 RM4 RB0 RB1 RB2 RB3 RB4
-#ifndef LH2
-  #define THUMBS LH1 LH0 RH0 RH1         // Thumbs on 34 keys.
-#else
-  // TODO Add additional thumb keys here when binding to them 
-  // for the Glove 80
-  #define THUMBS LH2 LH1 LH0 RH0 RH1 RH2 // Thumbs on 36+ keys.
-#endif
-
 // NOTE Sticky keys on macos can interfere with mod-morphs on macos
 #define MAKE_HRM(NAME, HOLD, TAP, TAP_TERM, TRIGGER_POS, ...) \
   ZMK_HOLD_TAP(NAME, bindings = <HOLD>, <TAP>; \
@@ -50,7 +40,7 @@ RIGHT_KP_HRM(right_pinky,  PINKY_TAP_TERM, hold-while-undecided;)
 #define rr(key) &right_ring   LALT key
 #define rp(key) &right_pinky  LCTRL key
 
-// Windows alternates (minimize flashing mods)
+// Windows (minimize flashing mods)
 LEFT_KP_HRM(left_pinky_pc,    PINKY_TAP_TERM) 
 LEFT_KP_HRM(left_ring_pc,     RINGY_TAP_TERM) 
 LEFT_KP_HRM(left_middle_pc,   MIDDY_TAP_TERM, hold-while-undecided;) 
@@ -68,27 +58,3 @@ RIGHT_KP_HRM(right_pinky_pc,  PINKY_TAP_TERM)
 #define rm_pc(key) &right_middle_pc RSHFT key 
 #define rr_pc(key) &right_ring_pc   LALT key
 #define rp_pc(key) &right_pinky_pc  LGUI key
-
-// Experimenting with Sunaku's config
-//thumb: thumb_layer_access {
-//  compatible = "zmk,behavior-hold-tap";
-//  flavor = "balanced";
-//  tapping-term-ms = <(TAP_TERM + 50)>;
-//  quick-tap-ms = <(TAP_TERM + 150)>; // enable repeat
-//  #binding-cells = <2>;
-//  bindings = <&mo>, <&kp>;
-//  #ifdef THUMB_FORGIVENESS
-//  retro-tap; // tap on standalone hold
-//  #endif
-//};
-//space: thumb_layer_access_spacebar {
-//  compatible = "zmk,behavior-hold-tap";
-//  flavor = ("balanced" + 150);
-//  tapping-term-ms = <(TAP_TERM + 50)>;
-//  quick-tap-ms = <TAP_TERM>; // enable repeat
-//  #binding-cells = <2>;
-//  bindings = <&mo>, <&kp>;
-//  #ifdef SPACE_FORGIVENESS
-//  retro-tap; // tap on standalone hold
-//  #endif
-//};
