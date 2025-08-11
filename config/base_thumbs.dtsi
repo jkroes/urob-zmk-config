@@ -16,13 +16,11 @@ ZMK_MOD_MORPH(bspc_morph, bindings = <&kp BSPC>, <&kp DEL>;
 // Right shift-tap: esc
 // Hold: num layer
 // Shift-hold: num-word 
-#define SMART_NUM &smart_num 0 0
-ZMK_HOLD_TAP(smart_num, bindings = <&num_morph>, <&ret_morph>; 
+#define SMART_NUM &smart_num 0 ESC
+ZMK_HOLD_TAP(smart_num, bindings = <&num_morph>, <&kp>; 
              flavor = "balanced"; tapping-term-ms = <300>; 
              quick-tap-ms = <QUICK_TAP_MS>;)
 SIMPLE_MORPH(num_morph, SFT, &mo NUM, &num_word NUM)
-ZMK_MOD_MORPH(ret_morph, bindings = <&kp RET>, <&kp ESC>;
-              mods = <(MOD_RSFT)>;)
 
 // Tap: space
 // Right shift-tap (after alpha): dot -> space -> sticky shift | 

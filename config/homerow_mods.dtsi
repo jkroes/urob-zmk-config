@@ -40,7 +40,7 @@ RIGHT_KP_HRM(right_pinky,  PINKY_TAP_TERM, hold-while-undecided;)
 #define rr(key) &right_ring   LALT key
 #define rp(key) &right_pinky  LCTRL key
 
-// Windows (minimize flashing mods)
+// Windows (minimize flashing mods for ALT and GUI)
 LEFT_KP_HRM(left_pinky_pc,    PINKY_TAP_TERM) 
 LEFT_KP_HRM(left_ring_pc,     RINGY_TAP_TERM) 
 LEFT_KP_HRM(left_middle_pc,   MIDDY_TAP_TERM, hold-while-undecided;) 

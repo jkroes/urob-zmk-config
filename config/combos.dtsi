@@ -26,7 +26,7 @@
   MAKE_HRM(combo_hrm_##name, &kp, tap, PINKY_TAP_TERM, side THUMBS)                             \
   ZMK_COMBO_HORZ(name, &combo_hrm_##name keys, keypos, layers)
 
-// TODO Set up combos for pc mods that affect the pc layer instead of DEF
+// TODO Set up combos for pc mods that affect the PC instead of DEF
 
 /* Horizontal combos - left hand */
 ZMK_COMBO_HORZ(esc,   &kp ESC,        LT3 LT2,     DEF NAV NUM)
