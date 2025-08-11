@@ -75,15 +75,14 @@
 ZMK_CONDITIONAL_LAYER(sys, FN NUM, SYS) // FN + NUM --> SYS.
 
 GLV80_LAYER(macos,
-&tog 1       &kp F2  &kp F3  &kp F4        &kp F5                        &kp F6     &kp F7        &kp F8      &kp F9   &kp F10 
-XXX          &kp N1  &kp N2  &kp N3        &kp N4      &kp N5    &kp N6  &kp N7     &kp N8        &kp N9      &kp N0   XXX  
-XXX          &kp Q   &kp W   &kp E         &kp R       &kp T     &kp Y   &kp U      &kp I         &kp O       &kp P    XXX
-&kp CAPS     lp(A)   lr(S)   lm(D)         li(F)       &kp G     &kp H   ri(J)      rm(K)         rr(L)       rp(SQT)  XXX
-XXX          &kp Z   &kp X   &kp C         &kp V       &kp B   , &kp N   &kp M      &comma_morph  &dot_morph  &qexcl   XXX
-&bootloader  XXX     XXX     &kp LEFT      &kp RIGHT           ,         &kp UP     &kp DOWN      XXX         XXX      &bootloader
-
-,                            &sk LGUI      &sk LALT   &sk LCTRL  XXX     XXX        &kp RET      
-,                            SUPER_NAV     &lt FN TAB  XXX       XXX     SMART_NUM  MAGIC_SHIFT
+&tog 1       &kp F2  &kp F3  &kp F4    &kp F5                        &kp F6   &kp F7        &kp F8      &kp F9   &kp F10 
+XXX          &kp N1  &kp N2  &kp N3    &kp N4      &kp N5    &kp N6  &kp N7   &kp N8        &kp N9      &kp N0   XXX  
+XXX          &kp Q   &kp W   &kp E     &kp R       &kp T     &kp Y   &kp U    &kp I         &kp O       &kp P    XXX
+&kp CAPS     lp(A)   lr(S)   lm(D)     li(F)       &kp G     &kp H   ri(J)    rm(K)         rr(L)       rp(SQT)  XXX
+XXX          &kp Z   &kp X   &kp C     &kp V       &kp B   , &kp N   &kp M    &comma_morph  &dot_morph  &qexcl   XXX
+&bootloader  XXX     XXX     &kp LEFT  &kp RIGHT           ,         &kp UP   &kp DOWN      XXX         XXX      &bootloader
+,                            &kp TAB   XXX         XXX       XXX     XXX      &kp ESC      
+,                            BSPC_NAV  &lt FN DEL  XXX       XXX     RET_NUM  MAGIC_SHIFT
 )
 
 GLV80_LAYER(pc,
@@ -93,8 +92,18 @@ ___  ___       ___       ___        ___       ___        ___  ___       ___    _
 ___  lp_pc(A)  lr_pc(S)  lm_pc(D)   li_pc(F)  ___        ___  ri_pc(J)  rm(K)  rr_pc(L)  rp_pc(SQT)  ___
 ___  ___       ___       ___        ___       ___      , ___  ___       ___    ___       ___         ___
 ___  ___       ___       ___        ___                ,      ___       ___    ___       ___         ___
+,                        ___        ___       ___        ___  ___       ___
+,                        ___        ___       ___        ___  ___       ___
+)
 
-,                        &kp LCTRL  ___       &kp LGUI   ___  ___       ___
+GLV80_LAYER(typing,
+___  ___       ___       ___        ___                       ___       ___    ___       ___         ___
+___  ___       ___       ___        ___       ___        ___  ___       ___    ___       ___         ___
+___  ___       ___       ___        ___       ___        ___  ___       ___    ___       ___         ___
+___  &kp A     &kp S     &kp D      &kp F     ___        ___  &kp J     &kp K  &kp L     &kp SQT     ___
+___  ___       ___       ___        ___       ___      , ___  ___       ___    ___       ___         ___
+___  ___       ___       ___        ___                ,      ___       ___    ___       ___         ___
+,                        ___        ___       ___        ___  ___       ___
 ,                        ___        ___       ___        ___  ___       ___
 )
 
@@ -105,7 +114,6 @@ XXX  &kp LA(F4)  XXX       &kp LS(TAB)  &swapper  XXX   &kp  PG_UP  NAV_BSPC  NA
 XXX  &sk LCTRL   &sk LALT  &sk LSHFT    &sk LGUI  XXX , &kp  PG_DN  NAV_LEFT  NAV_DOWN  NAV_RIGHT  &kp RET  XXX 
 XXX  XXX         XXX       XXX          XXX       XXX , &kp  INS    &kp TAB   XXX       XXX        XXX      XXX
 XXX  XXX         XXX       XXX          XXX                         XXX       XXX       XXX        XXX      XXX
-
 ,                          ___          ___       ___   ___         ___       ___
 ,                          ___          ___       ___   ___         ___       CANCEL
 )
@@ -117,7 +125,6 @@ XXX  XXX  XXX  XXX  XXX  XXX   XXX  XXX  XXX  XXX  XXX  XXX
 XXX  XXX  XXX  XXX  XXX  XXX   XXX  XXX  XXX  XXX  XXX  XXX
 XXX  XXX  XXX  XXX  XXX  XXX , XXX  XXX  XXX  XXX  XXX  XXX
 XXX  XXX  XXX  XXX  XXX      ,      XXX  XXX  XXX  XXX  XXX
-
 ,              ___  ___  ___   ___  ___  ___
 ,              ___  ___  ___   ___  ___  ___
 )
@@ -129,7 +136,6 @@ XXX  XXX  XXX  XXX  XXX  XXX   XXX  XXX  XXX  XXX  XXX  XXX
 XXX  XXX  XXX  XXX  XXX  XXX   XXX  XXX  XXX  XXX  XXX  XXX
 XXX  XXX  XXX  XXX  XXX  XXX , XXX  XXX  XXX  XXX  XXX  XXX
 XXX  XXX  XXX  XXX  XXX      ,      XXX  XXX  XXX  XXX  XXX
-
 ,              ___  ___  ___   ___  ___  ___
 ,              ___  ___  ___   ___  ___  ___
 )
@@ -141,7 +147,6 @@ XXX  XXX  XXX  XXX  XXX  XXX   XXX  XXX  XXX  XXX  XXX  XXX
 XXX  XXX  XXX  XXX  XXX  XXX   XXX  XXX  XXX  XXX  XXX  XXX
 XXX  XXX  XXX  XXX  XXX  XXX , XXX  XXX  XXX  XXX  XXX  XXX
 XXX  XXX  XXX  XXX  XXX      ,      XXX  XXX  XXX  XXX  XXX
-
 ,              ___  ___  ___   ___  ___  ___
 ,              ___  ___  ___   ___  ___  ___
 )
