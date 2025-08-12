@@ -115,25 +115,26 @@ ___  ___       ___       ___         ___                ,      ___       ___    
 )
 
 GLV80_LAYER(nav,
-XXX  XXX  XXX  XXX  XXX             XXX  XXX  XXX  XXX  XXX
-XXX  XXX  XXX  XXX  XXX  XXX   XXX  XXX  XXX  XXX  XXX  XXX
-XXX  XXX  XXX  XXX  XXX  XXX   XXX  XXX  XXX  XXX  XXX  XXX
-XXX  XXX  XXX  XXX  XXX  XXX   XXX  XXX  XXX  XXX  XXX  XXX
-XXX  XXX  XXX  XXX  XXX  XXX , XXX  XXX  XXX  XXX  XXX  XXX
-XXX  XXX  XXX  XXX  XXX      ,      XXX  XXX  XXX  XXX  XXX
-,              ___  ___  ___   ___  ___  ___
-,              ___  ___  ___   ___  ___  ___
+XXX  XXX         XXX       XXX          XXX                        XXX           XXX       XXX            XXX      XXX
+XXX  XXX         XXX       XXX          XXX       XXX   XXX        XXX           XXX       XXX            XXX      XXX
+XXX  &kp LA(F4)  XXX       &kp LS(TAB)  &swapper  XXX   &kp PG_UP  &kp LA(LEFT)  NAV_UP    &kp LA(RIGHT)  XXX      XXX 
+XXX  &sk LCTRL   &sk LALT  &sk LSHFT    &sk LGUI  XXX   &kp PG_DN  NAV_LEFT      NAV_DOWN  NAV_RIGHT      XXX      XXX
+XXX  XXX         XXX       XXX          XXX       XXX , &kp INS    XXX           XXX       XXX            XXX      XXX
+XXX  XXX         XXX       XXX          XXX           ,            XXX           XXX       XXX            XXX      XXX
+,                          ___          ___       ___   ___        ___           ___
+,                          ___          ___       ___   ___        ___           CANCEL
 )
 
+
 GLV80_LAYER(nav_pc,
-XXX  XXX         XXX       XXX          XXX                        XXX       XXX       XXX        XXX      XXX
-XXX  XXX         XXX       XXX          XXX       XXX   XXX        XXX       XXX       XXX        XXX      XXX
-XXX  &kp LA(F4)  XXX       &kp LS(TAB)  &swapper  XXX   &kp PG_UP  XXX       NAV_UP    XXX        XXX      XXX 
-XXX  &sk LCTRL   &sk LALT  &sk LSHFT    &sk LGUI  XXX   &kp PG_DN  NAV_LEFT  NAV_DOWN  NAV_RIGHT  XXX      XXX
-XXX  XXX         XXX       XXX          XXX       XXX , &kp INS    XXX       XXX       XXX        XXX      XXX
-XXX  XXX         XXX       XXX          XXX           ,            XXX       XXX       XXX        XXX      XXX
-,                          ___          ___       ___   ___        ___       ___
-,                          ___          ___       ___   ___        ___       CANCEL
+XXX  XXX         XXX       XXX          XXX                         XXX           XXX       XXX            XXX      XXX
+XXX  XXX         XXX       XXX          XXX        XXX   XXX        XXX           XXX       XXX            XXX      XXX
+XXX  &kp LA(F4)  XXX       &kp LS(TAB)  &swapper   XXX   &kp PG_UP  &kp LC(LEFT)  NAV_UP    &kp LC(RIGHT)  XXX      XXX 
+XXX  &sk LGUI    &sk LALT  &sk LSHFT    &sk LCTRL  XXX   &kp PG_DN  NAV_LEFT      NAV_DOWN  NAV_RIGHT      XXX      XXX
+XXX  XXX         XXX       XXX          XXX        XXX , &kp INS    XXX           XXX       XXX            XXX      XXX
+XXX  XXX         XXX       XXX          XXX            ,            XXX           XXX       XXX            XXX      XXX
+,                          ___          ___        ___   ___        ___           ___
+,                          ___          ___        ___   ___        ___           CANCEL
 )
 
 GLV80_LAYER(sym,
@@ -176,9 +177,6 @@ look into https://karabiner-elements.pqrs.org and https://www.reddit.com/r/vim/c
 
 Navigation:
 Arrows
-LA(l/r): move word
-LG(l/r): move start/end line
-LA(u/d): move paragraph
 page up/down
 HOME/END
 shift + arrows = select ...
