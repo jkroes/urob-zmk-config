@@ -23,13 +23,14 @@
 #include "zmk-helpers/helper.h"
 
 // Map layers (top to bottom order) to names for keymap usage
-#define DEF 0
-#define PC  1
+#define DEF    0
+#define PC     1
 #define TYPING 2
-#define NAV 3
-#define SYM  4
-#define NUM 5
-#define SYS 6
+#define NAV    3
+#define NAV_PC 4
+#define SYM    5
+#define NUM    6
+#define SYS    7
 
 // Minimum tapping-term-ms
 #define MIN_TAP_TERM 150
@@ -92,14 +93,14 @@ XXX          &kp Z   &kp X   &kp C            &kp V       &kp B     , &kp N   &k
 )
 
 GLV80_LAYER(pc,
-___  ___       ___       ___        ___                       ___       ___    ___       ___         ___
-___  ___       ___       ___        ___       ___        ___  ___       ___    ___       ___         ___
-___  ___       ___       ___        ___       ___        ___  ___       ___    ___       ___         ___
-___  lp_pc(A)  lr_pc(S)  lm_pc(D)   li_pc(F)  ___        ___  ri_pc(J)  rm(K)  rr_pc(L)  rp_pc(SQT)  ___
-___  ___       ___       ___        ___       ___      , ___  ___       ___    ___       ___         ___
-___  ___       ___       ___        ___                ,      ___       ___    ___       ___         ___
-,                        &kp LCTRL  ___       &kp LGUI   ___  ___       ___
-,                        ___        ___       ___        ___  ___       ___
+___  ___       ___       ___                 ___                       ___       ___    ___       ___         ___
+___  ___       ___       ___                 ___       ___        ___  ___       ___    ___       ___         ___
+___  ___       ___       ___                 ___       ___        ___  ___       ___    ___       ___         ___
+___  lp_pc(A)  lr_pc(S)  lm_pc(D)            li_pc(F)  ___        ___  ri_pc(J)  rm(K)  rr_pc(L)  rp_pc(SQT)  ___
+___  ___       ___       ___                 ___       ___      , ___  ___       ___    ___       ___         ___
+___  ___       ___       ___                 ___                ,      ___       ___    ___       ___         ___
+,                        &kp LCTRL           ___       &kp LGUI   ___  ___       ___
+,                        &bspc_del NAV_PC 0  ___       ___        ___  ___       ___
 )
 
 GLV80_LAYER(typing,
@@ -114,11 +115,22 @@ ___  ___       ___       ___         ___                ,      ___       ___    
 )
 
 GLV80_LAYER(nav,
+XXX  XXX  XXX  XXX  XXX             XXX  XXX  XXX  XXX  XXX
+XXX  XXX  XXX  XXX  XXX  XXX   XXX  XXX  XXX  XXX  XXX  XXX
+XXX  XXX  XXX  XXX  XXX  XXX   XXX  XXX  XXX  XXX  XXX  XXX
+XXX  XXX  XXX  XXX  XXX  XXX   XXX  XXX  XXX  XXX  XXX  XXX
+XXX  XXX  XXX  XXX  XXX  XXX , XXX  XXX  XXX  XXX  XXX  XXX
+XXX  XXX  XXX  XXX  XXX      ,      XXX  XXX  XXX  XXX  XXX
+,              ___  ___  ___   ___  ___  ___
+,              ___  ___  ___   ___  ___  ___
+)
+
+GLV80_LAYER(nav_pc,
 XXX  XXX         XXX       XXX          XXX                        XXX       XXX       XXX        XXX      XXX
 XXX  XXX         XXX       XXX          XXX       XXX   XXX        XXX       XXX       XXX        XXX      XXX
-XXX  &kp LA(F4)  XXX       &kp LS(TAB)  &swapper  XXX   &kp PG_UP  NAV_BSPC  NAV_UP    NAV_DEL    XXX      XXX 
-XXX  &sk LCTRL   &sk LALT  &sk LSHFT    &sk LGUI  XXX   &kp PG_DN  NAV_LEFT  NAV_DOWN  NAV_RIGHT  &kp RET  &kp N1 
-XXX  XXX         XXX       XXX          XXX       XXX , &kp INS    &kp TAB   XXX       XXX        XXX      XXX
+XXX  &kp LA(F4)  XXX       &kp LS(TAB)  &swapper  XXX   &kp PG_UP  XXX       NAV_UP    XXX        XXX      XXX 
+XXX  &sk LCTRL   &sk LALT  &sk LSHFT    &sk LGUI  XXX   &kp PG_DN  NAV_LEFT  NAV_DOWN  NAV_RIGHT  XXX      XXX
+XXX  XXX         XXX       XXX          XXX       XXX , &kp INS    XXX       XXX       XXX        XXX      XXX
 XXX  XXX         XXX       XXX          XXX           ,            XXX       XXX       XXX        XXX      XXX
 ,                          ___          ___       ___   ___        ___       ___
 ,                          ___          ___       ___   ___        ___       CANCEL
