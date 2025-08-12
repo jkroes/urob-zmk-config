@@ -27,7 +27,7 @@
 #define PC  1
 #define TYPING 2
 #define NAV 3
-#define FN  4
+#define SYM  4
 #define NUM 5
 #define SYS 6
 
@@ -78,20 +78,20 @@
 #define XXX &none
 #define ___ &trans
 
-ZMK_CONDITIONAL_LAYER(sys, FN NUM, SYS) // FN + NUM --> SYS.
+//ZMK_CONDITIONAL_LAYER(sys, SYM NUM, SYS) // FN + NUM --> SYS.
 
-GLV80_LAYER(Macos,
-&tog 1       &kp F2  &kp F3  &kp F4        &kp F5                        &kp F6   &kp F7        &kp F8      &kp F9   &kp F10 
-XXX          &kp N1  &kp N2  &kp N3        &kp N4      &kp N5    &kp N6  &kp N7   &kp N8        &kp N9      &kp N0   XXX  
-XXX          &kp Q   &kp W   &kp E         &kp R       &kp T     &kp Y   &kp U    &kp I         &kp O       &kp P    XXX
-&kp CAPS     lp(A)   lr(S)   lm(D)         li(F)       &kp G     &kp H   ri(J)    rm(K)         rr(L)       rp(SQT)  XXX
-XXX          &kp Z   &kp X   &kp C         &kp V       &kp B   , &kp N   &kp M    &comma_morph  &dot_morph  &qexcl   XXX
-&bootloader  XXX     XXX     &kp LEFT      &kp RIGHT           ,         &kp UP   &kp DOWN      XXX         XXX      &bootloader
-,                            &kp LGUI      &kp LALT    &kp LCTRL XXX     XXX      XXX
-,                            NAV_BSPC_DEL  &lt FN ESC  XXX       XXX     NUM_RET  SHIFT_SPC_TAB
+GLV80_LAYER(macos,
+&tog 1       &kp F2  &kp F3  &kp F4           &kp F5                          &kp F6       &kp F7        &kp F8      &kp F9   &kp F10 
+XXX          &kp N1  &kp N2  &kp N3           &kp N4      &kp N5      &kp N6  &kp N7       &kp N8        &kp N9      &kp N0   XXX  
+XXX          &kp Q   &kp W   &kp E            &kp R       &kp T       &kp Y   &kp U        &kp I         &kp O       &kp P    XXX
+&kp CAPS     lp(A)   lr(S)   lm(D)            li(F)       &kp G       &kp H   ri(J)        rm(K)         rr(L)       rp(SQT)  XXX
+XXX          &kp Z   &kp X   &kp C            &kp V       &kp B     , &kp N   &kp M        &comma_morph  &dot_morph  &qexcl   XXX
+&bootloader  XXX     XXX     &kp LEFT         &kp RIGHT             ,         &kp UP       &kp DOWN      XXX         XXX      &bootloader
+,                            &kp LGUI         &kp LALT    &kp LCTRL   XXX     XXX          XXX
+,                            &bspc_del NAV 0  &num 0 ESC  XXX         XXX     &lt SYM RET  &shift_spc_tab 0 0
 )
 
-GLV80_LAYER(Pc,
+GLV80_LAYER(pc,
 ___  ___       ___       ___        ___                       ___       ___    ___       ___         ___
 ___  ___       ___       ___        ___       ___        ___  ___       ___    ___       ___         ___
 ___  ___       ___       ___        ___       ___        ___  ___       ___    ___       ___         ___
@@ -102,18 +102,18 @@ ___  ___       ___       ___        ___                ,      ___       ___    _
 ,                        ___        ___       ___        ___  ___       ___
 )
 
-GLV80_LAYER(Typing,
-___  ___       ___       ___        ___                       ___       ___    ___       ___         ___
-___  ___       ___       ___        ___       ___        ___  ___       ___    ___       ___         ___
-___  ___       ___       ___        ___       ___        ___  ___       ___    ___       ___         ___
-___  &kp A     &kp S     &kp D      &kp F     ___        ___  &kp J     &kp K  &kp L     &kp SQT     ___
-___  ___       ___       ___        ___       ___      , ___  ___       ___    ___       ___         ___
-___  ___       ___       ___        ___                ,      ___       ___    ___       ___         ___
-,                        ___        ___       ___        ___  ___       ___
-,                        &kp BSPC   &kp DEL   ___        ___  &kp RET   &kp SPC
+GLV80_LAYER(typing,
+___  ___       ___       ___         ___                       ___       ___    ___       ___         ___
+___  ___       ___       ___         ___       ___        ___  ___       ___    ___       ___         ___
+___  ___       ___       ___         ___       ___        ___  ___       ___    ___       ___         ___
+___  &kp A     &kp S     &kp D       &kp F     ___        ___  &kp J     &kp K  &kp L     &kp SQT     ___
+___  ___       ___       ___         ___       ___      , ___  ___       ___    ___       ___         ___
+___  ___       ___       ___         ___                ,      ___       ___    ___       ___         ___
+,                        ___         ___       ___        ___  ___       ___
+,                        ___         ___       ___        ___  ___       ___
 )
 
-GLV80_LAYER(Nav,
+GLV80_LAYER(nav,
 XXX  XXX         XXX       XXX          XXX                        XXX       XXX       XXX        XXX      XXX
 XXX  XXX         XXX       XXX          XXX       XXX   XXX        XXX       XXX       XXX        XXX      XXX
 XXX  &kp LA(F4)  XXX       &kp LS(TAB)  &swapper  XXX   &kp PG_UP  NAV_BSPC  NAV_UP    NAV_DEL    XXX      XXX 
@@ -124,7 +124,7 @@ XXX  XXX         XXX       XXX          XXX           ,            XXX       XXX
 ,                          ___          ___       ___   ___        ___       CANCEL
 )
 
-GLV80_LAYER(Fn,
+GLV80_LAYER(sym,
 XXX  XXX  XXX  XXX  XXX             XXX  XXX  XXX  XXX  XXX
 XXX  XXX  XXX  XXX  XXX  XXX   XXX  XXX  XXX  XXX  XXX  XXX
 XXX  XXX  XXX  XXX  XXX  XXX   XXX  XXX  XXX  XXX  XXX  XXX

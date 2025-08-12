@@ -1,15 +1,13 @@
 #include <behaviors/num_word.dtsi> // Requires auto-layer module.
 
 // Tap: bspc | Hold: nav layer | Shift-hold: toggle nav layer
-#define NAV_BSPC_DEL &mo_bspc_del NAV 0
-ZMK_HOLD_TAP(mo_bspc_del, bindings = <&mo>, <&bspc_del>; 
+ZMK_HOLD_TAP(bspc_del, bindings = <&mo>, <&bspc_del_morph>; 
              flavor = "balanced"; tapping-term-ms = <INDEX_TAP_TERM>; 
              quick-tap-ms = <200>;)
-ZMK_MOD_MORPH(bspc_del, bindings = <&kp BSPC>, <&kp DEL>; mods = <(MOD_LCTL|MOD_LGUI)>;)
+ZMK_MOD_MORPH(bspc_del_morph, bindings = <&kp BSPC>, <&kp DEL>; mods = <(MOD_LCTL|MOD_LGUI)>;)
 
 // Tap: ret | Hold: num layer | Shift-hold: num-word 
-#define NUM_RET &kp_num 0 RET
-ZMK_HOLD_TAP(kp_num, 
+ZMK_HOLD_TAP(num, 
              bindings = <&num_morph>, <&kp>; 
              flavor = "balanced"; 
              tapping-term-ms = <INDEX_TAP_TERM>; 
@@ -20,7 +18,6 @@ SIMPLE_MORPH(num_morph, SFT, &mo NUM, &num_word NUM)
 // Right shift-tap (after alpha): dot -> space -> sticky shift | 
 // Hold: shift
 // Shift-hold: caps-word 
-#define SHIFT_SPC_TAB &shift_spc_tab 0 0
 ZMK_HOLD_TAP(shift_spc_tab, 
              bindings = <&shift_caps>, <&spc_tab>;
              flavor = "balanced"; 
