@@ -33,12 +33,12 @@ RIGHT_KP_HRM(right_pinky,  PINKY_TAP_TERM, hold-while-undecided;)
 
 #define lp(key) &left_pinky   LCTRL key 
 #define lr(key) &left_ring    LALT key
-#define lm(key) &left_middle  LSHFT key
-#define li(key) &left_index   LGUI key
-#define ri(key) &right_index  LGUI key
-#define rm(key) &right_middle RSHFT key 
-#define rr(key) &right_ring   LALT key
-#define rp(key) &right_pinky  LCTRL key
+#define lm(key) &left_middle  LGUI key
+#define li(key) &left_index   LSHFT key
+#define ri(key) &right_index  RSHFT key
+#define rm(key) &right_middle RGUI key 
+#define rr(key) &right_ring   RALT key
+#define rp(key) &right_pinky  RCTRL key
 
 // Windows (minimize flashing mods for ALT and GUI)
 LEFT_KP_HRM(left_pinky_pc,    PINKY_TAP_TERM) 
@@ -52,9 +52,9 @@ RIGHT_KP_HRM(right_pinky_pc,  PINKY_TAP_TERM)
 
 #define lp_pc(key) &left_pinky_pc   LGUI key 
 #define lr_pc(key) &left_ring_pc    LALT key
-#define lm_pc(key) &left_middle_pc  LSHFT key
-#define li_pc(key) &left_index_pc   LCTRL key
-#define ri_pc(key) &right_index_pc  LCTRL key
-#define rm_pc(key) &right_middle_pc RSHFT key 
-#define rr_pc(key) &right_ring_pc   LALT key
-#define rp_pc(key) &right_pinky_pc  LGUI key
+#define lm_pc(key) &left_middle_pc  LCTRL key
+#define li_pc(key) &left_index_pc   LSHFT key
+#define ri_pc(key) &right_index_pc  RSHFT key
+#define rm_pc(key) &right_middle_pc RCTRL key 
+#define rr_pc(key) &right_ring_pc   RALT key
+#define rp_pc(key) &right_pinky_pc  RGUI key

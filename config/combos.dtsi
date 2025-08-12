@@ -29,7 +29,7 @@
 // TODO Set up combos for pc mods that affect the PC instead of DEF
 
 /* Horizontal combos - left hand */
-ZMK_COMBO_HORZ(esc,   &kp ESC,        LT3 LT2,     DEF NAV NUM)
+//ZMK_COMBO_HORZ(esc,   &kp ESC,        LT3 LT2,     DEF NAV NUM)
 
 //ZMK_COMBO_HRM(tab,   &kp,         LS(LALT) TAB,   KEYS_R, LM3 LM2,     DEF NAV NUM)
 //ZMK_COMBO_HRM(ldr,   &leader,     LS(LGUI) 0,     KEYS_R, LM2 LM1,     DEF NAV NUM)
