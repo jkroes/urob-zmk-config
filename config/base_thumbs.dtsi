@@ -5,10 +5,10 @@
 ZMK_HOLD_TAP(mo_bspc_del, bindings = <&mo>, <&bspc_del>; 
              flavor = "balanced"; tapping-term-ms = <INDEX_TAP_TERM>; 
              quick-tap-ms = <200>;)
-ZMK_MOD_MORPH(bspc_del, bindings = <&kp BSPC>, <&kp DEL>; mods = <(MOD_LSFT)>;)
+ZMK_MOD_MORPH(bspc_del, bindings = <&kp BSPC>, <&kp DEL>; mods = <(MOD_LCTL|MOD_LGUI)>;)
 
 // Tap: ret | Hold: num layer | Shift-hold: num-word 
-#define NUM_TAB &kp_num 0 TAB
+#define NUM_RET &kp_num 0 RET
 ZMK_HOLD_TAP(kp_num, 
              bindings = <&num_morph>, <&kp>; 
              flavor = "balanced"; 
@@ -20,9 +20,9 @@ SIMPLE_MORPH(num_morph, SFT, &mo NUM, &num_word NUM)
 // Right shift-tap (after alpha): dot -> space -> sticky shift | 
 // Hold: shift
 // Shift-hold: caps-word 
-#define SHIFT_SPC_RET &shift_spc_ret 0 0
-ZMK_HOLD_TAP(shift_spc_ret, 
-             bindings = <&shift_caps>, <&spc_ret>;
+#define SHIFT_SPC_TAB &shift_spc_tab 0 0
+ZMK_HOLD_TAP(shift_spc_tab, 
+             bindings = <&shift_caps>, <&spc_tab>;
              flavor = "balanced"; 
              tapping-term-ms = <INDEX_TAP_TERM>;
              quick-tap-ms = <200>;)
@@ -42,6 +42,6 @@ WITH_TYPING(shift_typing, &kp LSHFT)
 WITH_TYPING(caps_word_typing, &caps_word)
 SIMPLE_MORPH(shift_caps, SFT, &shift_typing, &caps_word_typing)
 
-ZMK_MOD_MORPH(spc_ret, bindings = <&kp SPACE>, <&kp RET>; mods = <(MOD_RSFT)>;)
+ZMK_MOD_MORPH(spc_tab, bindings = <&kp SPACE>, <&kp TAB>; mods = <(MOD_RCTL|MOD_RGUI)>;)
 //ZMK_MACRO(dot_spc, bindings = <&kp DOT &kp SPACE &sk LSHFT>; wait-ms = <0>; tap-ms = <5>;)
 
