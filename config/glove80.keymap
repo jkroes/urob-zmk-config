@@ -48,7 +48,6 @@
 #include "morphs.dtsi" 
 #include "base_thumbs.dtsi" // Must be sourced after SIMPLE_MORPH is defined
 #include "nav.dtsi"
-#include "app_switcher.dtsi"
 #include "fn.dtsi"
 #include "leader.dtsi"
 #include "combos.dtsi" // Must be sourced after &hml and &hmr are defined
@@ -68,6 +67,7 @@
   tapping-term-ms = <300>;
   quick-tap-ms = <QUICK_TAP_MS>;
 };
+
 &caps_word { 
   // Mods deactivate caps-word, requires PR #1451. [TODO: rebase]
   // /delete-property/ ignore-modifiers;
@@ -80,6 +80,7 @@
 #define ___ &trans
 
 //ZMK_CONDITIONAL_LAYER(sys, SYM NUM, SYS) // FN + NUM --> SYS.
+ZMK_CONDITIONAL_LAYER(nav_pc, PC NAV, NAV_PC) // FN + NUM --> SYS.
 
 GLV80_LAYER(macos,
 &tog 1       &kp F2  &kp F3  &kp F4           &kp F5                          &kp F6       &kp F7        &kp F8      &kp F9   &kp F10 
@@ -93,14 +94,14 @@ XXX          &kp Z   &kp X   &kp C            &kp V       &kp B     , &kp N   &k
 )
 
 GLV80_LAYER(pc,
-___  ___       ___       ___                 ___                       ___       ___    ___       ___         ___
-___  ___       ___       ___                 ___       ___        ___  ___       ___    ___       ___         ___
-___  ___       ___       ___                 ___       ___        ___  ___       ___    ___       ___         ___
-___  lp_pc(A)  lr_pc(S)  lm_pc(D)            li_pc(F)  ___        ___  ri_pc(J)  rm(K)  rr_pc(L)  rp_pc(SQT)  ___
-___  ___       ___       ___                 ___       ___      , ___  ___       ___    ___       ___         ___
-___  ___       ___       ___                 ___                ,      ___       ___    ___       ___         ___
-,                        &kp LCTRL           ___       &kp LGUI   ___  ___       ___
-,                        &bspc_del NAV_PC 0  ___       ___        ___  ___       ___
+___  ___       ___       ___        ___                       ___       ___    ___       ___         ___
+___  ___       ___       ___        ___       ___        ___  ___       ___    ___       ___         ___
+___  ___       ___       ___        ___       ___        ___  ___       ___    ___       ___         ___
+___  lp_pc(A)  lr_pc(S)  lm_pc(D)   li_pc(F)  ___        ___  ri_pc(J)  rm(K)  rr_pc(L)  rp_pc(SQT)  ___
+___  ___       ___       ___        ___       ___      , ___  ___       ___    ___       ___         ___
+___  ___       ___       ___        ___                ,      ___       ___    ___       ___         ___
+,                        &kp LCTRL  ___       &kp LGUI   ___  ___       ___
+,                        ___        ___       ___        ___  ___       ___
 )
 
 GLV80_LAYER(typing,
@@ -115,25 +116,26 @@ ___  ___       ___       ___         ___                ,      ___       ___    
 )
 
 GLV80_LAYER(nav,
-XXX  XXX         XXX       XXX          XXX                        XXX           XXX       XXX            XXX      XXX
-XXX  XXX         XXX       XXX          XXX       XXX   XXX        XXX           XXX       XXX            XXX      XXX
-XXX  &kp LA(F4)  XXX       &kp LS(TAB)  &swapper  XXX   &kp PG_UP  &kp LA(LEFT)  NAV_UP    &kp LA(RIGHT)  XXX      XXX 
-XXX  &sk LCTRL   &sk LALT  &sk LSHFT    &sk LGUI  XXX   &kp PG_DN  NAV_LEFT      NAV_DOWN  NAV_RIGHT      XXX      XXX
-XXX  XXX         XXX       XXX          XXX       XXX , &kp INS    XXX           XXX       XXX            XXX      XXX
-XXX  XXX         XXX       XXX          XXX           ,            XXX           XXX       XXX            XXX      XXX
-,                          ___          ___       ___   ___        ___           ___
-,                          ___          ___       ___   ___        ___           CANCEL
+XXX  XXX         XXX        XXX          XXX                              XXX           XXX       XXX            XXX      XXX
+XXX  XXX         XXX        XXX          XXX        XXX        XXX        XXX           XXX       XXX            XXX      XXX
+XXX  &kp LG(Q)   &kp LG(W)  &kp LS(TAB)  &swapper   XXX        &kp PG_UP  &kp LA(LEFT)  NAV_UP    &kp LA(RIGHT)  XXX      XXX 
+XXX  &sk LCTRL   &sk LALT   &sk LSHFT    &sk LGUI   XXX        &kp PG_DN  NAV_LEFT      NAV_DOWN  NAV_RIGHT      XXX      XXX
+XXX  XXX         XXX        &kp LG(C)    &kp LG(V)  XXX ,      &kp INS    XXX           XXX       XXX            XXX      XXX
+XXX  XXX         XXX        XXX          XXX            ,                 XXX           XXX       XXX            XXX      XXX
+,                           ___          ___        ___        ___        ___           ___
+,                           ___          ___        ___        ___        ___           CANCEL
 )
 
+// TODO Convert XXX to ___ and replace duplicate bindings from nav with ___
 GLV80_LAYER(nav_pc,
-XXX  XXX         XXX       XXX          XXX                         XXX           XXX       XXX            XXX      XXX
-XXX  XXX         XXX       XXX          XXX        XXX   XXX        XXX           XXX       XXX            XXX      XXX
-XXX  &kp LA(F4)  XXX       &kp LS(TAB)  &swapper   XXX   &kp PG_UP  &kp LC(LEFT)  NAV_UP    &kp LC(RIGHT)  XXX      XXX 
-XXX  &sk LGUI    &sk LALT  &sk LSHFT    &sk LCTRL  XXX   &kp PG_DN  NAV_LEFT      NAV_DOWN  NAV_RIGHT      XXX      XXX
-XXX  XXX         XXX       XXX          XXX        XXX , &kp INS    XXX           XXX       XXX            XXX      XXX
-XXX  XXX         XXX       XXX          XXX            ,            XXX           XXX       XXX            XXX      XXX
-,                          ___          ___        ___   ___        ___           ___
-,                          ___          ___        ___   ___        ___           CANCEL
+___  ___        ___        ___        ___                          ___           ___  ___            ___  ___
+___  ___        ___        ___        ___          ___        ___  ___           ___  ___            ___  ___
+___  &kp LC(Q)  &kp LC(W)  ___        &swapper_pc  ___        ___  &kp LC(LEFT)  ___  &kp LC(RIGHT)  ___  ___ 
+___  &sk LGUI   ___        ___        &sk LCTRL    ___        ___  ___           ___  ___            ___  ___
+___  ___        ___        &kp LC(C)  &kp LC(V)    ___ ,      ___  ___           ___  ___            ___  ___
+___  ___        ___        ___        ___              ,           ___           ___  ___            ___  ___
+,                          ___        ___          ___        ___  ___           ___
+,                          ___        ___          ___        ___  ___           ___
 )
 
 GLV80_LAYER(sym,

@@ -1,20 +1,24 @@
+ZMK_TRI_STATE(swapper, bindings = <&kt LCMD>, <&kp TAB>, <&kt LCMD>;
+              ignored-key-positions = <LT2 RT2 RM1 RM2 RM3>;)
+
+ZMK_TRI_STATE(swapper_pc, bindings = <&kt LALT>, <&kp TAB>, <&kt LALT>;
+              ignored-key-positions = <LT2 RT2 RM1 RM2 RM3>;)
+
 #define MT_CORE                                                                \
   flavor = "tap-preferred";                                                    \
   tapping-term-ms = <220>;                                                     \
   quick-tap-ms = <220>;                                                        \
   hold-trigger-key-positions = <0>;
 
-&mt { MT_CORE };
-
+// Mask CTRL on left/right hold to avoid accidental jumps to start/end of doc.
 ZMK_HOLD_TAP(mt_home, bindings = <&masked_home>, <&kp>; MT_CORE)
 ZMK_HOLD_TAP(mt_end, bindings = <&masked_end>, <&kp>; MT_CORE)
-
-// Mask CTRL on left/right hold to avoid accidental jumps to start/end of doc.
 #define MASK_MODS(NAME, MODS, BINDING)                                         \
   ZMK_MOD_MORPH(NAME, bindings = <BINDING>, <BINDING>; mods = <MODS>;)
-
 MASK_MODS(masked_home, (MOD_LCTL), &kp HOME)
 MASK_MODS(masked_end,  (MOD_LCTL), &kp END)
+
+&mt { MT_CORE };
 
 #define NAV_LEFT  &mt_home 0   LEFT  // Tap: left  | Long-tap: start of line.
 #define NAV_RIGHT &mt_end 0    RIGHT // Tap: right | Long-tap: end   of line.
