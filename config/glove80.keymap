@@ -125,7 +125,6 @@ XXX  XXX         XXX       XXX          XXX           ,            XXX          
 ,                          ___          ___       ___   ___        ___           CANCEL
 )
 
-
 GLV80_LAYER(nav_pc,
 XXX  XXX         XXX       XXX          XXX                         XXX           XXX       XXX            XXX      XXX
 XXX  XXX         XXX       XXX          XXX        XXX   XXX        XXX           XXX       XXX            XXX      XXX
@@ -174,7 +173,6 @@ XXX  XXX  XXX  XXX  XXX      ,      XXX  XXX  XXX  XXX  XXX
 enable private relay on mac mini if not enabled
 on macos, i can swap the modifiers for specific keyboards. keep the windows bindings here and swap cmd/ctrl
 look into https://karabiner-elements.pqrs.org and https://www.reddit.com/r/vim/comments/c4oyji/if_youre_on_macos_karabiners_systemwide_vimode_is/
-
 Navigation:
 Arrows
 page up/down
