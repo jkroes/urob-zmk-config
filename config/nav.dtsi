@@ -25,3 +25,16 @@ ZMK_HOLD_TAP(mt_end, bindings = <&masked_end>, <&kp>; MT_CORE)
 #define NAV_UP    &mt LC(HOME) UP    // Tap: up    | Long-tap: start of doc.
 #define NAV_DOWN  &mt LC(END)  DOWN  // Tap: down  | Long-tap: end   of doc.
 #define CANCEL    &kp K_CANCEL       // Cancel caps-word & auto-layers.
+
+#define _QUIT     LG(Q)
+#define _QUIT_PC  LC(Q)
+#define _WIN      LG(W)
+#define _WIN_PC   LC(W)
+#define _COPY     LG(C)
+#define _COPY_PC  LC(C)
+#define _PASTE    LG(V)
+#define _PASTE_PC LC(C)
+#define _LWORD    LA(LEFT)
+#define _LWORD_PC LC(LEFT)
+#define _RWORD    LA(RIGHT)
+#define _RWORD_PC LC(RIGHT)

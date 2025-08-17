@@ -132,7 +132,6 @@ ___  ___       ___       ___         ___                ,      ___       ___    
 //       &kp LS(TAB)  &kp TAB   &none  &select_none  &extend_line  &extend_word  
 // &tog LAYER_Cursor    &none   &none   &select_all  &select_line  &select_word  
 
-
 GLV80_LAYER(nav,
 XXX  XXX         XXX        XXX          XXX                              XXX           XXX       XXX            XXX      XXX
 XXX  XXX         XXX        XXX          XXX        XXX        XXX        XXX           XXX       XXX            XXX      XXX
