@@ -25,11 +25,13 @@
 
 // Maps layers in top to bottom order to order-independent names 
 #define DEF    0
-#define TYPING 1
-#define NAV    2
-#define SYM    3
-#define NUM    4
-#define SYS    5
+#define PC     1
+#define TYPING 2
+#define NAV    3
+#define NAV_PC 4
+#define SYM    5
+#define NUM    5
+#define SYS    7
 
 // Minimum tapping-term-ms
 #define MIN_TAP_TERM 150 
@@ -85,16 +87,15 @@ RIGHT_KP_HRM(right_middle, MIDDY_TAP_TERM, hold-while-undecided;)
 RIGHT_KP_HRM(right_ring,   RINGY_TAP_TERM) 
 RIGHT_KP_HRM(right_pinky,  PINKY_TAP_TERM) 
 
-#define lp(key) &left_pinky   LGUI  key 
+#define lp(key) &left_pinky   LGUI  key // LCTRL (MacOS)
 #define lr(key) &left_ring    LALT  key
 #define lm(key) &left_middle  LSHFT key
-#define li(key) &left_index   LCTRL key
-#define ri(key) &right_index  RCTRL key
+#define li(key) &left_index   LCTRL key // LGUI (MacOS)
+#define ri(key) &right_index  RCTRL key // RGUI (MacOS)
 #define rm(key) &right_middle RSHFT key 
 #define rr(key) &right_ring   RALT  key
-#define rp(key) &right_pinky  RGUI  key
+#define rp(key) &right_pinky  RGUI  key // RCTRL (MacOS)
 
-// Thumb hold-taps
 // TODO Should we use retro-tap for thumb keys? May cause issues
 // e.g. for caps-word. Consider moving to another key?
 // Could we rearrange the morphs? spc and caps-word are taps,
@@ -103,15 +104,22 @@ RIGHT_KP_HRM(right_pinky,  PINKY_TAP_TERM)
 // the same key? Maybe that's why it's lower than hrm value above.
 #define LT_CORE \
   flavor = "balanced"; \
-  tapping-term-ms = <(MIN_TAP_TERM + 75)>; \
-  quick-tap-ms = <(MIN_TAP_TERM + 50)>;
+  tapping-term-ms = <225>; \
+  quick-tap-ms = <200>;
 
 &lt { LT_CORE };
 
 #define THUMB(NAME, HOLD, TAP) \
   ZMK_HOLD_TAP(NAME, bindings = <HOLD>, <TAP>; LT_CORE)
 
-// Simple mod-morph definitions
+#define TP_CORE \
+  bindings = <&kp>, <&kp>; \
+  flavor = "tap-preferred"; \
+  tapping-term-ms = <220>; \
+  quick-tap-ms = <220>;
+
+ZMK_HOLD_TAP(tp, TP_CORE)
+
 #define MORPH(NAME, MODS, BINDING1, BINDING2) \
   ZMK_MOD_MORPH(NAME, mods = <(MODS)>; bindings = <BINDING1>, <BINDING2>;)
 
@@ -119,7 +127,6 @@ RIGHT_KP_HRM(right_pinky,  PINKY_TAP_TERM)
 #define SIMPLE_MORPH(NAME, MOD, BINDING1, BINDING2) \
   MORPH(NAME, MOD_L##MOD|MOD_R##MOD, BINDING1, BINDING2)
 
-// Simple macro definitions
 #define MACRO(NAME, BINDINGS, WAIT_MS, TAP_MS) \
   ZMK_MACRO(NAME, bindings = <BINDINGS>; wait-ms = <WAIT_MS>; tap-ms = <TAP_MS>;)
 
@@ -132,18 +139,28 @@ RIGHT_KP_HRM(right_pinky,  PINKY_TAP_TERM)
         WAIT_MS, \
         TAP_MS)
 
+#define TRI_STATE(NAME, BINDINGS, KEY_POS) \
+  ZMK_TRI_STATE(NAME, \
+                bindings = <BINDINGS>; \
+                ignored-key-positions = <KEY_POS>;) 
+
 #define LT_BSPC_DEL(LAYER) &lt_bspc_del LAYER 0
 THUMB(lt_bspc_del, &mo, &bspc_del)
 MORPH(bspc_del, MOD_LCTL, &kp BSPC, &kp DEL)
  
 MORPH(num_morph, MOD_LCTL, &mo NUM, &num_word NUM)
 
-//HRM(shift_spc, &shift_morph, &spc_morph, 1000, THUMBS)
 #define SHIFT_SPC shift_spc 0 0
 THUMB(shift_spc, &shift_morph, &spc_morph)
 MORPH(shift_morph, MOD_RCTL, &typing_shift, &typing_caps_word)
 LAYER_MACRO(typing_shift, TYPING, &kp LSHFT, 0, 5)
 LAYER_MACRO(typing_caps_word, TYPING, &caps_word, 0, 5)
+&caps_word { 
+  /delete-property/ ignore-modifiers; // Mods deactivate caps-word, requires PR #1451. [TODO: rebase]
+  continue-list = < 
+    UNDER BSPC DEL N1 N2 N3 N4 N5 N6 N7 N8 N9 N0
+  >;
+};
 MORPH(spc_morph, MOD_RCTL, &kp SPACE, &dot_spc_shft)
 MACRO(dot_spc_shft, &kp DOT &kp SPACE &sk LSHFT, 15, 30)
 
@@ -158,7 +175,6 @@ SIMPLE_MORPH(dot_inner_morph, CTL, &kp COLON, &kp GREATER_THAN)
 // Tap: qmark | Shift + tap: excl.
 SIMPLE_MORPH(qexcl, SFT, &kp QMARK, &kp EXCL)
 
-#include "nav.dtsi"
 #include "fn.dtsi"
 #include "leader.dtsi"
 #include "combos.dtsi"  
@@ -169,25 +185,17 @@ SIMPLE_MORPH(qexcl, SFT, &kp QMARK, &kp EXCL)
   quick-release;
 };
 
-&sl { // Allow sticky mods to chord across sticky layers.
-  ignore-modifiers;
-};
-
-&caps_word { 
-  // Mods deactivate caps-word, requires PR #1451. [TODO: rebase]
-  // /delete-property/ ignore-modifiers;
-  continue-list = < 
-    UNDER BSPC DEL N1 N2 N3 N4 N5 N6 N7 N8 N9 N0
-  >;
-};
+// &sl { // Allow sticky mods to chord across sticky layers.
+//   ignore-modifiers;
+// };
 
 #define XXX &none
 #define ___ &trans
 
-//ZMK_CONDITIONAL_LAYER(sys, SYM NUM, SYS) // FN + NUM --> SYS.
+//ZMK_CONDITIONAL_LAYER(sys, FN NUM, SYS) // FN + NUM --> SYS.
 
 GLV80_LAYER(macos,
-&kp F1       &kp F2  &kp F3  &kp F4            &kp F5                          &kp F6       &kp F7        &kp F8      &kp F9   &kp F10 
+&tog PC      &kp F2  &kp F3  &kp F4            &kp F5                          &kp F6       &kp F7        &kp F8      &kp F9   &kp F10 
 XXX          &kp N1  &kp N2  &kp N3            &kp N4      &kp N5      &kp N6  &kp N7       &kp N8        &kp N9      &kp N0   XXX  
 XXX          &kp Q   &kp W   &kp E             &kp R       &kp T       &kp Y   &kp U        &kp I         &kp O       &kp P    XXX
 &kp CAPS     lp(A)   lr(S)   lm(D)             li(F)       &kp G       &kp H   ri(J)        rm(K)         rr(L)       rp(SQT)  XXX
@@ -195,6 +203,19 @@ XXX          &kp Z   &kp X   &kp C             &kp V       &kp B     , &kp N   &
 &bootloader  XXX     XXX     &kp LEFT          &kp RIGHT             ,         &kp UP       &kp DOWN      XXX         XXX      &bootloader
 ,                            &kp TAB           XXX         XXX         XXX     XXX          &kp ESC
 ,                            LT_BSPC_DEL(NAV)  &num_morph  XXX         XXX     &lt SYM RET  &SHIFT_SPC
+)
+
+ZMK_CONDITIONAL_LAYER(nav_pc, PC NAV, NAV_PC) 
+
+GLV80_LAYER(pc,
+___  ___  ___  ___  ___             ___  ___  ___  ___  ___
+___  ___  ___  ___  ___  ___   ___  ___  ___  ___  ___  ___
+___  ___  ___  ___  ___  ___   ___  ___  ___  ___  ___  ___
+___  ___  ___  ___  ___  ___   ___  ___  ___  ___  ___  ___
+___  ___  ___  ___  ___  ___ , ___  ___  ___  ___  ___  ___
+___  ___  ___  ___  ___      ,      ___  ___  ___  ___  ___
+,              ___  ___  ___   ___  ___  ___
+,              ___  ___  ___   ___  ___  ___
 )
 
 GLV80_LAYER(typing,
@@ -208,24 +229,44 @@ ___  ___       ___       ___         ___                ,      ___       ___    
 ,                        ___         ___       ___        ___  ___       ___
 )
 
+TRI_STATE(swapper, &kt LCTRL &kp TAB &kt LCTRL, LT2 RT2 RM1 RM2 RM3)
+#define NAV_LEFT  &tp LC(LEFT)  LEFT  // Tap: left | Long-tap: start of line
+#define NAV_RIGHT &tp LC(RIGHT) RIGHT // Tap: right | Long-tap: end of line
+#define NAV_UP    &tp LC(UP)    UP    // Tap: up | Long-tap: start of doc
+#define NAV_DOWN  &tp LC(DOWN)  DOWN  // Tap: down | Long-tap: end of doc
+#define CANCEL    &kp K_CANCEL        // Cancel caps-word & auto-layers
+
 // PowerToys Keyboard Manager:
-// lctrl tab->lalt tab (swapper)
-// lalt right->lctrl right
-// lalt left->lctrl left 
-// ctrl space->alt spacalt space (with powertoys run enabled)
-// lgui home->lctrl home
-// lgui end->lctrl end
-// ->
+// ctrl space->alt space (with powertoys run enabled)
 GLV80_LAYER(nav,
 XXX  XXX         XXX        XXX          XXX                              XXX           XXX       XXX            XXX      XXX
 XXX  XXX         XXX        XXX          XXX        XXX        XXX        XXX           XXX       XXX            XXX      XXX
-XXX  &kp LC(Q)   &kp LC(W)  &kp LS(TAB)  &swapper   XXX        &kp PG_UP  &kp LA(LEFT)  NAV_UP    &kp LA(RIGHT)  XXX      XXX 
+XXX  XXX         XXX        &kp LS(TAB)  &swapper   XXX        &kp PG_UP  &kp LA(LEFT)  NAV_UP    &kp LA(RIGHT)  XXX      XXX 
 XXX  &sk LGUI    &sk LALT   &sk LSHFT    &sk LCTRL  XXX        &kp PG_DN  NAV_LEFT      NAV_DOWN  NAV_RIGHT      XXX      XXX
-XXX  XXX         XXX        &kp LC(C)    &kp LC(V)  XXX ,      &kp INS    XXX           XXX       XXX            XXX      XXX
+XXX  XXX         XXX        XXX          XXX        XXX ,      XXX        XXX           XXX       XXX            XXX      XXX
 XXX  XXX         XXX        XXX          XXX            ,                 XXX           XXX       XXX            XXX      XXX
 ,                           ___          ___        ___        ___        ___           ___
 ,                           ___          ___        ___        ___        ___           CANCEL
 )
+
+TRI_STATE(swapper_pc, &kt LALT &kp TAB &kt LALT, LT2 RT2 RM1 RM2 RM3)
+#define NAV_LEFT_PC  &tp HOME     LEFT  
+#define NAV_RIGHT_PC &tp END      RIGHT 
+#define NAV_UP_PC    &tp LC(HOME) UP 
+#define NAV_DOWN_PC  &tp LC(END)  DOWN  
+
+GLV80_LAYER(nav_pc,
+___  ___  ___  ___  ___                     ___           ___          ___            ___  ___
+___  ___  ___  ___  ___          ___   ___  ___           ___          ___            ___  ___
+___  ___  ___  ___  &swapper_pc  ___   ___  &kp LC(LEFT)  NAV_UP_PC    &kp LC(RIGHT)  ___  ___
+___  ___  ___  ___  ___          ___   ___  NAV_LEFT_PC   NAV_DOWN_PC  NAV_RIGHT_PC   ___  ___
+___  ___  ___  ___  ___          ___ , ___  ___           ___          ___            ___  ___
+___  ___  ___  ___  ___              ,      ___           ___          ___            ___  ___
+,              ___  ___          ___   ___  ___           ___
+,              ___  ___          ___   ___  ___           ___
+)
+
+MACRO(dot_dot, &macro_tap &kp DOT &kp DOT, 0, 5)
 
 GLV80_LAYER(sym,
 &none      &none      &none      &none      &none                             &none      &none        &none      &none     &none
