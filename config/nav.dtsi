@@ -4,6 +4,7 @@ ZMK_TRI_STATE(swapper, bindings = <&kt LCMD>, <&kp TAB>, <&kt LCMD>;
 ZMK_TRI_STATE(swapper_pc, bindings = <&kt LALT>, <&kp TAB>, <&kt LALT>;
               ignored-key-positions = <LT2 RT2 RM1 RM2 RM3>;)
 
+// TODO Investigate use of hold-trigger-key-positions here
 #define MT_CORE                                                                \
   flavor = "tap-preferred";                                                    \
   tapping-term-ms = <220>;                                                     \

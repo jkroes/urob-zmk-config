@@ -36,9 +36,6 @@
 // Minimum tapping-term-ms
 #define MIN_TAP_TERM 150 
 
-// Default quick-tap-ms
-#define QUICK_TAP (MIN_TAP_TERM + 150) 
-
 // Per-finger tapping-term-ms
 #define PINKY_TAP_TERM (MIN_TAP_TERM + 150) 
 #define RINGY_TAP_TERM (MIN_TAP_TERM + 125)
@@ -51,7 +48,7 @@
                bindings = <HOLD>, <TAP>; \
                flavor = "balanced"; \
                tapping-term-ms = <TAP_TERM>; \
-               quick-tap-ms = <QUICK_TAP>; \
+               quick-tap-ms = <(MIN_TAP_TERM + 150)>; \
                require-prior-idle-ms = <TAP_TERM>; \
                hold-trigger-on-release; \
                hold-trigger-key-positions = <TRIGGER_POS>; \
@@ -70,12 +67,21 @@
   RIGHT_HRM(NAME, &kp, &kp, TAP_TERM, __VA_ARGS__)
 
 // Thumb hold-taps
+// TODO Should we use retro-tap for thumb keys? May cause issues
+// e.g. for caps-word. Consider moving to another key?
+// Could we rearrange the morphs? spc and caps-word are taps,
+// and shift and dot-spc are holds? 
+// TODO How does quick-tap-ms affect spc followed by shift on 
+// the same key? Maybe that's why it's lower than hrm value above.
+#define LT_CORE \
+  flavor = "balanced"; \
+  tapping-term-ms = <(MIN_TAP_TERM + 75)>; \
+  quick-tap-ms = <(MIN_TAP_TERM + 50)>;
+
+&lt { LT_CORE };
+
 #define THUMB(NAME, HOLD, TAP) \
-  ZMK_HOLD_TAP(NAME, \
-               bindings = <HOLD>, <TAP>; \
-               flavor = "balanced"; \
-               tapping-term-ms = <INDEX_TAP_TERM>; \
-               quick-tap-ms = <200>;)
+  ZMK_HOLD_TAP(NAME, bindings = <HOLD>, <TAP>; LT_CORE)
 
 // Simple mod-morph definitions
 #define MORPH(NAME, MODS, BINDING1, BINDING2) \
@@ -154,12 +160,6 @@ SIMPLE_MORPH(qexcl, SFT, &kp QMARK, &kp EXCL)
 
 &sl { // Allow sticky mods to chord across sticky layers.
   ignore-modifiers;
-};
-
-&lt {
-  flavor = "balanced";
-  tapping-term-ms = <300>;
-  quick-tap-ms = <QUICK_TAP>;
 };
 
 &caps_word { 
