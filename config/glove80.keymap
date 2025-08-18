@@ -21,8 +21,9 @@
 // TODO Add back Sys layer with bluetooth, bootloader, sys_reset
 // #define _BT_SEL_KEYS_ &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_CLR
 #include "zmk-helpers/helper.h"
+#include <behaviors/num_word.dtsi> // Requires auto-layer module
 
-// Map layers (top to bottom order) to names for keymap usage
+// Maps layers in top to bottom order to order-independent names 
 #define DEF    0
 #define PC     1
 #define TYPING 2
@@ -33,24 +34,123 @@
 #define SYS    7
 
 // Minimum tapping-term-ms
-#define MIN_TAP_TERM 150
+#define MIN_TAP_TERM 150 
 
 // Default quick-tap-ms
-#define QUICK_TAP_MS (MIN_TAP_TERM + 150)
+#define QUICK_TAP (MIN_TAP_TERM + 150) 
 
-// Home row modifiers
-#define PINKY_TAP_TERM (MIN_TAP_TERM + 150)
+// Per-finger tapping-term-ms
+#define PINKY_TAP_TERM (MIN_TAP_TERM + 150) 
 #define RINGY_TAP_TERM (MIN_TAP_TERM + 125)
 #define MIDDY_TAP_TERM (MIN_TAP_TERM + 100)
 #define INDEX_TAP_TERM (MIN_TAP_TERM + 75)
 
-#include "homerow_mods.dtsi" 
-#include "morphs.dtsi" 
-#include "base_thumbs.dtsi" // Must be sourced after SIMPLE_MORPH is defined
+// Map fingers to home row modifiers
+#define LEFT_PINKY_MOD  LGUI
+#define LEFT_RING_MOD   LALT
+#define LEFT_MIDDLE_MOD LSHFT
+#define LEFT_INDEX_MOD  LCTRL
+#define RIGHT_INDEX_MOD  RCTRL
+#define RIGHT_MIDDLE_MOD RSHFT
+#define RIGHT_RING_MOD   RALT
+#define RIGHT_PINKY_MOD  RGUI
+
+// Home row modifiers
+#define HRM(NAME, HOLD, TAP, TAP_TERM, TRIGGER_POS, ...) \
+  ZMK_HOLD_TAP(NAME, \
+               bindings = <HOLD>, <TAP>; \
+               flavor = "balanced"; \
+               tapping-term-ms = <TAP_TERM>; \
+               quick-tap-ms = <QUICK_TAP>; \
+               require-prior-idle-ms = <TAP_TERM>; \
+               hold-trigger-on-release; \
+               hold-trigger-key-positions = <TRIGGER_POS>; \
+               __VA_ARGS__)
+
+#define LEFT_HRM(NAME, HOLD, TAP, TAP_TERM, ...) \
+  HRM(NAME, HOLD, TAP, TAP_TERM, KEYS_R THUMBS, __VA_ARGS__)
+
+#define RIGHT_HRM(NAME, HOLD, TAP, TAP_TERM, ...) \
+  HRM(NAME, HOLD, TAP, TAP_TERM, KEYS_L THUMBS, __VA_ARGS__)
+
+#define LEFT_KP_HRM(NAME, TAP_TERM, ...) \
+  LEFT_HRM(NAME, &kp, &kp, TAP_TERM, __VA_ARGS__)                                
+
+#define RIGHT_KP_HRM(NAME, TAP_TERM, ...) \
+  RIGHT_HRM(NAME, &kp, &kp, TAP_TERM, __VA_ARGS__)
+
+// Minimize flashing mods for ALT and GUI on PC (assuming they
+// are on the pinky and ring fingers)
+LEFT_KP_HRM(left_pinky,    PINKY_TAP_TERM)
+LEFT_KP_HRM(left_ring,     RINGY_TAP_TERM) 
+LEFT_KP_HRM(left_middle,   MIDDY_TAP_TERM, hold-while-undecided;) 
+LEFT_KP_HRM(left_index,    INDEX_TAP_TERM, hold-while-undecided;) 
+RIGHT_KP_HRM(right_index,  INDEX_TAP_TERM, hold-while-undecided;) 
+RIGHT_KP_HRM(right_middle, MIDDY_TAP_TERM, hold-while-undecided;) 
+RIGHT_KP_HRM(right_ring,   RINGY_TAP_TERM) 
+RIGHT_KP_HRM(right_pinky,  PINKY_TAP_TERM) 
+
+#define lp(key) &left_pinky   LEFT_PINKY_MOD   key 
+#define lr(key) &left_ring    LEFT_RING_MOD    key
+#define lm(key) &left_middle  LEFT_MIDDLE_MOD  key
+#define li(key) &left_index   LEFT_INDEX_MOD   key
+#define ri(key) &right_index  RIGHT_INDEX_MOD  key
+#define rm(key) &right_middle RIGHT_MIDDLE_MOD key 
+#define rr(key) &right_ring   RIGHT_RING_MOD   key
+#define rp(key) &right_pinky  RIGHT_PINKY_MOD  key
+
+// Thumb hold-taps
+#define THUMB(NAME, HOLD, TAP) \
+  ZMK_HOLD_TAP(NAME, \
+               bindings = <HOLD>, <TAP>; \
+               flavor = "balanced"; \
+               tapping-term-ms = <INDEX_TAP_TERM>; \
+               quick-tap-ms = <200>;)
+
+// Simple macro definitions
+#define MACRO(NAME, BINDINGS) \
+  ZMK_MACRO(NAME, bindings = <BINDINGS>;)
+
+// Trigger a layer and hold mods before the next keypress
+#define LAYER_MACRO(NAME, LAYER, MODS) \
+  MACRO(NAME, \
+        &macro_press &mo LAYER MODS \
+        &macro_pause_for_release \
+        &macro_release &mo LAYER MODS)
+
+// Simple mod-morph definitions
+#define MORPH(NAME, MODS, BINDING1, BINDING2) \
+  ZMK_MOD_MORPH(NAME, mods = <(MODS)>; bindings = <BINDING1>, <BINDING2>;)
+
+// Mod-morph with a single left/right modifier
+#define SIMPLE_MORPH(NAME, MOD, BINDING1, BINDING2) \
+  MORPH(NAME, MOD_L##MOD|MOD_R##MOD, BINDING1, BINDING2)
+
+THUMB(bspc_del, &mo, &bspc_del_morph)
+MORPH(bspc_del_morph, MOD_LCTL, &kp BSPC, &kp DEL)
+
+MORPH(num_morph, MOD_LCTL, &mo NUM, &num_word NUM)
+
+THUMB(shift_spc, &shift_caps, &spc_dot_spc)
+MORPH(shift_caps, MOD_RCTL, &shift_typing, &caps_word_typing)
+LAYER_MACRO(shift_typing, TYPING, &kp LSHFT)
+LAYER_MACRO(caps_word_typing, TYPING, &caps_word)
+MORPH(spc_dot_spc, MOD_RCTL, &kp SPACE, &dot_spc)
+MACRO(dot_spc, &kp DOT &kp SPACE &sk LSHFT)
+
+// Tap: comma | Shift + tap: semicolon | Ctrl + shift + tap: <.
+SIMPLE_MORPH(comma_morph, SFT, &kp COMMA, &comma_inner_morph)
+SIMPLE_MORPH(comma_inner_morph, CTL, &kp SEMICOLON, &kp LESS_THAN)
+// Tap: dot | Shift + tap: colon | Ctrl + shift + tap: >.
+SIMPLE_MORPH(dot_morph, SFT, &kp DOT, &dot_inner_morph)
+SIMPLE_MORPH(dot_inner_morph, CTL, &kp COLON, &kp GREATER_THAN)
+// Tap: qmark | Shift + tap: excl.
+SIMPLE_MORPH(qexcl, SFT, &kp QMARK, &kp EXCL)
+
 #include "nav.dtsi"
 #include "fn.dtsi"
 #include "leader.dtsi"
-#include "combos.dtsi" // Must be sourced after &hml and &hmr are defined
+#include "combos.dtsi"  
 
 // Built-in behavior modifiers
 &sk {
@@ -65,7 +165,7 @@
 &lt {
   flavor = "balanced";
   tapping-term-ms = <300>;
-  quick-tap-ms = <QUICK_TAP_MS>;
+  quick-tap-ms = <QUICK_TAP>;
 };
 
 &caps_word { 
@@ -89,19 +189,19 @@ XXX          &kp Q   &kp W   &kp E            &kp R       &kp T       &kp Y   &k
 &kp CAPS     lp(A)   lr(S)   lm(D)            li(F)       &kp G       &kp H   ri(J)        rm(K)         rr(L)       rp(SQT)  XXX
 XXX          &kp Z   &kp X   &kp C            &kp V       &kp B     , &kp N   &kp M        &comma_morph  &dot_morph  &qexcl   XXX
 &bootloader  XXX     XXX     &kp LEFT         &kp RIGHT             ,         &kp UP       &kp DOWN      XXX         XXX      &bootloader
-,                            &kp LGUI         &kp LALT    &kp LCTRL   XXX     XXX          XXX
-,                            &bspc_del NAV 0  &num 0 ESC  XXX         XXX     &lt SYM RET  &shift_spc_tab 0 0
+,                            &mt LCTRL TAB    &kp LALT    &kp LGUI    XXX     XXX          &kp ESC
+,                            &bspc_del NAV 0  &num_morph  XXX         XXX     &lt SYM RET  &shift_spc 0 0
 )
 
 GLV80_LAYER(pc,
-___  ___       ___       ___        ___                       ___       ___    ___       ___         ___
-___  ___       ___       ___        ___       ___        ___  ___       ___    ___       ___         ___
-___  ___       ___       ___        ___       ___        ___  ___       ___    ___       ___         ___
-___  lp_pc(A)  lr_pc(S)  lm_pc(D)   li_pc(F)  ___        ___  ri_pc(J)  rm(K)  rr_pc(L)  rp_pc(SQT)  ___
-___  ___       ___       ___        ___       ___      , ___  ___       ___    ___       ___         ___
-___  ___       ___       ___        ___                ,      ___       ___    ___       ___         ___
-,                        &kp LCTRL  ___       &kp LGUI   ___  ___       ___
-,                        ___        ___       ___        ___  ___       ___
+___  ___  ___  ___  ___             ___  ___  ___  ___  ___
+___  ___  ___  ___  ___  ___   ___  ___  ___  ___  ___  ___
+___  ___  ___  ___  ___  ___   ___  ___  ___  ___  ___  ___
+___  ___  ___  ___  ___  ___   ___  ___  ___  ___  ___  ___
+___  ___  ___  ___  ___  ___ , ___  ___  ___  ___  ___  ___
+___  ___  ___  ___  ___      ,      ___  ___  ___  ___  ___
+,              ___  ___  ___   ___  ___  ___
+,              ___  ___  ___   ___  ___  ___
 )
 
 GLV80_LAYER(typing,
@@ -177,7 +277,7 @@ XXX  XXX  XXX  XXX  XXX      ,      XXX  XXX  XXX  XXX  XXX
 ,              ___  ___  ___   ___  ___  ___
 )
 
-GLV80_LAYER(Sys,
+GLV80_LAYER(sys,
 XXX  XXX  XXX  XXX  XXX             XXX  XXX  XXX  XXX  XXX
 XXX  XXX  XXX  XXX  XXX  XXX   XXX  XXX  XXX  XXX  XXX  XXX
 XXX  XXX  XXX  XXX  XXX  XXX   XXX  XXX  XXX  XXX  XXX  XXX

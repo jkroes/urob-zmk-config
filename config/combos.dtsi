@@ -49,10 +49,14 @@ ZMK_COMBO_HORZ(bspc,  &kp BSPC,       RT1 RT2,     DEF NAV NUM)
 ZMK_COMBO_HORZ(del,   &kp DEL,        RT2 RT3,     DEF NAV NUM)
 
 RIGHT_COMBO_HRM(lpar, &lpar_lt, RS(LGUI) 0, RM1 RM2, DEF NAV NUM)
+SIMPLE_MORPH(lpar_lt, SFT, &kp LPAR, &kp LT)
 RIGHT_COMBO_HRM(rpar, &rpar_gt, RS(LALT) 0, RM2 RM3, DEF NAV NUM)
+SIMPLE_MORPH(rpar_gt, SFT, &kp RPAR, &kp GT)
 
 ZMK_COMBO_HORZ(lbkt,  &lbkt_lbrc,     RB1 RB2,   DEF NAV NUM)
+SIMPLE_MORPH(lbkt_lbrc, SFT, &kp LBKT, &kp LBRC)
 ZMK_COMBO_HORZ(rbkt,  &rbkt_rbrc,     RB2 RB3,   DEF NAV NUM)
+SIMPLE_MORPH(rbkt_rbrc, SFT, &kp RBKT, &kp RBRC)
 
 /* Vertical combos - left hand */
 ZMK_COMBO_VERT(at,    &kp AT,         LT3 LM3,     DEF NAV NUM)
