@@ -38,3 +38,6 @@ ZMK_HOLD_TAP(mt_end, bindings = <&masked_end>, <&kp>; MT_CORE)
 #define _LWORD_PC LC(LEFT)
 #define _RWORD    LA(RIGHT)
 #define _RWORD_PC LC(RIGHT)
+
+
+MACRO(dot_dot, &macro_tap &kp DOT &kp DOT)
