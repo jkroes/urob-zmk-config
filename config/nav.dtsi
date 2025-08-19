@@ -4,62 +4,79 @@
 //#define _UNDO      &kp LC(Z)              // Mostly cross-platform; suspends some Terminals
 //#define _REDO      &kp LS(LC(Z))          // MacOS or Google Workspace or VSCode
 //#define _REDO2     &kp LC(Y)              // Windows or Microsoft Office
+//#define CANCEL     &kp K_CANCEL           // Cancel caps-word & auto-layers
+
 #define select_all kp LC(A)
 MACRO(select_none, &kp DOWN &kp UP &kp RIGHT &kp LEFT, 1, 1)
 
-#define NAV_BEHAVIORS(_W, _HOME, _END, suffix)                                            \
-  SIMPLE_MORPH(select_word ## suffix, SFT, &select_word_right, &select_word_left)         \
-  MACRO(select_word_right  ## suffix, &kp _W(RIGHT) &kp _W(LEFT) &kp _W(LS(RIGHT)), 1, 1) \
-  MACRO(select_word_left   ## suffix,  &kp _W(LEFT) &kp _W(RIGHT) &kp _W(LS(LEFT)), 1, 1) \
-                                                                                          \
-  SIMPLE_MORPH(extend_word ## suffix, SFT, &extend_word_right, &extend_word_left)         \
-  MACRO(extend_word_right  ## suffix, &kp _W(LS(RIGHT)), 1, 1)                            \
-  MACRO(extend_word_left   ## suffix,  &kp _W(LS(LEFT)), 1, 1)                            \
-                                                                                          \
-  SIMPLE_MORPH(select_line ## suffix, SFT, &select_line_right, &select_line_left)         \
-  MACRO(select_line_right  ## suffix, &kp _HOME &kp LS(_END), 1, 1)                       \
-  MACRO(select_line_left   ## suffix,  &kp _END &kp LS(_HOME), 1, 1)                      \
-                                                                                          \
-  SIMPLE_MORPH(extend_line ## suffix, SFT, &extend_line_right, &extend_line_left)         \
-  MACRO(extend_line_right  ## suffix, &kp LS(DOWN) &kp LS(_END), 1, 1)                    \
-  MACRO(extend_line_left   ## suffix, &kp LS(UP) &kp LS(_HOME), 1, 1)
+// TODO Change the modifier from SFT to CTL for consistency with other morphs
+#define DEFINE_SELEXT_NODES(_W, _HOME, _END, _SUFFIX)                                                              \
+  MACRO(CAT(select_word_right, _SUFFIX), &kp _W(RIGHT) &kp _W(LEFT) &kp _W(LS(RIGHT)), 1, 1)                       \
+  MACRO(CAT(select_word_left,  _SUFFIX), &kp _W(LEFT)  &kp _W(RIGHT) &kp _W(LS(LEFT)),  1, 1)                      \
+  MACRO(CAT(extend_word_right, _SUFFIX), &kp _W(LS(RIGHT)),                             1, 1)                      \
+  MACRO(CAT(extend_word_left,  _SUFFIX), &kp _W(LS(LEFT)),                              1, 1)                      \
+  MACRO(CAT(select_line_right, _SUFFIX), &kp _HOME &kp LS(_END),                        1, 1)                      \
+  MACRO(CAT(select_line_left,  _SUFFIX), &kp _END  &kp LS(_HOME),                       1, 1)                      \
+  MACRO(CAT(extend_line_right, _SUFFIX), &kp LS(DOWN) &kp LS(_END),                     1, 1)                      \
+  MACRO(CAT(extend_line_left,  _SUFFIX), &kp LS(UP)   &kp LS(_HOME),                    1, 1)                      \
+                                                                                                                   \
+  SIMPLE_MORPH(CAT(select_word, _SUFFIX), SFT, &CAT(select_word_right, _SUFFIX), &CAT(select_word_left,  _SUFFIX)) \
+  SIMPLE_MORPH(CAT(extend_word, _SUFFIX), SFT, &CAT(extend_word_right, _SUFFIX), &CAT(extend_word_left,  _SUFFIX)) \
+  SIMPLE_MORPH(CAT(select_line, _SUFFIX), SFT, &CAT(select_line_right, _SUFFIX), &CAT(select_line_left,  _SUFFIX)) \
+  SIMPLE_MORPH(CAT(extend_line, _SUFFIX), SFT, &CAT(extend_line_right, _SUFFIX), &CAT(extend_line_left,  _SUFFIX))
 
-NAV_BEHAVIORS(LA, LC(LEFT), LC(RIGHT),)
-NAV_BEHAVIORS(LC, HOME, END, _pc)
+DEFINE_SELEXT_NODES(LA, LC(LEFT),  LC(RIGHT), )
+DEFINE_SELEXT_NODES(LC, HOME,      END,       _pc)
 
-//#define _W      LA
-//#define _W      LC
-//#define _HOME   LC(LEFT)
-//#define _END    LC(RIGHT)
-//#define _HOME   HOME
-//#define _END    END
+#define TP_CORE \
+  flavor = "tap-preferred"; \
+  tapping-term-ms = <220>; \
+  quick-tap-ms = <220>;
+
+ZMK_HOLD_TAP(tp_kp, bindings = <&kp>, <&kp>; TP_CORE)
+
+#define _WORD_LEFT(_W)      &kp _W(LEFT)
+#define _WORD_RIGHT(_W)     &kp _W(RIGHT)
+#define _NAV_LEFT(_HOME)    &tp_kp _HOME     LEFT
+#define _NAV_RIGHT(_END)    &tp_kp _END      RIGHT
+#define _NAV_UP(_DOC_HOME)  &tp_kp _DOC_HOME UP
+#define _NAV_DOWN(_DOC_END) &tp_kp _DOC_END  DOWN
+
+#define WORD_LEFT     _WORD_LEFT(LA)
+#define WORD_RIGHT    _WORD_RIGHT(LA)
+#define NAV_LEFT      _NAV_LEFT(LC(LEFT))   // Tap: left | Long-tap: start of line
+#define NAV_RIGHT     _NAV_RIGHT(LC(RIGHT)) // Tap: right | Long-tap: end of line
+#define NAV_UP        _NAV_UP(LC(UP))       // Tap: up | Long-tap: start of doc
+#define NAV_DOWN      _NAV_DOWN(LC(DOWN))   // Tap: down | Long-tap: end of doc
+
+#define WORD_LEFT_PC  _WORD_LEFT(LC) 
+#define WORD_RIGHT_PC _WORD_RIGHT(LC) 
+#define NAV_LEFT_PC   _NAV_LEFT(HOME) 
+#define NAV_RIGHT_PC  _NAV_RIGHT(END) 
+#define NAV_UP_PC     _NAV_UP(LC(HOME))
+#define NAV_DOWN_PC   _NAV_DOWN(LC(END))  
+
+
+#define SWAPPER_POS LB1 RM1 RM2 RM3 RM4 // LS(TAB) NAV_LEFT NAV_UP NAV_DOWN NAV_RIGHT
+
+#define DEFINE_SWAPPER_NODES(_MOD, _SUFFIX)                                            \
+  ZMK_HOLD_TAP(CAT(swapper_kp, _SUFFIX),                                               \
+               bindings = <&CAT(swapper, _SUFFIX)>, <&kp>;                             \
+               TP_CORE)                                                                \
+  TRI_STATE(CAT(swapper, _SUFFIX),                                                     \
+            &kt _MOD &kp TAB &kt _MOD,                                                 \
+            SWAPPER_POS)
+
+DEFINE_SWAPPER_NODES(LCTRL, )
+DEFINE_SWAPPER_NODES(LALT,  _pc) 
+
+#define SWAPPER_TAB_ALIAS(_SUFFIX) &CAT(swapper_kp, _SUFFIX) 0 TAB
+
+#define SWAPPER_TAB      SWAPPER_TAB_ALIAS()
+#define SWAPPER_TAB_PC   SWAPPER_TAB_ALIAS(_pc)
 
 
 
-
-
-
-#define SWAPPER_TAB &swapper_kp 0 TAB
-ZMK_HOLD_TAP(swapper_kp, bindings = <&swapper>, <&kp>; TP_CORE)
-TRI_STATE(swapper, &kt LCTRL &kp TAB &kt LCTRL, LN1 RM1 RM2 RM3 RM4)
-#define WORD_LEFT  &kp LA(LEFT)
-#define WORD_RIGHT &kp LA(RIGHT)
-#define NAV_LEFT   &tp_kp LC(LEFT)  LEFT  // Tap: left | Long-tap: start of line
-#define NAV_RIGHT  &tp_kp LC(RIGHT) RIGHT // Tap: right | Long-tap: end of line
-#define NAV_UP     &tp_kp LC(UP)    UP    // Tap: up | Long-tap: start of doc
-#define NAV_DOWN   &tp_kp LC(DOWN)  DOWN  // Tap: down | Long-tap: end of doc
-// #define CANCEL     &kp K_CANCEL           // Cancel caps-word & auto-layers
-
-
-#define SWAPPER_TAB_PC &swapper_pc_kp 0 TAB
-ZMK_HOLD_TAP(swapper_pc_kp, bindings = <&swapper_pc>, <&kp>; TP_CORE)
-TRI_STATE(swapper_pc, &kt LALT &kp TAB &kt LALT, LN1 RM1 RM2 RM3 RM4)
-#define WORD_LEFT_PC  &kp LC(LEFT)
-#define WORD_RIGHT_PC &kp LC(RIGHT)
-#define NAV_LEFT_PC   &tp_kp HOME     LEFT  
-#define NAV_RIGHT_PC  &tp_kp END      RIGHT 
-#define NAV_UP_PC     &tp_kp LC(HOME) UP 
-#define NAV_DOWN_PC   &tp_kp LC(END)  DOWN  
 
 
 // shortcuts in fn.dtsi                                

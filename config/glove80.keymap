@@ -23,6 +23,10 @@
 #include "zmk-helpers/helper.h"
 #include <behaviors/num_word.dtsi> // Requires auto-layer module
 
+/* Two-pass token pasting */
+#define _CAT(a,b) a##b      // concatenate
+#define CAT(a,b) _CAT(a,b) // expand and concatenate
+
 // Maps layers in top to bottom order to order-independent names 
 #define DEF    0
 #define PC     1
@@ -111,13 +115,6 @@ RIGHT_KP_HRM(right_pinky,  PINKY_TAP_TERM)
 
 #define THUMB(NAME, HOLD, TAP) \
   ZMK_HOLD_TAP(NAME, bindings = <HOLD>, <TAP>; LT_CORE)
-
-#define TP_CORE \
-  flavor = "tap-preferred"; \
-  tapping-term-ms = <220>; \
-  quick-tap-ms = <220>;
-
-ZMK_HOLD_TAP(tp_kp, bindings = <&kp>, <&kp>; TP_CORE)
 
 #define MORPH(NAME, MODS, BINDING1, BINDING2) \
   ZMK_MOD_MORPH(NAME, mods = <(MODS)>; bindings = <BINDING1>, <BINDING2>;)
@@ -244,8 +241,8 @@ XXX  XXX         XXX        XXX          XXX              ,               XXX   
 GLV80_LAYER(nav_pc,
 ___  ___  ___  ___  ___                                 ___              ___              ___          ___            ___
 ___  ___  ___  ___  ___             ___   ___           ___              ___              ___          ___            ___
-___  ___  ___  ___  SWAPPER_TAB_PC  ___   ___           WORD_LEFT_PC     ___              ___          WORD_RIGHT_PC  ___
-___  ___  ___  ___  ___             ___   ___           NAV_LEFT_PC      NAV_UP_PC        NAV_DOWN_PC  NAV_RIGHT_PC   ___ 
+___  ___  ___  ___  ___             ___   ___           WORD_LEFT_PC     ___              ___          WORD_RIGHT_PC  ___
+___  ___  ___  ___  SWAPPER_TAB_PC  ___   ___           NAV_LEFT_PC      NAV_UP_PC        NAV_DOWN_PC  NAV_RIGHT_PC   ___ 
 ___  ___  ___  ___  ___             ___ , ___           ___              ___              ___          ___            ___
 ___  ___  ___  ___  ___                 ,               ___              ___              ___          ___            ___
 ,              ___  ___             ___   &select_none  &extend_line_pc  &extend_word_pc 
