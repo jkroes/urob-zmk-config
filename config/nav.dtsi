@@ -1,0 +1,72 @@
+//#define _CUT       &kp LC(X)
+//#define _COPY      &kp LC(C)
+//#define _PASTE     &kp LC(V)
+//#define _UNDO      &kp LC(Z)              // Mostly cross-platform; suspends some Terminals
+//#define _REDO      &kp LS(LC(Z))          // MacOS or Google Workspace or VSCode
+//#define _REDO2     &kp LC(Y)              // Windows or Microsoft Office
+#define select_all kp LC(A)
+MACRO(select_none, &kp DOWN &kp UP &kp RIGHT &kp LEFT, 1, 1)
+
+#define NAV_BEHAVIORS(_W, _HOME, _END, suffix)                                            \
+  SIMPLE_MORPH(select_word ## suffix, SFT, &select_word_right, &select_word_left)         \
+  MACRO(select_word_right  ## suffix, &kp _W(RIGHT) &kp _W(LEFT) &kp _W(LS(RIGHT)), 1, 1) \
+  MACRO(select_word_left   ## suffix,  &kp _W(LEFT) &kp _W(RIGHT) &kp _W(LS(LEFT)), 1, 1) \
+                                                                                          \
+  SIMPLE_MORPH(extend_word ## suffix, SFT, &extend_word_right, &extend_word_left)         \
+  MACRO(extend_word_right  ## suffix, &kp _W(LS(RIGHT)), 1, 1)                            \
+  MACRO(extend_word_left   ## suffix,  &kp _W(LS(LEFT)), 1, 1)                            \
+                                                                                          \
+  SIMPLE_MORPH(select_line ## suffix, SFT, &select_line_right, &select_line_left)         \
+  MACRO(select_line_right  ## suffix, &kp _HOME &kp LS(_END), 1, 1)                       \
+  MACRO(select_line_left   ## suffix,  &kp _END &kp LS(_HOME), 1, 1)                      \
+                                                                                          \
+  SIMPLE_MORPH(extend_line ## suffix, SFT, &extend_line_right, &extend_line_left)         \
+  MACRO(extend_line_right  ## suffix, &kp LS(DOWN) &kp LS(_END), 1, 1)                    \
+  MACRO(extend_line_left   ## suffix, &kp LS(UP) &kp LS(_HOME), 1, 1)
+
+NAV_BEHAVIORS(LA, LC(LEFT), LC(RIGHT),)
+NAV_BEHAVIORS(LC, HOME, END, _pc)
+
+//#define _W      LA
+//#define _W      LC
+//#define _HOME   LC(LEFT)
+//#define _END    LC(RIGHT)
+//#define _HOME   HOME
+//#define _END    END
+
+
+
+
+
+
+#define SWAPPER_TAB &swapper_kp 0 TAB
+ZMK_HOLD_TAP(swapper_kp, bindings = <&swapper>, <&kp>; TP_CORE)
+TRI_STATE(swapper, &kt LCTRL &kp TAB &kt LCTRL, LN1 RM1 RM2 RM3 RM4)
+#define WORD_LEFT  &kp LA(LEFT)
+#define WORD_RIGHT &kp LA(RIGHT)
+#define NAV_LEFT   &tp_kp LC(LEFT)  LEFT  // Tap: left | Long-tap: start of line
+#define NAV_RIGHT  &tp_kp LC(RIGHT) RIGHT // Tap: right | Long-tap: end of line
+#define NAV_UP     &tp_kp LC(UP)    UP    // Tap: up | Long-tap: start of doc
+#define NAV_DOWN   &tp_kp LC(DOWN)  DOWN  // Tap: down | Long-tap: end of doc
+// #define CANCEL     &kp K_CANCEL           // Cancel caps-word & auto-layers
+
+
+#define SWAPPER_TAB_PC &swapper_pc_kp 0 TAB
+ZMK_HOLD_TAP(swapper_pc_kp, bindings = <&swapper_pc>, <&kp>; TP_CORE)
+TRI_STATE(swapper_pc, &kt LALT &kp TAB &kt LALT, LN1 RM1 RM2 RM3 RM4)
+#define WORD_LEFT_PC  &kp LC(LEFT)
+#define WORD_RIGHT_PC &kp LC(RIGHT)
+#define NAV_LEFT_PC   &tp_kp HOME     LEFT  
+#define NAV_RIGHT_PC  &tp_kp END      RIGHT 
+#define NAV_UP_PC     &tp_kp LC(HOME) UP 
+#define NAV_DOWN_PC   &tp_kp LC(END)  DOWN  
+
+
+// shortcuts in fn.dtsi                                
+// PowerToys Keyboard Manager:                         
+// ctrl space->alt space (with powertoys run enabled)  
+// _UNDO _REDO _REDO2
+// &kp _FIND  &kp _FIND_PREV  &kp _FIND_NEXT           
+// _CUT       _COPY        _PASTE
+// &select_all   &select_line  &select_word  
+// &select_none  &extend_line  &extend_word  
