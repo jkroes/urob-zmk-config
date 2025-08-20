@@ -11,7 +11,7 @@ MACRO(select_none, &kp DOWN &kp UP &kp RIGHT &kp LEFT, 1, 1)
 
 // TODO Change the modifier from SFT to CTL for consistency with other morphs
 #define DEFINE_SELEXT_NODES(_W, _HOME, _END, _SUFFIX)                                                              \
-  MACRO(CAT(select_word_right, _SUFFIX), &kp _W(RIGHT) &kp _W(LEFT) &kp _W(LS(RIGHT)), 1, 1)                       \
+  MACRO(CAT(select_word_right, _SUFFIX), &kp _W(RIGHT) &kp _W(LEFT) &kp _W(LS(RIGHT)),  1, 1)                       \
   MACRO(CAT(select_word_left,  _SUFFIX), &kp _W(LEFT)  &kp _W(RIGHT) &kp _W(LS(LEFT)),  1, 1)                      \
   MACRO(CAT(extend_word_right, _SUFFIX), &kp _W(LS(RIGHT)),                             1, 1)                      \
   MACRO(CAT(extend_word_left,  _SUFFIX), &kp _W(LS(LEFT)),                              1, 1)                      \
@@ -60,25 +60,20 @@ ZMK_HOLD_TAP(tp, bindings = <&kp>, <&kp>; TP_CORE)
 
 #define SWAPPER_POS LB1 RM1 RM2 RM3 RM4 // LS(TAB) NAV_LEFT NAV_UP NAV_DOWN NAV_RIGHT
 
-#define DEFINE_SWAPPER_NODES(_MOD, _SUFFIX)                                            \
-  ZMK_HOLD_TAP(CAT(tp_swapper, _SUFFIX),                                               \
-               bindings = <&CAT(swapper, _SUFFIX)>, <&kp>;                             \
-               TP_CORE)                                                                \
-  TRI_STATE(CAT(swapper, _SUFFIX),                                                     \
-            &kt _MOD &kp TAB &kt _MOD,                                                 \
+// tapping-term-ms needs to be sufficiently fast not to interfere
+// with repeated presses of the swapper portion of the tap-dance
+// but not too fast. Luckily swapper has a noticeable visual delay
+// on MacOS
+#define DEFINE_SWAPPER_NODES(_MOD, _SUFFIX)                      \
+  ZMK_TAP_DANCE(CAT(td_swapper, _SUFFIX),                        \
+                bindings = <&CAT(swapper, _SUFFIX)>, <&kp TAB>;  \
+                tapping-term-ms = <400>;) \
+  TRI_STATE(CAT(swapper, _SUFFIX),                               \
+            &kt _MOD &kp TAB &kt _MOD,                           \
             SWAPPER_POS)
 
 DEFINE_SWAPPER_NODES(LCTRL, )
 DEFINE_SWAPPER_NODES(LALT,  _pc) 
-
-#define SWAPPER_TAB_ALIAS(_SUFFIX) &CAT(tp_swapper, _SUFFIX) 0 TAB
-
-#define SWAPPER_TAB      SWAPPER_TAB_ALIAS()
-#define SWAPPER_TAB_PC   SWAPPER_TAB_ALIAS(_pc)
-
-
-
-
 
 // shortcuts in fn.dtsi                                
 // PowerToys Keyboard Manager:                         

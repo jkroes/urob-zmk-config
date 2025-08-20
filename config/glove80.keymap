@@ -231,18 +231,18 @@ GLV80_LAYER(nav,
 XXX  XXX         XXX        XXX          XXX                              XXX           XXX           XXX        XXX         XXX
 XXX  XXX         XXX        XXX          XXX          XXX   XXX           XXX           XXX           XXX        XXX         XXX
 XXX  &sk LGUI    &sk LALT   &sk LSHFT    &sk LCTRL    XXX   XXX           WORD_LEFT     &kp PG_UP     &kp PG_DN  WORD_RIGHT  XXX 
-XXX  &kp DEL     &kp BSPC   &kp SPC      SWAPPER_TAB  XXX   XXX           NAV_LEFT      NAV_UP        NAV_DOWN   NAV_RIGHT   XXX
+XXX  &kp DEL     &kp BSPC   &kp SPC      &td_swapper  XXX   XXX           NAV_LEFT      NAV_UP        NAV_DOWN   NAV_RIGHT   XXX
 XXX  &kp INS     &kp ESC    &kp RET      &kp LS(TAB)  XXX , XXX           XXX           XXX           XXX        XXX         XXX
 XXX  XXX         XXX        XXX          XXX              ,               XXX           XXX           XXX        XXX         XXX
 ,                           ___          ___          ___   &select_none  &extend_line  &extend_word 
 ,                           ___          ___          ___   &select_all   &select_line  &select_word  
 )                                                      
- 
+
 GLV80_LAYER(nav_pc,
 ___  ___  ___  ___  ___                                 ___              ___              ___          ___            ___
 ___  ___  ___  ___  ___             ___   ___           ___              ___              ___          ___            ___
 ___  ___  ___  ___  ___             ___   ___           WORD_LEFT_PC     ___              ___          WORD_RIGHT_PC  ___
-___  ___  ___  ___  SWAPPER_TAB_PC  ___   ___           NAV_LEFT_PC      NAV_UP_PC        NAV_DOWN_PC  NAV_RIGHT_PC   ___ 
+___  ___  ___  ___  &td_swapper_pc  ___   ___           NAV_LEFT_PC      NAV_UP_PC        NAV_DOWN_PC  NAV_RIGHT_PC   ___ 
 ___  ___  ___  ___  ___             ___ , ___           ___              ___              ___          ___            ___
 ___  ___  ___  ___  ___                 ,               ___              ___              ___          ___            ___
 ,              ___  ___             ___   &select_none  &extend_line_pc  &extend_word_pc 
