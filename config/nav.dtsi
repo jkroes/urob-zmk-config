@@ -61,20 +61,12 @@ ZMK_HOLD_TAP(tp, bindings = <&kp>, <&kp>; TP_CORE)
 #define SWAPPER_POS LB1 RM1 RM2 RM3 RM4 // Continue swapper on LS(TAB) NAV_LEFT NAV_UP NAV_DOWN NAV_RIGHT
 
 #define DEFINE_SWAPPER_NODES(_MOD, _SUFFIX)                                            \
-  ZMK_HOLD_TAP(CAT(tp_swapper, _SUFFIX),                                               \
-               bindings = <&kp>, <&CAT(swapper, _SUFFIX)>;                             \
-               TP_CORE)                                                                \
   TRI_STATE(CAT(swapper, _SUFFIX),                                                     \
             &kt _MOD &kp TAB &kt _MOD,                                                 \
             SWAPPER_POS)
 
 DEFINE_SWAPPER_NODES(LCTRL, )
 DEFINE_SWAPPER_NODES(LALT,  _pc) 
-
-#define SWAPPER_TAB_ALIAS(_SUFFIX) &CAT(tp_swapper, _SUFFIX) TAB 0 // Hold: tab | Tap: swapper
-
-#define SWAPPER_TAB      SWAPPER_TAB_ALIAS()
-#define SWAPPER_TAB_PC   SWAPPER_TAB_ALIAS(_pc)
 
 // shortcuts in fn.dtsi                                
 // PowerToys Keyboard Manager:                         
