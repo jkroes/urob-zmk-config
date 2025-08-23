@@ -60,16 +60,15 @@ ZMK_HOLD_TAP(tp, bindings = <&kp>, <&kp>; TP_CORE)
 
 #define SWAPPER_POS LB1 RM1 RM2 RM3 RM4 // Continue swapper on LS(TAB) NAV_LEFT NAV_UP NAV_DOWN NAV_RIGHT
 
-// Tri-state for Windows/RDP (does not repeat on hold)
-MACRO(alt_press, &macro_press &kp LALT, 15, 30)
-MACRO(tapdelay_tab, &macro_wait_time 120 &macro_tap &kp TAB, 15, 30)
+// Tri-state for Windows/RDP
+MACRO(alt_press, &macro_press &kp LALT &macro_wait_time 120, 15, 30)
 MACRO(alt_release, &macro_release &kp LALT, 15, 30)
 ZMK_TRI_STATE(swapper_pc,
-    bindings = <&alt_press>, <&tapdelay_tab>, <&alt_release>;
+    bindings = <&alt_press>, <&kp TAB>, <&alt_release>;
     ignored-key-positions = <SWAPPER_POS>;
 )
-// Tri-state for macOS (repeats on hold)
-ZMK_TRI_STATE(swapper
+// Tri-state for macOS 
+ZMK_TRI_STATE(swapper,
     bindings = <&kt LCTRL>, <&kp TAB>, <&kt LCTRL>;
     ignored-key-positions = <SWAPPER_POS>;
 )
