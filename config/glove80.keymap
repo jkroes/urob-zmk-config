@@ -51,6 +51,12 @@
 #define NUM    6
 #define SYS    7
 
+// CONFIG_* symbols are Kconfig (C build-time) values, not Devicetree tokens. 
+// The DTS preprocessor that feeds dtc doesn’t know about CONFIG_ZMK_*
+// definitions, so I need to supply my own definitions for use with MACRO
+#define MACRO_DEFAULT_WAIT_MS 15 // CONFIG_ZMK_MACRO_DEFAULT_WAIT_MS
+#define MACRO_DEFAULT_TAP_MS 30 // CONFIG_ZMK_MACRO_DEFAULT_TAP_MS
+
 // Minimum tapping-term-ms
 #define MIN_TAP_TERM 150 
 
@@ -132,17 +138,22 @@ RIGHT_HRM(right_pinky,  &kp, &kp, PINKY_TAP_TERM)
 #define SIMPLE_MORPH(NAME, MOD, BINDING1, BINDING2) \
   MORPH(NAME, MOD_L##MOD|MOD_R##MOD, BINDING1, BINDING2)
 
-#define MACRO(NAME, BINDINGS, WAIT_MS, TAP_MS) \
-  ZMK_MACRO(NAME, bindings = <BINDINGS>; wait-ms = <WAIT_MS>; tap-ms = <TAP_MS>;)
+#define MACRO(...) CONCAT(MACRO_, VARGS(__VA_ARGS__))(__VA_ARGS__)
+#define MACRO_2(NAME, BINDINGS) \
+    MACRO_3(NAME, BINDINGS, MACRO_DEFAULT_WAIT_MS) 
+#define MACRO_3(NAME, BINDINGS, WAIT_MS) \
+    MACRO_4(NAME, BINDINGS, WAIT_MS, MACRO_DEFAULT_TAP_MS) 
+#define MACRO_4(NAME, BINDINGS, WAIT_MS, TAP_MS) \
+  ZMK_BEHAVIOR(NAME, macro, bindings = <BINDINGS>; wait-ms = <WAIT_MS>; tap-ms = <TAP_MS>;)
 
 // Trigger a layer and hold mods before the next keypress
-#define LAYER_MACRO(NAME, LAYER, MODS, WAIT_MS, TAP_MS) \
+// Lower wait time to ensure next key press is shifted
+#define LAYER_MACRO(NAME, LAYER, MODS) \
   MACRO(NAME, \
         &macro_press &mo LAYER MODS \
         &macro_pause_for_release \
         &macro_release &mo LAYER MODS, \
-        WAIT_MS, \
-        TAP_MS)
+        0) 
 
 #define LT_BSPC_DEL(LAYER) &lt_bspc_del LAYER 0
 THUMB(lt_bspc_del, &mo, &bspc_del)
@@ -153,16 +164,19 @@ MORPH(num_morph, MOD_LCTL, &mo NUM, &num_word NUM)
 #define SHIFT_SPC shift_spc 0 0
 THUMB(shift_spc, &shift_morph, &spc_morph)
 MORPH(shift_morph, MOD_RCTL, &typing_shift, &typing_caps_word)
-LAYER_MACRO(typing_shift, TYPING, &kp LSHFT, 0, 5)
-LAYER_MACRO(typing_caps_word, TYPING, &caps_word, 0, 5)
+LAYER_MACRO(typing_shift, TYPING, &kp LSHFT)
+LAYER_MACRO(typing_caps_word, TYPING, &caps_word)
 &caps_word { 
   /delete-property/ ignore-modifiers; // Mods deactivate caps-word, requires PR #1451. [TODO: rebase]
   continue-list = < 
     UNDER BSPC DEL N1 N2 N3 N4 N5 N6 N7 N8 N9 N0
   >;
 };
+// Pausing for release prevents &kp DOT from being dropped. Seems to
+// be necessary for macros bound to hold-tap, mod-morph, or a combination
+// of the two.
 MORPH(spc_morph, MOD_RCTL, &kp SPACE, &dot_spc_shft)
-MACRO(dot_spc_shft, &kp DOT &kp SPACE &sk LSHFT, 15, 30)
+MACRO(dot_spc_shft, &macro_pause_for_release &kp DOT &kp SPACE &sk LSHFT)
 
 // Tap: comma | Shift + tap: semicolon | Ctrl + shift + tap: <.
 SIMPLE_MORPH(comma_morph, SFT, &kp COMMA, &comma_inner_morph)
@@ -253,7 +267,7 @@ ___  ___  ___  ___  ___                 ,               ___              ___    
 ,              ___  ___             ___   &select_all   &select_line_pc  &select_word_pc  
 )
 
-MACRO(dot_dot, &macro_tap &kp DOT &kp DOT, 0, 5)
+MACRO(dot_dot, &macro_tap &kp DOT &kp DOT)
 
 GLV80_LAYER(sym,
 &none      &none      &none      &none      &none                             &none      &none        &none      &none     &none
