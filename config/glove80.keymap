@@ -23,9 +23,23 @@
 #include "zmk-helpers/helper.h"
 #include <behaviors/num_word.dtsi> // Requires auto-layer module
 
-/* Two-pass token pasting */
-#define _CAT(a,b) a##b      // concatenate
-#define CAT(a,b) _CAT(a,b) // expand and concatenate
+// _CAT and CAT both paste or concatenate arguments.
+// Prescan expands each macro argument before substitution unless the corresponding parameter is
+// used with # or ## in that same macro. Substitution replaces a macro with its body
+// and its arguments with their (possibly expanded) value. The process repeats
+// recusrively for inner macros within the body.
+//   #define _SUFFIX _pc
+//   _CAT(swapper, _pc)     → swapper_pc   (non-macro tokens)
+//   _CAT(swapper, _SUFFIX) → swapper_SUFFIX  (macro was NOT expanded before paste)
+//   CAT(swapper, _SUFFIX)  → swapper_pc (macro was expanded before paste)
+// Inside an outer macro that doesn’t use #/## with its parameters, using _CAT
+// or CAT at the call sites yields the same result because the outer prescan
+// already expanded the args.
+// If you ever paste at top level or inside a macro where the pasting macro is
+// the first to see those arguments, use CAT to ensure arguments expand before
+// they’re glued together.
+#define _CAT(a,b) a##b
+#define CAT(a,b) _CAT(a,b)
 
 // Maps layers in top to bottom order to order-independent names 
 #define DEF    0
@@ -74,22 +88,17 @@
 #define RIGHT_HRM(NAME, HOLD, TAP, TAP_TERM, ...) \
   HRM(NAME, HOLD, TAP, TAP_TERM, KEYS_L THUMBS, __VA_ARGS__)
 
-#define LEFT_KP_HRM(NAME, TAP_TERM, ...) \
-  LEFT_HRM(NAME, &kp, &kp, TAP_TERM, __VA_ARGS__)                                
-
-#define RIGHT_KP_HRM(NAME, TAP_TERM, ...) \
-  RIGHT_HRM(NAME, &kp, &kp, TAP_TERM, __VA_ARGS__)
-
-// Avoid flashing mods for ALT and GUI on PC (assuming they
-// are on the pinky and ring fingers)
-LEFT_KP_HRM(left_pinky,    PINKY_TAP_TERM)
-LEFT_KP_HRM(left_ring,     RINGY_TAP_TERM) 
-LEFT_KP_HRM(left_middle,   MIDDY_TAP_TERM, hold-while-undecided;) 
-LEFT_KP_HRM(left_index,    INDEX_TAP_TERM, hold-while-undecided;) 
-RIGHT_KP_HRM(right_index,  INDEX_TAP_TERM, hold-while-undecided;) 
-RIGHT_KP_HRM(right_middle, MIDDY_TAP_TERM, hold-while-undecided;) 
-RIGHT_KP_HRM(right_ring,   RINGY_TAP_TERM) 
-RIGHT_KP_HRM(right_pinky,  PINKY_TAP_TERM) 
+// hold-while-undecided can lead to issues when using remote
+// desktop on windows 11. e.g. holding the right shift key
+// and tapping the left one just outputs lowercase d.
+LEFT_HRM(left_pinky,    &kp, &kp, PINKY_TAP_TERM)
+LEFT_HRM(left_ring,     &kp, &kp, RINGY_TAP_TERM) 
+LEFT_HRM(left_middle,   &kp, &kp, MIDDY_TAP_TERM) // , hold-while-undecided;) 
+LEFT_HRM(left_index,    &kp, &kp, INDEX_TAP_TERM) // , hold-while-undecided;) 
+RIGHT_HRM(right_index,  &kp, &kp, INDEX_TAP_TERM) // , hold-while-undecided;) 
+RIGHT_HRM(right_middle, &kp, &kp, MIDDY_TAP_TERM) // , hold-while-undecided;) 
+RIGHT_HRM(right_ring,   &kp, &kp, RINGY_TAP_TERM) 
+RIGHT_HRM(right_pinky,  &kp, &kp, PINKY_TAP_TERM) 
 
 #define lp(key) &left_pinky   LGUI  key // LCTRL (MacOS)
 #define lr(key) &left_ring    LALT  key
