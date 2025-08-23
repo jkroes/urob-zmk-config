@@ -144,11 +144,6 @@ RIGHT_HRM(right_pinky,  &kp, &kp, PINKY_TAP_TERM)
         WAIT_MS, \
         TAP_MS)
 
-#define TRI_STATE(NAME, BINDINGS, KEY_POS) \
-  ZMK_TRI_STATE(NAME, \
-                bindings = <BINDINGS>; \
-                ignored-key-positions = <KEY_POS>;) 
-
 #define LT_BSPC_DEL(LAYER) &lt_bspc_del LAYER 0
 THUMB(lt_bspc_del, &mo, &bspc_del)
 MORPH(bspc_del, MOD_LCTL, &kp BSPC, &kp DEL)
