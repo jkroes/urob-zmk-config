@@ -1,4 +1,4 @@
-#define SWAPPER_POS LB1 RM1 RM2 RM3 RM4 // Continue swapper on LS(TAB) NAV_LEFT NAV_UP NAV_DOWN NAV_RIGHT
+#define SWAPPER_POS RM1 RM2 RM3 RM4 RH4 // Continue swapper on NAV_LEFT NAV_UP NAV_DOWN NAV_RIGHT LS(TAB) 
 
 // Tri-state for macOS 
 ZMK_TRI_STATE(swapper,
@@ -54,16 +54,3 @@ ZMK_HOLD_TAP(tp, bindings = <&kp>, <&kp>; TP_CORE)
 #define NAV_RIGHT_PC  _NAV_RIGHT(END) 
 #define NAV_UP_PC     _NAV_UP(LC(HOME))
 #define NAV_DOWN_PC   _NAV_DOWN(LC(END))  
-
-// TODO Select line left/right should be renamed as a single select line. 
-// The left right version would be LS(_END) or LS(_HOME)
-#define _X(_W, _HOME, _END, _SUFFIX) \
-  MACRO(CAT(select_line, _SUFFIX), &kp _HOME &kp LS(_END), 1, 1) \
-  MACRO(CAT(extend_line_right, _SUFFIX), &kp LS(DOWN) &kp LS(_END), 1, 1) \
-  MACRO(CAT(extend_line_left,  _SUFFIX), &kp LS(UP)   &kp LS(_HOME), 1, 1) \
-  SIMPLE_MORPH(CAT(extend_line, _SUFFIX), CTL, &CAT(extend_line_right, _SUFFIX), &CAT(extend_line_left,  _SUFFIX))
-
-_X(LA, LC(LEFT),  LC(RIGHT), )
-_X(LC, HOME,      END,       _pc)
-
-#undef _X
