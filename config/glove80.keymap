@@ -211,11 +211,11 @@ SIMPLE_MORPH(qexcl, SFT, &kp QMARK, &kp EXCL)
 //ZMK_CONDITIONAL_LAYER(sys, FN NUM, SYS) // FN + NUM --> SYS.
 
 GLV80_LAYER(macos,
-&tog PC      &kp F2  &kp F3  &kp F4            &kp F5                          &kp F6       &kp F7        &kp F8      &kp F9   &kp F10 
+&kp F1       &kp F2  &kp F3  &kp F4            &kp F5                          &kp F6       &kp F7        &kp F8      &kp F9   &kp F10 
 XXX          &kp N1  &kp N2  &kp N3            &kp N4      &kp N5      &kp N6  &kp N7       &kp N8        &kp N9      &kp N0   XXX  
 XXX          &kp Q   &kp W   &kp E             &kp R       &kp T       &kp Y   &kp U        &kp I         &kp O       &kp P    XXX
 &kp CAPS     lp(A)   lr(S)   lm(D)             li(F)       &kp G       &kp H   ri(J)        rm(K)         rr(L)       rp(SQT)  XXX
-XXX          &kp Z   &kp X   &kp C             &kp V       &kp B     , &kp N   &kp M        &comma_morph  &dot_morph  &qexcl   XXX
+&tog PC      &kp Z   &kp X   &kp C             &kp V       &kp B     , &kp N   &kp M        &comma_morph  &dot_morph  &qexcl   XXX
 &bootloader  XXX     XXX     &kp LEFT          &kp RIGHT             ,         &kp UP       &kp DOWN      XXX         XXX      &bootloader
 ,                            &kp TAB           XXX         XXX         XXX     XXX          &kp ESC
 ,                            LT_BSPC_DEL(NAV)  &num_morph  XXX         XXX     &lt SYM RET  &SHIFT_SPC
@@ -251,25 +251,25 @@ ___  ___       ___       ___         ___                ,      ___       ___    
 #include "nav.dtsi"
 
 GLV80_LAYER(nav,
-XXX  XXX       XXX         XXX          XXX                           XXX           XXX           XXX        XXX         XXX
-XXX  XXX       XXX         XXX          XXX          XXX      XXX     XXX           XXX           XXX        XXX         XXX
-XXX  &kp DEL   &kp BSPC    &kp SPC      &kp TAB      _CUT     _REDO2  WORD_LEFT     &kp PG_UP     &kp PG_DN  WORD_RIGHT  XXX 
-XXX  &sk LGUI  &sk LALT    &sk LSHFT    &sk LCTRL    _COPY    _REDO   NAV_LEFT      NAV_UP        NAV_DOWN   NAV_RIGHT   XXX
-XXX  &kp INS   &kp ESC     &kp RET      &kp LS(TAB)  _PASTE , _UNDO   XXX           XXX           XXX        XXX         XXX
-XXX  XXX       _FIND_PREV  _FIND        _FIND_NEXT          ,         XXX           XXX           XXX        XXX         XXX
-,                          ___          ___          ___      ___     &kp LS(TAB)   ___
-,                          ___          ___          ___      ___     &swapper      ___
+XXX  XXX       XXX         XXX          XXX                              XXX           XXX           XXX        XXX         XXX
+XXX  XXX       XXX         XXX          XXX          XXX      XXX        XXX           XXX           XXX        XXX         XXX
+XXX  &kp DEL   &kp BSPC    &kp SPC      &kp TAB      _CUT     _REDO2     WORD_LEFT     &kp PG_UP     &kp PG_DN  WORD_RIGHT  XXX 
+XXX  &sk LGUI  &sk LALT    &sk LSHFT    &sk LCTRL    _COPY    _REDO      NAV_LEFT      NAV_UP        NAV_DOWN   NAV_RIGHT   XXX
+XXX  &kp INS   &kp ESC     &kp RET      &kp LS(TAB)  _PASTE , _UNDO      XXX           XXX           XXX        XXX         XXX
+XXX  XXX       _FIND_PREV  _FIND        _FIND_NEXT          ,            XXX           XXX           XXX        XXX         XXX
+,                          ___          ___          ___      ___        &kp LS(TAB)   NEXT_WIN
+,                          ___          ___          ___      SPOTLIGHT  &swapper      &sk LSHFT
 )                                                      
 
 GLV80_LAYER(nav_pc,
-___  ___       ___         ___          ___                           ___           ___           ___          ___            ___
-___  ___       ___         ___          ___          ___      ___     ___           ___           ___          ___            ___
-___  ___       ___         ___          ___          ___      ___     WORD_LEFT_PC  ___           ___          WORD_RIGHT_PC  ___
-___  ___       ___         ___          ___          ___      ___     NAV_LEFT_PC   NAV_UP_PC     NAV_DOWN_PC  NAV_RIGHT_PC   ___ 
-___  ___       ___         ___          ___          ___    , ___     ___           ___           ___          ___            ___
-___  ___       ___         ___          ___                 ,         ___           ___           ___          ___            ___
-,                          ___          ___          ___      ___     ___           ___
-,                          ___          ___          ___      ___     &swapper_pc   ___ 
+___  ___       ___         ___          ___                              ___           ___           ___          ___            ___
+___  ___       ___         ___          ___          ___      ___        ___           ___           ___          ___            ___
+___  ___       ___         ___          ___          ___      ___        WORD_LEFT_PC  ___           ___          WORD_RIGHT_PC  ___
+___  ___       ___         ___          ___          ___      ___        NAV_LEFT_PC   NAV_UP_PC     NAV_DOWN_PC  NAV_RIGHT_PC   ___ 
+___  ___       ___         ___          ___          ___    , ___        ___           ___           ___          ___            ___
+___  ___       ___         ___          ___                 ,            ___           ___           ___          ___            ___
+,                          ___          ___          ___      ___        ___           NEXT_WIN_PC
+,                          ___          ___          ___      POWERRUN   &swapper_pc   ___ 
 )
 
 MACRO(dot_dot, &macro_tap &kp DOT &kp DOT)

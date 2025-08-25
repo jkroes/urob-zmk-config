@@ -12,10 +12,6 @@ ZMK_TRI_STATE(swapper_pc,
     bindings = <&alt_press>, <&kp TAB>, <&alt_release>;
     ignored-key-positions = <SWAPPER_POS>;)
 
-// shortcuts in fn.dtsi                                
-// PowerToys Keyboard Manager:                         
-// ctrl space->alt space (with powertoys run enabled)  
-
 #define _CUT        &kp LC(X)
 #define _COPY       &kp LC(C)
 #define _PASTE      &kp LC(V)
@@ -40,6 +36,7 @@ ZMK_HOLD_TAP(tp, bindings = <&kp>, <&kp>; TP_CORE)
 #define _NAV_RIGHT(_END)    &tp _END      RIGHT  // Tap: right | Long-tap: end of line
 #define _NAV_UP(_DOC_HOME)  &tp _DOC_HOME UP     // Tap: up | Long-tap: start of doc
 #define _NAV_DOWN(_DOC_END) &tp _DOC_END  DOWN   // Tap: down | Long-tap: end of doc
+#define _NEXT_WIN(_WIN)     &kp _WIN(GRAVE) 
 
 #define WORD_LEFT     _WORD_LEFT(LA)
 #define WORD_RIGHT    _WORD_RIGHT(LA)
@@ -47,6 +44,8 @@ ZMK_HOLD_TAP(tp, bindings = <&kp>, <&kp>; TP_CORE)
 #define NAV_RIGHT     _NAV_RIGHT(LC(RIGHT)) 
 #define NAV_UP        _NAV_UP(LC(UP))       
 #define NAV_DOWN      _NAV_DOWN(LC(DOWN))   
+#define NEXT_WIN      _NEXT_WIN(LC)
+#define SPOTLIGHT     &kp LC(SPACE)
 
 #define WORD_LEFT_PC  _WORD_LEFT(LC) 
 #define WORD_RIGHT_PC _WORD_RIGHT(LC) 
@@ -54,3 +53,9 @@ ZMK_HOLD_TAP(tp, bindings = <&kp>, <&kp>; TP_CORE)
 #define NAV_RIGHT_PC  _NAV_RIGHT(END) 
 #define NAV_UP_PC     _NAV_UP(LC(HOME))
 #define NAV_DOWN_PC   _NAV_DOWN(LC(END))  
+#define NEXT_WIN_PC   _NEXT_WIN(LA)
+#define POWERRUN      &kp LA(LS(SPACE))
+
+// shortcuts in fn.dtsi                                
+// PowerToys Keyboard Manager:                         
+// ctrl space->alt space (with powertoys run enabled)  
