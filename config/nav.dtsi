@@ -1,33 +1,31 @@
-//#define _CUT       &kp LC(X)
-//#define _COPY      &kp LC(C)
-//#define _PASTE     &kp LC(V)
-//#define _UNDO      &kp LC(Z)              // Mostly cross-platform; suspends some Terminals
-//#define _REDO      &kp LS(LC(Z))          // MacOS or Google Workspace or VSCode
-//#define _REDO2     &kp LC(Y)              // Windows or Microsoft Office
+#define SWAPPER_POS LB1 RM1 RM2 RM3 RM4 // Continue swapper on LS(TAB) NAV_LEFT NAV_UP NAV_DOWN NAV_RIGHT
+
+// Tri-state for macOS 
+ZMK_TRI_STATE(swapper,
+    bindings = <&kt LCTRL>, <&kp TAB>, <&kt LCTRL>;
+    ignored-key-positions = <SWAPPER_POS>;)
+
+// Tri-state for Windows/RDP
+MACRO(alt_press, &macro_press &kp LALT &macro_wait_time 120)
+MACRO(alt_release, &macro_release &kp LALT)
+ZMK_TRI_STATE(swapper_pc,
+    bindings = <&alt_press>, <&kp TAB>, <&alt_release>;
+    ignored-key-positions = <SWAPPER_POS>;)
+
+// shortcuts in fn.dtsi                                
+// PowerToys Keyboard Manager:                         
+// ctrl space->alt space (with powertoys run enabled)  
+
+#define _CUT        &kp LC(X)
+#define _COPY       &kp LC(C)
+#define _PASTE      &kp LC(V)
+#define _UNDO       &kp LC(Z)              // Mostly cross-platform; suspends some Terminals
+#define _REDO       &kp LS(LC(Z))          // MacOS or Google Workspace or VSCode
+#define _REDO2      &kp LC(Y)              // Windows or Microsoft Office
+#define _FIND       &kp LC(F)
+#define _FIND_NEXT  &kp LC(G)
+#define _FIND_PREV  &kp LC(LS(G))
 //#define CANCEL     &kp K_CANCEL           // Cancel caps-word & auto-layers
-
-#define select_all kp LC(A)
-MACRO(select_none, &kp DOWN &kp UP &kp RIGHT &kp LEFT)
-
-// TODO Change the modifier from SFT to CTL for consistency with other morphs
-#define DEFINE_SELEXT_NODES(_W, _HOME, _END, _SUFFIX) \
-  MACRO(CAT(select_word_right, _SUFFIX), &kp _W(RIGHT) &kp _W(LEFT) &kp _W(LS(RIGHT)), 1, 1) \
-  MACRO(CAT(select_word_left,  _SUFFIX), &kp _W(LEFT)  &kp _W(RIGHT) &kp _W(LS(LEFT)), 1, 1) \
-  MACRO(CAT(extend_word_right, _SUFFIX), &kp _W(LS(RIGHT)), 1, 1) \
-  MACRO(CAT(extend_word_left,  _SUFFIX), &kp _W(LS(LEFT)), 1, 1) \
-  MACRO(CAT(select_line_right, _SUFFIX), &kp _HOME &kp LS(_END), 1, 1) \
-  MACRO(CAT(select_line_left,  _SUFFIX), &kp _END  &kp LS(_HOME), 1, 1) \
-  MACRO(CAT(extend_line_right, _SUFFIX), &kp LS(DOWN) &kp LS(_END), 1, 1) \
-  MACRO(CAT(extend_line_left,  _SUFFIX), &kp LS(UP)   &kp LS(_HOME), 1, 1) \
-  \
-  SIMPLE_MORPH(CAT(select_word, _SUFFIX), SFT, &CAT(select_word_right, _SUFFIX), &CAT(select_word_left,  _SUFFIX)) \
-  SIMPLE_MORPH(CAT(extend_word, _SUFFIX), SFT, &CAT(extend_word_right, _SUFFIX), &CAT(extend_word_left,  _SUFFIX)) \
-  SIMPLE_MORPH(CAT(select_line, _SUFFIX), SFT, &CAT(select_line_right, _SUFFIX), &CAT(select_line_left,  _SUFFIX)) \
-  SIMPLE_MORPH(CAT(extend_line, _SUFFIX), SFT, &CAT(extend_line_right, _SUFFIX), &CAT(extend_line_left,  _SUFFIX))
-
-DEFINE_SELEXT_NODES(LA, LC(LEFT),  LC(RIGHT), )
-DEFINE_SELEXT_NODES(LC, HOME,      END,       _pc)
-
 
 #define TP_CORE \
   flavor = "tap-preferred"; \
@@ -38,17 +36,17 @@ ZMK_HOLD_TAP(tp, bindings = <&kp>, <&kp>; TP_CORE)
 
 #define _WORD_LEFT(_W)      &kp _W(LEFT)
 #define _WORD_RIGHT(_W)     &kp _W(RIGHT)
-#define _NAV_LEFT(_HOME)    &tp _HOME     LEFT
-#define _NAV_RIGHT(_END)    &tp _END      RIGHT
-#define _NAV_UP(_DOC_HOME)  &tp _DOC_HOME UP
-#define _NAV_DOWN(_DOC_END) &tp _DOC_END  DOWN
+#define _NAV_LEFT(_HOME)    &tp _HOME     LEFT   // Tap: left | Long-tap: start of line
+#define _NAV_RIGHT(_END)    &tp _END      RIGHT  // Tap: right | Long-tap: end of line
+#define _NAV_UP(_DOC_HOME)  &tp _DOC_HOME UP     // Tap: up | Long-tap: start of doc
+#define _NAV_DOWN(_DOC_END) &tp _DOC_END  DOWN   // Tap: down | Long-tap: end of doc
 
 #define WORD_LEFT     _WORD_LEFT(LA)
 #define WORD_RIGHT    _WORD_RIGHT(LA)
-#define NAV_LEFT      _NAV_LEFT(LC(LEFT))   // Tap: left | Long-tap: start of line
-#define NAV_RIGHT     _NAV_RIGHT(LC(RIGHT)) // Tap: right | Long-tap: end of line
-#define NAV_UP        _NAV_UP(LC(UP))       // Tap: up | Long-tap: start of doc
-#define NAV_DOWN      _NAV_DOWN(LC(DOWN))   // Tap: down | Long-tap: end of doc
+#define NAV_LEFT      _NAV_LEFT(LC(LEFT))   
+#define NAV_RIGHT     _NAV_RIGHT(LC(RIGHT)) 
+#define NAV_UP        _NAV_UP(LC(UP))       
+#define NAV_DOWN      _NAV_DOWN(LC(DOWN))   
 
 #define WORD_LEFT_PC  _WORD_LEFT(LC) 
 #define WORD_RIGHT_PC _WORD_RIGHT(LC) 
@@ -57,28 +55,15 @@ ZMK_HOLD_TAP(tp, bindings = <&kp>, <&kp>; TP_CORE)
 #define NAV_UP_PC     _NAV_UP(LC(HOME))
 #define NAV_DOWN_PC   _NAV_DOWN(LC(END))  
 
+// TODO Select line left/right should be renamed as a single select line. 
+// The left right version would be LS(_END) or LS(_HOME)
+#define _X(_W, _HOME, _END, _SUFFIX) \
+  MACRO(CAT(select_line, _SUFFIX), &kp _HOME &kp LS(_END), 1, 1) \
+  MACRO(CAT(extend_line_right, _SUFFIX), &kp LS(DOWN) &kp LS(_END), 1, 1) \
+  MACRO(CAT(extend_line_left,  _SUFFIX), &kp LS(UP)   &kp LS(_HOME), 1, 1) \
+  SIMPLE_MORPH(CAT(extend_line, _SUFFIX), CTL, &CAT(extend_line_right, _SUFFIX), &CAT(extend_line_left,  _SUFFIX))
 
-#define SWAPPER_POS LB1 RM1 RM2 RM3 RM4 // Continue swapper on LS(TAB) NAV_LEFT NAV_UP NAV_DOWN NAV_RIGHT
+_X(LA, LC(LEFT),  LC(RIGHT), )
+_X(LC, HOME,      END,       _pc)
 
-// Tri-state for Windows/RDP
-MACRO(alt_press, &macro_press &kp LALT &macro_wait_time 120)
-MACRO(alt_release, &macro_release &kp LALT)
-ZMK_TRI_STATE(swapper_pc,
-    bindings = <&alt_press>, <&kp TAB>, <&alt_release>;
-    ignored-key-positions = <SWAPPER_POS>;
-)
-// Tri-state for macOS 
-ZMK_TRI_STATE(swapper,
-    bindings = <&kt LCTRL>, <&kp TAB>, <&kt LCTRL>;
-    ignored-key-positions = <SWAPPER_POS>;
-)
-
-
-// shortcuts in fn.dtsi                                
-// PowerToys Keyboard Manager:                         
-// ctrl space->alt space (with powertoys run enabled)  
-// _UNDO _REDO _REDO2
-// &kp _FIND  &kp _FIND_PREV  &kp _FIND_NEXT           
-// _CUT       _COPY        _PASTE
-// &select_all   &select_line  &select_word  
-// &select_none  &extend_line  &extend_word  
+#undef _X

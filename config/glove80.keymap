@@ -179,12 +179,14 @@ MORPH(spc_morph, MOD_RCTL, &kp SPACE, &dot_spc_shft)
 MACRO(dot_spc_shft, &macro_pause_for_release &kp DOT &kp SPACE &sk LSHFT)
 
 // Tap: comma | Shift + tap: semicolon | Ctrl + shift + tap: <.
-SIMPLE_MORPH(comma_morph, SFT, &kp COMMA, &comma_inner_morph)
-SIMPLE_MORPH(comma_inner_morph, CTL, &kp SEMICOLON, &kp LESS_THAN)
+SIMPLE_MORPH(comma_morph, SFT, &kp COMMA, &kp SEMI)
+//SIMPLE_MORPH(comma_morph, SFT, &kp COMMA, &comma_inner_morph)
+//SIMPLE_MORPH(comma_inner_morph, CTL, &kp SEMICOLON, &kp LESS_THAN)
 
 // Tap: dot | Shift + tap: colon | Ctrl + shift + tap: >.
-SIMPLE_MORPH(dot_morph, SFT, &kp DOT, &dot_inner_morph)
-SIMPLE_MORPH(dot_inner_morph, CTL, &kp COLON, &kp GREATER_THAN)
+SIMPLE_MORPH(dot_morph, SFT, &kp DOT, &kp COLON)
+//SIMPLE_MORPH(dot_morph, SFT, &kp DOT, &dot_inner_morph)
+//SIMPLE_MORPH(dot_inner_morph, CTL, &kp COLON, &kp GREATER_THAN)
 
 // Tap: qmark | Shift + tap: excl.
 SIMPLE_MORPH(qexcl, SFT, &kp QMARK, &kp EXCL)
@@ -243,28 +245,31 @@ ___  ___       ___       ___         ___                ,      ___       ___    
 ,                        ___         ___       ___        ___  ___       ___
 )
 
+// Remember that to activate the mod morphs on the right thumbs you need to use 
+// the sticky modifiers on the left home row of the nav layer
+
 #include "nav.dtsi"
 
 GLV80_LAYER(nav,
-XXX  XXX         XXX        XXX          XXX                              XXX           XXX           XXX        XXX         XXX
-XXX  XXX         XXX        XXX          XXX          XXX   XXX           XXX           XXX           XXX        XXX         XXX
-XXX  &sk LGUI    &sk LALT   &sk LSHFT    &sk LCTRL    XXX   XXX           WORD_LEFT     &kp PG_UP     &kp PG_DN  WORD_RIGHT  XXX 
-XXX  &kp DEL     &kp BSPC   &kp SPC      &swapper     XXX   XXX           NAV_LEFT      NAV_UP        NAV_DOWN   NAV_RIGHT   XXX
-XXX  &kp INS     &kp ESC    &kp RET      &kp LS(TAB)  XXX , XXX           XXX           XXX           XXX        XXX         XXX
-XXX  XXX         XXX        XXX          XXX              ,               XXX           XXX           XXX        XXX         XXX
-,                           ___          ___          ___   &select_none  &extend_line  &extend_word 
-,                           ___          ___          ___   &select_all   &select_line  &select_word  
+XXX  XXX       XXX         XXX          XXX                           XXX           XXX           XXX        XXX         XXX
+XXX  XXX       XXX         XXX          XXX          XXX      XXX     XXX           XXX           XXX        XXX         XXX
+XXX  &kp DEL   &kp BSPC    &kp SPC      &kp TAB      _CUT     _REDO2  WORD_LEFT     &kp PG_UP     &kp PG_DN  WORD_RIGHT  XXX 
+XXX  &sk LGUI  &sk LALT    &sk LSHFT    &sk LCTRL    _COPY    _REDO   NAV_LEFT      NAV_UP        NAV_DOWN   NAV_RIGHT   XXX
+XXX  &kp INS   &kp ESC     &kp RET      &kp LS(TAB)  _PASTE , _UNDO   XXX           XXX           XXX        XXX         XXX
+XXX  XXX       _FIND_PREV  _FIND        _FIND_NEXT          ,         XXX           XXX           XXX        XXX         XXX
+,                          ___          ___          ___      ___     &extend_line  &kp LS(TAB)
+,                          ___          ___          ___      ___     &select_line  &swapper
 )                                                      
 
 GLV80_LAYER(nav_pc,
-___  ___  ___  ___  ___                                 ___              ___              ___          ___            ___
-___  ___  ___  ___  ___             ___   ___           ___              ___              ___          ___            ___
-___  ___  ___  ___  ___             ___   ___           WORD_LEFT_PC     ___              ___          WORD_RIGHT_PC  ___
-___  ___  ___  ___  &swapper_pc     ___   ___           NAV_LEFT_PC      NAV_UP_PC        NAV_DOWN_PC  NAV_RIGHT_PC   ___ 
-___  ___  ___  ___  ___             ___ , ___           ___              ___              ___          ___            ___
-___  ___  ___  ___  ___                 ,               ___              ___              ___          ___            ___
-,              ___  ___             ___   &select_none  &extend_line_pc  &extend_word_pc 
-,              ___  ___             ___   &select_all   &select_line_pc  &select_word_pc  
+___  ___  ___  ___  ___                        ___              ___              ___          ___            ___
+___  ___  ___  ___  ___             ___   ___  ___              ___              ___          ___            ___
+___  ___  ___  ___  ___             ___   ___  WORD_LEFT_PC     ___              ___          WORD_RIGHT_PC  ___
+___  ___  ___  ___  ___             ___   ___  NAV_LEFT_PC      NAV_UP_PC        NAV_DOWN_PC  NAV_RIGHT_PC   ___ 
+___  ___  ___  ___  ___             ___ , ___  ___              ___              ___          ___            ___
+___  ___  ___  ___  ___                 ,      ___              ___              ___          ___            ___
+,              ___  ___             ___   ___  &extend_line_pc  ___
+,              ___  ___             ___   ___  &select_line_pc  &swapper_pc 
 )
 
 MACRO(dot_dot, &macro_tap &kp DOT &kp DOT)
@@ -272,8 +277,8 @@ MACRO(dot_dot, &macro_tap &kp DOT &kp DOT)
 GLV80_LAYER(sym,
 &none      &none      &none      &none      &none                             &none      &none        &none      &none     &none
 &kp GRAVE  &kp RBKT   &kp LPAR   &kp RPAR   &kp SEMI   &kp DOT     &none      &none      &none        &none      &none     &none
-&kp LBKT   &kp EXCL   &kp LBRC   &kp RBRC   &kp COMMA  &kp QMARK   &kp GRAVE  &sk LCTRL  &sk LSHFT    &sk LALT   &sk LGUI  &none
-&kp HASH   &kp CARET  &kp EQUAL  &kp UNDER  &kp DLLR   &kp STAR    &kp DQT    &kp BSPC   &kp TAB      &kp SPACE  &kp RET   &none
+&kp LBKT   &kp EXCL   &kp LBRC   &kp RBRC   &kp COMMA  &kp QMARK   &kp GRAVE  &kp BSPC   &kp TAB      &kp SPACE  &kp RET   &none
+&kp HASH   &kp CARET  &kp EQUAL  &kp UNDER  &kp DLLR   &kp STAR    &kp DQT    &sk LCTRL  &sk LSHFT    &sk LALT   &sk LGUI  &none
 &kp TILDE  &kp LT     &kp PIPE   &kp MINUS  &kp GT     &kp FSLH  , &kp SQT    &kp DEL    &kp LS(TAB)  &kp INS    &kp ESC   &none
 &dot_dot   &kp AMPS   &kp SQT    &kp DQT    &kp PLUS             ,            &none      &none        &none      &none     &none
 ,                                &kp BSLH   &kp DOT    &kp STAR    &none      &none      &none
