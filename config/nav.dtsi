@@ -1,4 +1,4 @@
-#define SWAPPER_POS RM1 RM2 RM3 RM4 RH4 // Continue swapper on NAV_LEFT NAV_UP NAV_DOWN NAV_RIGHT LS(TAB) 
+#define SWAPPER_POS RM1 RM2 RM3 RM4 RH5 // Continue swapper on NAV_LEFT NAV_UP NAV_DOWN NAV_RIGHT LS(TAB) 
 
 // Tri-state for macOS 
 ZMK_TRI_STATE(swapper,
@@ -53,9 +53,5 @@ ZMK_HOLD_TAP(tp, bindings = <&kp>, <&kp>; TP_CORE)
 #define NAV_RIGHT_PC  _NAV_RIGHT(END) 
 #define NAV_UP_PC     _NAV_UP(LC(HOME))
 #define NAV_DOWN_PC   _NAV_DOWN(LC(END))  
-#define NEXT_WIN_PC   _NEXT_WIN(LA)
-#define POWERRUN      &kp LA(LS(SPACE))
-
-// shortcuts in fn.dtsi                                
-// PowerToys Keyboard Manager:                         
-// ctrl space->alt space (with powertoys run enabled)  
+//#define NEXT_WIN_PC   _NEXT_WIN(LA) // https://github.com/sigoden/window-switcher
+#define POWERRUN      &kp LS(LA(SPACE)) // Requires PowerToys Run

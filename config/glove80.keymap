@@ -251,25 +251,25 @@ ___  ___       ___       ___         ___                ,      ___       ___    
 #include "nav.dtsi"
 
 GLV80_LAYER(nav,
-XXX  XXX       XXX         XXX          XXX                              XXX           XXX           XXX        XXX         XXX
-XXX  XXX       XXX         XXX          XXX          XXX      XXX        XXX           XXX           XXX        XXX         XXX
-XXX  &kp DEL   &kp BSPC    &kp SPC      &kp TAB      _CUT     _REDO2     WORD_LEFT     &kp PG_UP     &kp PG_DN  WORD_RIGHT  XXX 
-XXX  &sk LGUI  &sk LALT    &sk LSHFT    &sk LCTRL    _COPY    _REDO      NAV_LEFT      NAV_UP        NAV_DOWN   NAV_RIGHT   XXX
-XXX  &kp INS   &kp ESC     &kp RET      &kp LS(TAB)  _PASTE , _UNDO      XXX           XXX           XXX        XXX         XXX
-XXX  XXX       _FIND_PREV  _FIND        _FIND_NEXT          ,            XXX           XXX           XXX        XXX         XXX
-,                          ___          ___          ___      ___        &kp LS(TAB)   NEXT_WIN
-,                          ___          ___          ___      SPOTLIGHT  &swapper      &sk LSHFT
+XXX  XXX       XXX         XXX          XXX                              XXX           XXX           XXX           XXX         XXX
+XXX  XXX       XXX         XXX          XXX          XXX      XXX        XXX           XXX           XXX           XXX         XXX
+XXX  &kp DEL   &kp BSPC    &kp SPC      &kp TAB      _CUT     _REDO2     WORD_LEFT     &kp PG_DN     &kp PG_UP     WORD_RIGHT  XXX 
+XXX  &sk LGUI  &sk LALT    &sk LSHFT    &sk LCTRL    _COPY    _REDO      NAV_LEFT      NAV_DOWN      NAV_UP        NAV_RIGHT   XXX
+XXX  &kp INS   &kp ESC     &kp RET      &kp LS(TAB)  _PASTE , _UNDO      XXX           XXX           XXX           XXX         XXX
+XXX  XXX       _FIND_PREV  _FIND        _FIND_NEXT          ,            XXX           XXX           XXX           XXX         XXX
+,                          ___          ___          ___                 ___           NEXT_WIN      &kp LS(TAB)   
+,                          ___          ___          ___                 ___           SPOTLIGHT     &swapper      
 )                                                      
 
 GLV80_LAYER(nav_pc,
 ___  ___       ___         ___          ___                              ___           ___           ___          ___            ___
 ___  ___       ___         ___          ___          ___      ___        ___           ___           ___          ___            ___
 ___  ___       ___         ___          ___          ___      ___        WORD_LEFT_PC  ___           ___          WORD_RIGHT_PC  ___
-___  ___       ___         ___          ___          ___      ___        NAV_LEFT_PC   NAV_UP_PC     NAV_DOWN_PC  NAV_RIGHT_PC   ___ 
+___  ___       ___         ___          ___          ___      ___        NAV_LEFT_PC   NAV_DOWN_PC   NAV_UP_PC    NAV_RIGHT_PC   ___ 
 ___  ___       ___         ___          ___          ___    , ___        ___           ___           ___          ___            ___
 ___  ___       ___         ___          ___                 ,            ___           ___           ___          ___            ___
-,                          ___          ___          ___      ___        ___           NEXT_WIN_PC
-,                          ___          ___          ___      POWERRUN   &swapper_pc   ___ 
+,                          ___          ___          ___      ___        ___           ___ 
+,                          ___          ___          ___      ___        POWERRUN      &swapper_pc   
 )
 
 MACRO(dot_dot, &macro_tap &kp DOT &kp DOT)
