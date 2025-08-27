@@ -53,5 +53,19 @@ ZMK_HOLD_TAP(tp, bindings = <&kp>, <&kp>; TP_CORE)
 #define NAV_RIGHT_PC  _NAV_RIGHT(END) 
 #define NAV_UP_PC     _NAV_UP(LC(HOME))
 #define NAV_DOWN_PC   _NAV_DOWN(LC(END))  
-//#define NEXT_WIN_PC   _NEXT_WIN(LA) // https://github.com/sigoden/window-switcher
-#define POWERRUN      &kp LS(LA(SPACE)) // Requires PowerToys Run
+//#define NEXT_WIN_PC   _NEXT_WIN(LA) // Requires https://github.com/sigoden/window-switcher
+MACRO(power_run, 
+      &macro_press &kp LALT &kp LSHFT \
+      &macro_wait_time 120 \
+      &macro_tap &kp SPACE \
+      &macro_wait_time MACRO_DEFAULT_WAIT_MS \
+      &macro_release &kp LALT &kp LSHFT) // Requires PowerToys Run
+
+// Pulled from the fn layer
+// #define DSK_PREV  &hmr LCTRL LG(LC(LEFT)) // Previous desktop.
+// #define DSK_NEXT  &hmr LALT LG(LC(RIGHT)) // Next     desktop.
+// #define PIN_WIN   &kp LG(LC(LS(Q)))       // Pin window across desktops.
+// #define PIN_APP   &kp LG(LC(LS(A)))       // Pin application across desktops.
+// #define DSK_MGR   &kp LA(GRAVE)           // Desktop manager.
+
+

@@ -191,10 +191,6 @@ SIMPLE_MORPH(dot_morph, SFT, &kp DOT, &kp COLON)
 // Tap: qmark | Shift + tap: excl.
 SIMPLE_MORPH(qexcl, SFT, &kp QMARK, &kp EXCL)
 
-#include "fn.dtsi"
-#include "leader.dtsi"
-#include "combos.dtsi"  
-
 // Built-in behavior modifiers
 &sk {
   release-after-ms = <2000>;
@@ -207,6 +203,9 @@ SIMPLE_MORPH(qexcl, SFT, &kp QMARK, &kp EXCL)
 
 #define XXX &none
 #define ___ &trans
+
+#include "leader.dtsi"
+#include "combos.dtsi"  
 
 //ZMK_CONDITIONAL_LAYER(sys, FN NUM, SYS) // FN + NUM --> SYS.
 
@@ -251,36 +250,36 @@ ___  ___       ___       ___         ___                ,      ___       ___    
 #include "nav.dtsi"
 
 GLV80_LAYER(nav,
-XXX  XXX       XXX         XXX          XXX                              XXX           XXX           XXX           XXX         XXX
-XXX  XXX       XXX         XXX          XXX          XXX      XXX        XXX           XXX           XXX           XXX         XXX
-XXX  &kp DEL   &kp BSPC    &kp SPC      &kp TAB      _CUT     _REDO2     WORD_LEFT     &kp PG_DN     &kp PG_UP     WORD_RIGHT  XXX 
-XXX  &sk LGUI  &sk LALT    &sk LSHFT    &sk LCTRL    _COPY    _REDO      NAV_LEFT      NAV_DOWN      NAV_UP        NAV_RIGHT   XXX
-XXX  &kp INS   &kp ESC     &kp RET      &kp LS(TAB)  _PASTE , _UNDO      XXX           XXX           XXX           XXX         XXX
-XXX  XXX       _FIND_PREV  _FIND        _FIND_NEXT          ,            XXX           XXX           XXX           XXX         XXX
-,                          ___          ___          ___                 ___           NEXT_WIN      &kp LS(TAB)   
-,                          ___          ___          ___                 ___           SPOTLIGHT     &swapper      
+XXX  XXX       XXX          XXX        XXX                             XXX           XXX           XXX           XXX         XXX
+XXX  XXX       XXX          XXX        XXX         XXX      XXX        XXX           XXX           XXX           XXX         XXX
+XXX  &kp DEL   &kp TAB      &kp BSPC   &kp SPC     _CUT     _REDO2     WORD_LEFT     &kp PG_DN     &kp PG_UP     WORD_RIGHT  XXX 
+XXX  &sk LGUI  &sk LALT     &sk LSHFT  &sk LCTRL   _COPY    _REDO      NAV_LEFT      NAV_DOWN      NAV_UP        NAV_RIGHT   XXX
+XXX  &kp INS   &kp LS(TAB)  &kp ESC    &kp RET     _PASTE , _UNDO      XXX           XXX           XXX           XXX         XXX
+XXX  XXX       _FIND_PREV   _FIND      _FIND_NEXT         ,            XXX           XXX           XXX           XXX         XXX
+,                           ___        ___         ___                 ___           NEXT_WIN      &kp LS(TAB)   
+,                           ___        ___         ___                 ___           SPOTLIGHT     &swapper      
 )                                                      
 
 GLV80_LAYER(nav_pc,
-___  ___       ___         ___          ___                              ___           ___           ___          ___            ___
-___  ___       ___         ___          ___          ___      ___        ___           ___           ___          ___            ___
-___  ___       ___         ___          ___          ___      ___        WORD_LEFT_PC  ___           ___          WORD_RIGHT_PC  ___
-___  ___       ___         ___          ___          ___      ___        NAV_LEFT_PC   NAV_DOWN_PC   NAV_UP_PC    NAV_RIGHT_PC   ___ 
-___  ___       ___         ___          ___          ___    , ___        ___           ___           ___          ___            ___
-___  ___       ___         ___          ___                 ,            ___           ___           ___          ___            ___
-,                          ___          ___          ___      ___        ___           ___ 
-,                          ___          ___          ___      ___        POWERRUN      &swapper_pc   
+___  ___  ___  ___  ___             ___           ___          ___        ___            ___
+___  ___  ___  ___  ___  ___   ___  ___           ___          ___        ___            ___
+___  ___  ___  ___  ___  ___   ___  WORD_LEFT_PC  ___          ___        WORD_RIGHT_PC  ___
+___  ___  ___  ___  ___  ___   ___  NAV_LEFT_PC   NAV_DOWN_PC  NAV_UP_PC  NAV_RIGHT_PC   ___ 
+___  ___  ___  ___  ___  ___ , ___  ___           ___          ___        ___            ___
+___  ___  ___  ___  ___      ,      ___           ___          ___        ___            ___
+,              ___  ___  ___   ___  ___           ___ 
+,              ___  ___  ___   ___  &power_run    &swapper_pc   
 )
 
 MACRO(dot_dot, &macro_tap &kp DOT &kp DOT)
 
 GLV80_LAYER(sym,
-&none      &none      &none      &none      &none                             &none      &none        &none      &none     &none
-&kp GRAVE  &kp RBKT   &kp LPAR   &kp RPAR   &kp SEMI   &kp DOT     &none      &none      &none        &none      &none     &none
-&kp LBKT   &kp EXCL   &kp LBRC   &kp RBRC   &kp COMMA  &kp QMARK   &kp GRAVE  &kp BSPC   &kp TAB      &kp SPACE  &kp RET   &none
-&kp HASH   &kp CARET  &kp EQUAL  &kp UNDER  &kp DLLR   &kp STAR    &kp DQT    &sk LCTRL  &sk LSHFT    &sk LALT   &sk LGUI  &none
-&kp TILDE  &kp LT     &kp PIPE   &kp MINUS  &kp GT     &kp FSLH  , &kp SQT    &kp DEL    &kp LS(TAB)  &kp INS    &kp ESC   &none
-&dot_dot   &kp AMPS   &kp SQT    &kp DQT    &kp PLUS             ,            &none      &none        &none      &none     &none
+&none      &none      &none      &none      &none                             &none      &none      &none        &none     &none
+&kp GRAVE  &kp RBKT   &kp LPAR   &kp RPAR   &kp SEMI   &kp DOT     &none      &none      &none      &none        &none     &none
+&kp LBKT   &kp EXCL   &kp LBRC   &kp RBRC   &kp COMMA  &kp QMARK   &kp GRAVE  &kp SPC    &kp BSPC   &kp TAB      &kp DEL   &none
+&kp HASH   &kp CARET  &kp EQUAL  &kp UNDER  &kp DLLR   &kp STAR    &kp DQT    &sk LCTRL  &sk LSHFT  &sk LALT     &sk LGUI  &none
+&kp TILDE  &kp LT     &kp PIPE   &kp MINUS  &kp GT     &kp FSLH  , &kp SQT    &kp RET    &kp ESC    &kp LS(TAB)  &kp INS   &none
+&dot_dot   &kp AMPS   &kp SQT    &kp DQT    &kp PLUS             ,            &none      &none      &none        &none     &none
 ,                                &kp BSLH   &kp DOT    &kp STAR    &none      &none      &none
 ,                                &kp PRCNT  &kp COLON  &kp AT      &none      &none      &none
 )
