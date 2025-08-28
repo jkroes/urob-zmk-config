@@ -123,25 +123,25 @@ ___  ___       ___       ___         ___                ,      ___       ___    
 // the sticky modifiers on the left home row of the nav layer
 
 GLV80_LAYER(nav,
-XXX  XXX       XXX          XXX        XXX                   XXX        XXX        XXX          XXX         XXX
-XXX  XXX       XXX          XXX        XXX        XXX   XXX  XXX        XXX        XXX          XXX         XXX
-XXX  &kp DEL   &kp TAB      &kp BSPC   &kp SPC    XXX   XXX  WORD_LEFT  &kp PG_DN  &kp PG_UP    WORD_RIGHT  XXX 
-XXX  &sk LGUI  &sk LALT     &sk LSHFT  &sk LCTRL  XXX   XXX  NAV_LEFT   NAV_DOWN   NAV_UP       NAV_RIGHT   XXX
-XXX  &kp INS   &kp LS(TAB)  &kp ESC    &kp RET    XXX , XXX  XXX        XXX        XXX          XXX         XXX
-XXX  XXX       XXX          XXX        XXX            ,      XXX        XXX        XXX          XXX         XXX
-,                           ___        ___        ___        ___        NEXT_WIN   &kp LS(TAB)  
-,                           ___        ___        ___        ___        SPOTLIGHT  &swapper     
+XXX  XXX       XXX          XXX        XXX                       XXX        XXX        XXX         XXX        XXX
+XXX  XXX       XXX          XXX        XXX        XXX   XXX      XXX        XXX        XXX         XXX        XXX
+XXX  &kp DEL   &kp TAB      &kp BSPC   &kp SPC    XXX   XXX      &kp PG_UP  WORD_LEFT  WORD_RIGHT  &kp PG_DN  XXX 
+XXX  &sk LGUI  &sk LALT     &sk LSHFT  &sk LCTRL  XXX   XXX      NAV_UP     NAV_LEFT   NAV_RIGHT   NAV_DOWN   XXX
+XXX  &kp INS   &kp LS(TAB)  &kp ESC    &kp RET    XXX , XXX      XXX        XXX        XXX         XXX        XXX
+XXX  XXX       XXX          XXX        XXX            ,          XXX        XXX        XXX         XXX        XXX
+,                           ___        ___        ___   ___      NEXT_WIN   &kp LS(TAB)  
+,                           ___        ___        ___   &finder  SPOTLIGHT  &swapper     
 )                                                      
 
 GLV80_LAYER(nav_pc,
-___  ___  ___  ___  ___             ___           ___          ___        ___            ___
-___  ___  ___  ___  ___  ___   ___  ___           ___          ___        ___            ___
-___  ___  ___  ___  ___  ___   ___  WORD_LEFT_PC  ___          ___        WORD_RIGHT_PC  ___
-___  ___  ___  ___  ___  ___   ___  NAV_LEFT_PC   NAV_DOWN_PC  NAV_UP_PC  NAV_RIGHT_PC   ___ 
-___  ___  ___  ___  ___  ___ , ___  ___           ___          ___        ___            ___
-___  ___  ___  ___  ___      ,      ___           ___          ___        ___            ___
-,              ___  ___  ___   ___  ___           ___ 
-,              ___  ___  ___   ___  &power_run    &swapper_pc   
+___  ___  ___  ___  ___                   ___           ___           ___            ___          ___
+___  ___  ___  ___  ___  ___   ___        ___           ___           ___            ___          ___
+___  ___  ___  ___  ___  ___   ___        ___           WORD_LEFT_PC  WORD_RIGHT_PC  ___          ___
+___  ___  ___  ___  ___  ___   ___        NAV_UP_PC     NAV_LEFT_PC   NAV_RIGHT_PC   NAV_DOWN_PC  ___ 
+___  ___  ___  ___  ___  ___ , ___        ___           ___           ___            ___          ___
+___  ___  ___  ___  ___      ,            ___           ___           ___            ___          ___
+,              ___  ___  ___   ___        ___           ___ 
+,              ___  ___  ___   EXPLORER   &power_run    &swapper_pc   
 )
 
 MACRO(dot_dot, &macro_tap &kp DOT &kp DOT)
@@ -178,51 +178,3 @@ XXX  XXX  XXX  XXX  XXX      ,      XXX  XXX  XXX  XXX  XXX
 ,              ___  ___  ___   ___  ___  ___
 ,              ___  ___  ___   ___  ___  ___
 )
-
-/*
-private relay: https://support.apple.com/en-us/102022
-https://support.apple.com/en-us/102609
-https://learn.microsoft.com/en-us/windows/powertoys/run
-
-look into https://karabiner-elements.pqrs.org and https://www.reddit.com/r/vim/comments/c4oyji/if_youre_on_macos_karabiners_systemwide_vimode_is/
-Get rid of caps once hammerspoon becomes redundant
-Note that some things are best implemented as combos!!!
-bind pc-specific layers to the thumb clusters on the pc layer
-
-system shortcuts (change to fn keys or hyper--all mods--to 
-avoid interfering with app shortcuts):
-
-https://alt-tab-macos.netlify.app
-https://rectangleapp.com
-https://www.reddit.com/r/macapps/comments/1dmj0la/spaces_for_macos/
-Assign apps to specific mission control spaces: https://support.apple.com/ml-in/guide/mac-help/mh14112/mac
-
-1password (on laptop: cmd-shift-spc)
-spotlight
-- show spotlight search
-- show finder search window
-launchpad & dock
-- show launchpad
-mission control
-- mission control: show all windows?
-- move left/right a space 
-- application windows 
-- show desktop
-windows
-- minimize
-- maximize
-- fill
-- center
-- halves 
-keyboard
-- move focus to next window
-- move focus to the dock
-- move focus to the menu bar
-- show contextual menu: right click?
--- maybe we can simulate this with zmk mouse functionality I deleted?
-cmd-shift-5: screenshot toolbar
-TODO services
-dictation 
-safari tab overview (cmd-shift-\)
-enable type to siri shortcut: tap cmd twice (requires standalone cmd key)
-*/

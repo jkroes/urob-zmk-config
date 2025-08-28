@@ -35,6 +35,7 @@ ZMK_HOLD_TAP(tp, bindings = <&kp>, <&kp>; TP_CORE)
 #define NAV_DOWN      _NAV_DOWN(LC(DOWN))   
 #define NEXT_WIN      _NEXT_WIN(LC)
 #define SPOTLIGHT     &kp LC(SPACE)
+MACRO(finder, SPOTLIGHT &kp F &kp RET)
 
 #define WORD_LEFT_PC  _WORD_LEFT(LC) 
 #define WORD_RIGHT_PC _WORD_RIGHT(LC) 
@@ -49,6 +50,7 @@ MACRO(power_run,
       &macro_tap &kp SPACE \
       &macro_wait_time MACRO_DEFAULT_WAIT_MS \
       &macro_release &kp LALT &kp LSHFT) // Requires PowerToys Run
+#define EXPLORER &kp LG(E)
 
 // Pulled from the fn layer
 // #define DSK_PREV  &hmr LCTRL LG(LC(LEFT)) // Previous desktop.
@@ -57,4 +59,44 @@ MACRO(power_run,
 // #define PIN_APP   &kp LG(LC(LS(A)))       // Pin application across desktops.
 // #define DSK_MGR   &kp LA(GRAVE)           // Desktop manager.
 
+/*
+https://support.apple.com/en-us/102609
 
+look into https://karabiner-elements.pqrs.org and https://www.reddit.com/r/vim/comments/c4oyji/if_youre_on_macos_karabiners_systemwide_vimode_is/
+Get rid of caps once hammerspoon becomes redundant
+Note that some things are best implemented as combos!!!
+bind pc-specific layers to the thumb clusters on the pc layer
+
+system shortcuts (change to fn keys or hyper--all mods--to 
+avoid interfering with app shortcuts):
+
+https://alt-tab-macos.netlify.app
+https://rectangleapp.com
+https://www.reddit.com/r/macapps/comments/1dmj0la/spaces_for_macos/
+Assign apps to specific mission control spaces: https://support.apple.com/ml-in/guide/mac-help/mh14112/mac
+
+1password (on laptop: cmd-shift-spc)
+launchpad & dock
+- show launchpad
+mission control
+- mission control: show all windows?
+- move left/right a space 
+- application windows 
+- show desktop
+windows
+- minimize
+- maximize
+- fill
+- center
+- halves 
+keyboard
+- move focus to next window
+- move focus to the dock
+- move focus to the menu bar
+- show contextual menu: right click?
+-- maybe we can simulate this with zmk mouse functionality I deleted?
+cmd-shift-5: screenshot toolbar
+TODO services
+dictation 
+safari tab overview (cmd-shift-\)
+*/

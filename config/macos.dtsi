@@ -12,8 +12,6 @@ SIMPLE_MORPH(dot_morph, SFT, &kp DOT, &kp COLON)
 // Tap: qmark | Shift + tap: excl.
 SIMPLE_MORPH(qexcl, SFT, &kp QMARK, &kp EXCL)
 
-THUMB()
-
 #define LT_BSPC_DEL(LAYER) &lt_bspc_del LAYER 0
 THUMB(lt_bspc_del, &mo, &bspc_del)
 MORPH(bspc_del, MOD_LCTL, &kp BSPC, &kp DEL)
