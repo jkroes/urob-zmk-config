@@ -1,5 +1,3 @@
-#define SWAPPER_POS RM1 RM2 RM3 RM4 RH5 // Continue swapper on NAV_LEFT NAV_UP NAV_DOWN NAV_RIGHT LS(TAB) 
-
 // Tri-state for macOS 
 ZMK_TRI_STATE(swapper,
     bindings = <&kt LCTRL>, <&kp TAB>, <&kt LCTRL>;
@@ -12,15 +10,6 @@ ZMK_TRI_STATE(swapper_pc,
     bindings = <&alt_press>, <&kp TAB>, <&alt_release>;
     ignored-key-positions = <SWAPPER_POS>;)
 
-#define _CUT        &kp LC(X)
-#define _COPY       &kp LC(C)
-#define _PASTE      &kp LC(V)
-#define _UNDO       &kp LC(Z)              // Mostly cross-platform; suspends some Terminals
-#define _REDO       &kp LS(LC(Z))          // MacOS or Google Workspace or VSCode
-#define _REDO2      &kp LC(Y)              // Windows or Microsoft Office
-#define _FIND       &kp LC(F)
-#define _FIND_NEXT  &kp LC(G)
-#define _FIND_PREV  &kp LC(LS(G))
 //#define CANCEL     &kp K_CANCEL           // Cancel caps-word & auto-layers
 
 #define TP_CORE \
