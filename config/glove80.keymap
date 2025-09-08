@@ -1,5 +1,4 @@
-// Key position labels
-#include "zmk-helpers/key-labels/glove80.h"
+#include "zmk-helpers/key-labels/glove80.h" // Key position labels
 #define THUMBS LH0 LH1 LH2 LH3 LH4 LH5 \
                RH0 RH1 RH2 RH3 RH4 RH5
 #define KEYS_L LC1 LC2 LC3 LC4 LC5     \
@@ -59,7 +58,7 @@
 #define MACRO_DEFAULT_WAIT_MS 15 // CONFIG_ZMK_MACRO_DEFAULT_WAIT_MS
 #define MACRO_DEFAULT_TAP_MS 30 // CONFIG_ZMK_MACRO_DEFAULT_TAP_MS
 
-#define COMBO_TIMEOUT_HORZ 50
+#define COMBO_TIMEOUT_HORZ 40
 #define COMBO_PRIOR_IDLE_HORZ 150
 #define COMBO_TIMEOUT_VERT 75
 #define COMBO_PRIOR_IDLE_VERT 50
@@ -86,14 +85,14 @@ ZMK_CONDITIONAL_LAYER(sys, NUM SYM, SYS) // FN + NUM --> SYS.
 ZMK_CONDITIONAL_LAYER(nav_pc, PC NAV, NAV_PC) 
 
 GLV80_LAYER(macos,
-&kp F1       &kp F2  &kp F3  &kp F4            &kp F5                          &kp F6       &kp F7        &kp F8      &kp F9   &kp F10 
-XXX          &kp N1  &kp N2  &kp N3            &kp N4      &kp N5      &kp N6  &kp N7       &kp N8        &kp N9      &kp N0   XXX  
-XXX          &kp Q   &kp W   &kp E             &kp R       &kp T       &kp Y   &kp U        &kp I         &kp O       &kp P    XXX
-&kp CAPS     lp(A)   lr(S)   lm(D)             li(F)       &kp G       &kp H   ri(J)        rm(K)         rr(L)       rp(SQT)  XXX
-&tog PC      &kp Z   &kp X   &kp C             &kp V       &kp B     , &kp N   &kp M        &comma_morph  &dot_morph  &qexcl   XXX
-&bootloader  XXX     XXX     &kp LEFT          &kp RIGHT             ,         &kp UP       &kp DOWN      XXX         XXX      &bootloader
-,                            &mt LCTRL TAB     XXX         XXX         XXX     XXX          &kp ESC
-,                            LT_BSPC_DEL(NAV)  &num_morph  XXX         XXX     &lt SYM RET  &SHIFT_SPC
+&kp F1    &kp F2  &kp F3  &kp F4            &kp F5                          &kp F6       &kp F7        &kp F8      &kp F9   &kp F10 
+XXX       &kp N1  &kp N2  &kp N3            &kp N4      &kp N5      &kp N6  &kp N7       &kp N8        &kp N9      &kp N0   XXX  
+XXX       &kp Q   &kp W   &kp E             &kp R       &kp T       &kp Y   &kp U        &kp I         &kp O       &kp P    XXX
+XXX       lp(A)   lr(S)   lm(D)             li(F)       &kp G       &kp H   ri(J)        rm(K)         rr(L)       rp(SQT)  XXX
+XXX       &kp Z   &kp X   &kp C             &kp V       &kp B     , &kp N   &kp M        &comma_morph  &dot_morph  &qexcl   XXX
+XXX       XXX     XXX     &kp LEFT          &kp RIGHT             ,         &kp UP       &kp DOWN      XXX         XXX      XXX
+,                         &mt LCTRL TAB     &kp CAPS    XXX         XXX     XXX          &kp ESC
+,                         LT_BSPC_DEL(NAV)  &num_morph  XXX         XXX     &lt SYM RET  &SHIFT_SPC
 )
 
 GLV80_LAYER(pc,
@@ -168,12 +167,12 @@ XXX  XXX  XXX  XXX  XXX      ,      XXX  XXX  XXX  XXX  XXX
 )
 
 GLV80_LAYER(sys,
-XXX  XXX  XXX  XXX  XXX                    XXX    XXX    XXX    XXX           XXX
-XXX  XXX  XXX  XXX  XXX  XXX   XXX         XXX    XXX    XXX    XXX           XXX
-XXX  XXX  XXX  XXX  XXX  XXX   XXX         XXX    XXX    XXX    XXX           XXX
-XXX  XXX  XXX  XXX  XXX  XXX   &bt BT_CLR  &bt_0  &bt_1  &bt_2  &out OUT_USB  XXX
-XXX  XXX  XXX  XXX  XXX  XXX , XXX         XXX    XXX    XXX    XXX           XXX
-XXX  XXX  XXX  XXX  XXX      ,             XXX    XXX    XXX    XXX           XXX
-,              ___  ___  ___   ___  ___  ___
-,              ___  ___  ___   ___  ___  ___
+XXX  XXX  XXX  XXX  XXX                             XXX    XXX    XXX    XXX           XXX
+XXX  XXX  XXX  XXX  XXX  XXX           XXX          XXX    XXX    XXX    XXX           XXX
+XXX  XXX  XXX  XXX  XXX  XXX           XXX          XXX    XXX    XXX    XXX           XXX
+XXX  XXX  XXX  XXX  XXX  XXX           &bt BT_CLR   &bt_0  &bt_1  &bt_2  &out OUT_USB  XXX
+XXX  XXX  XXX  XXX  XXX  &bootloader , &bootloader  XXX    XXX    XXX    XXX           XXX
+XXX  XXX  XXX  XXX  XXX              ,              XXX    XXX    XXX    XXX           XXX
+,              ___  ___  ___           ___  ___  ___
+,              ___  ___  ___           ___  ___  ___
 )
