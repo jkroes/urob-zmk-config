@@ -1,0 +1,38 @@
+&kp LPAR &kp RPAR
+&kp LBKT &kp RBKT
+&kp LBRC &kp RBRC
+&kp LT &kp GT
+&kp COMMA &kp SEMI
+&kp SQT &kp DQT
+&kp GRAVE &kp TILDE
+&kp EQUAL &kp PLUS 
+
+&kp QMARK &kp FSLH 
+&kp EXCL &kp BSLH 
+&kp CARET &kp DLLR
+&kp HASH &kp STAR
+
+&kp AMPS &kp PIPE
+&kp DOT &kp COLON
+&kp PRCNT &kp AT 
+
+&dot_dot
+
+GLV80_LAYER(num,
+XXX  XXX        XXX        XXX       XXX                                   XXX        XXX      XXX       XXX      XXX
+XXX  XXX        XXX        XXX       XXX         XXX           XXX         XXX        XXX      XXX       XXX      XXX
+XXX  XXX        XXX        XXX       XXX         XXX           XXX         XXX        XXX      XXX       XXX      XXX
+XXX  XXX        XXX        XXX       &kp UNDER   &kp CARET     &kp DLLR    &kp MINUS  XXX      XXX       XXX      XXX
+XXX  XXX        XXX        XXX       XXX         XXX         , XXX         XXX        XXX      XXX       XXX      XXX
+XXX  XXX        XXX        XXX       XXX                     ,             XXX        XXX      XXX       XXX      XXX
+,                          ___       ___         ___           ___         ___  ___
+,                          ___       ___         ___           ___         ___  ___
+)
+
+
+
+Pinky   Ring   Middle   Index   Index        Index   Index   Middle   Ring   Pinky
+ (       {       [       /       -            =       \       ]       }       )
+
+[SPACE/LAYER]  [GRAVE~TILDE morph]  [AMP/PIPE]
+[ESC]          [AT]                 [BACKSLASH]

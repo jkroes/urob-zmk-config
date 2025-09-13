@@ -88,10 +88,10 @@ GLV80_LAYER(macos,
 &kp F1    &kp F2  &kp F3  &kp F4            &kp F5                          &kp F6       &kp F7        &kp F8      &kp F9   &kp F10 
 XXX       &kp N1  &kp N2  &kp N3            &kp N4      &kp N5      &kp N6  &kp N7       &kp N8        &kp N9      &kp N0   XXX  
 XXX       &kp Q   &kp W   &kp E             &kp R       &kp T       &kp Y   &kp U        &kp I         &kp O       &kp P    XXX
-XXX       lp(A)   lr(S)   lm(D)             li(F)       &kp G       &kp H   ri(J)        rm(K)         rr(L)       rp(SQT)  XXX
+&kp CAPS  lp(A)   lr(S)   lm(D)             li(F)       &kp G       &kp H   ri(J)        rm(K)         rr(L)       rp(SQT)  XXX
 XXX       &kp Z   &kp X   &kp C             &kp V       &kp B     , &kp N   &kp M        &comma_morph  &dot_morph  &qexcl   XXX
 XXX       XXX     XXX     &kp LEFT          &kp RIGHT             ,         &kp UP       &kp DOWN      XXX         XXX      XXX
-,                         &mt LCTRL TAB     &kp CAPS    XXX         XXX     XXX          &kp ESC
+,                         &mt LCTRL TAB     XXX         XXX         XXX     XXX          &kp ESC
 ,                         LT_BSPC_DEL(NAV)  &num_morph  XXX         XXX     &lt SYM RET  &SHIFT_SPC
 )
 
